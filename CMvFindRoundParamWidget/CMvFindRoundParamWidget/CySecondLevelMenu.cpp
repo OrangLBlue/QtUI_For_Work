@@ -1,5 +1,4 @@
 ﻿#include "CySecondLevelMenu.h"
-#include "ui_CMvFindLineParamWidget.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QVector>

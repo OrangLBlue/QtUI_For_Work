@@ -1,4 +1,4 @@
-#include "CMvFindRoundParamWidget.h"
+﻿#include "CMvFindRoundParamWidget.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])

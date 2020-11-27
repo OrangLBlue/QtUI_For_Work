@@ -1,8 +1,6 @@
 ﻿#ifndef CYSENCONDLEVELMENU
 #define CYSENCONDLEVELMENU
 
-#include "ui_CMvFindLineParamWidget.h"
-//#include "CMvFindLineParamWidget.h"
 #include <QWidget>
 #include <QVector>
 #include <QString>

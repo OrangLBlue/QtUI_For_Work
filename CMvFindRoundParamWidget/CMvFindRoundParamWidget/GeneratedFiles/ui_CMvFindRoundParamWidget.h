@@ -31,7 +31,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_CMvFindRoundParamWidgetClass
+class Ui_CMvFindRoundParamWidget
 {
 public:
     QHBoxLayout *horizontalLayout_3;
@@ -48,7 +48,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QTableWidget *tableWidget_input_2;
+    QTableWidget *tableWidget_input;
     QLabel *label_funcName_2;
     QLabel *label_roiCreat_2;
     QCheckBox *checkBox_enableFunc_2;
@@ -102,26 +102,26 @@ public:
     QPushButton *pushButton_affirm;
     QPushButton *pbPrev_cancel;
 
-    void setupUi(QWidget *CMvFindRoundParamWidgetClass)
+    void setupUi(QWidget *CMvFindRoundParamWidget)
     {
-        if (CMvFindRoundParamWidgetClass->objectName().isEmpty())
-            CMvFindRoundParamWidgetClass->setObjectName(QStringLiteral("CMvFindRoundParamWidgetClass"));
-        CMvFindRoundParamWidgetClass->resize(886, 652);
-        horizontalLayout_3 = new QHBoxLayout(CMvFindRoundParamWidgetClass);
-        horizontalLayout_3->setSpacing(0);
+        if (CMvFindRoundParamWidget->objectName().isEmpty())
+            CMvFindRoundParamWidget->setObjectName(QStringLiteral("CMvFindRoundParamWidget"));
+        CMvFindRoundParamWidget->resize(892, 652);
+        horizontalLayout_3 = new QHBoxLayout(CMvFindRoundParamWidget);
+        horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        graphicsView_mainImage = new QGraphicsView(CMvFindRoundParamWidgetClass);
+        graphicsView_mainImage = new QGraphicsView(CMvFindRoundParamWidget);
         graphicsView_mainImage->setObjectName(QStringLiteral("graphicsView_mainImage"));
         graphicsView_mainImage->setMinimumSize(QSize(500, 600));
 
         verticalLayout->addWidget(graphicsView_mainImage);
 
-        frame = new QFrame(CMvFindRoundParamWidgetClass);
+        frame = new QFrame(CMvFindRoundParamWidget);
         frame->setObjectName(QStringLiteral("frame"));
         frame->setMinimumSize(QSize(0, 42));
         frame->setMaximumSize(QSize(16777215, 42));
@@ -180,55 +180,55 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        tabWidget = new QTabWidget(CMvFindRoundParamWidgetClass);
+        tabWidget = new QTabWidget(CMvFindRoundParamWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setMinimumSize(QSize(382, 602));
         tabWidget->setMaximumSize(QSize(380, 16777215));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
-        tableWidget_input_2 = new QTableWidget(tab);
-        if (tableWidget_input_2->columnCount() < 2)
-            tableWidget_input_2->setColumnCount(2);
+        tableWidget_input = new QTableWidget(tab);
+        if (tableWidget_input->columnCount() < 2)
+            tableWidget_input->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        tableWidget_input_2->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        tableWidget_input->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableWidget_input_2->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        if (tableWidget_input_2->rowCount() < 4)
-            tableWidget_input_2->setRowCount(4);
+        tableWidget_input->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        if (tableWidget_input->rowCount() < 4)
+            tableWidget_input->setRowCount(4);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget_input_2->setVerticalHeaderItem(0, __qtablewidgetitem2);
+        tableWidget_input->setVerticalHeaderItem(0, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableWidget_input_2->setVerticalHeaderItem(1, __qtablewidgetitem3);
+        tableWidget_input->setVerticalHeaderItem(1, __qtablewidgetitem3);
         QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
-        tableWidget_input_2->setVerticalHeaderItem(2, __qtablewidgetitem4);
+        tableWidget_input->setVerticalHeaderItem(2, __qtablewidgetitem4);
         QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
-        tableWidget_input_2->setVerticalHeaderItem(3, __qtablewidgetitem5);
+        tableWidget_input->setVerticalHeaderItem(3, __qtablewidgetitem5);
         QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(0, 0, __qtablewidgetitem6);
+        tableWidget_input->setItem(0, 0, __qtablewidgetitem6);
         QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(0, 1, __qtablewidgetitem7);
+        tableWidget_input->setItem(0, 1, __qtablewidgetitem7);
         QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(1, 0, __qtablewidgetitem8);
+        tableWidget_input->setItem(1, 0, __qtablewidgetitem8);
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(1, 1, __qtablewidgetitem9);
+        tableWidget_input->setItem(1, 1, __qtablewidgetitem9);
         QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(2, 0, __qtablewidgetitem10);
+        tableWidget_input->setItem(2, 0, __qtablewidgetitem10);
         QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(2, 1, __qtablewidgetitem11);
+        tableWidget_input->setItem(2, 1, __qtablewidgetitem11);
         QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(3, 0, __qtablewidgetitem12);
+        tableWidget_input->setItem(3, 0, __qtablewidgetitem12);
         QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
-        tableWidget_input_2->setItem(3, 1, __qtablewidgetitem13);
-        tableWidget_input_2->setObjectName(QStringLiteral("tableWidget_input_2"));
-        tableWidget_input_2->setGeometry(QRect(10, 110, 361, 382));
-        tableWidget_input_2->setMinimumSize(QSize(361, 382));
-        tableWidget_input_2->setMaximumSize(QSize(361, 382));
-        tableWidget_input_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        tableWidget_input_2->setSelectionMode(QAbstractItemView::SingleSelection);
-        tableWidget_input_2->setSelectionBehavior(QAbstractItemView::SelectRows);
-        tableWidget_input_2->setShowGrid(false);
-        tableWidget_input_2->horizontalHeader()->setStretchLastSection(true);
-        tableWidget_input_2->verticalHeader()->setVisible(false);
+        tableWidget_input->setItem(3, 1, __qtablewidgetitem13);
+        tableWidget_input->setObjectName(QStringLiteral("tableWidget_input"));
+        tableWidget_input->setGeometry(QRect(10, 110, 361, 382));
+        tableWidget_input->setMinimumSize(QSize(361, 382));
+        tableWidget_input->setMaximumSize(QSize(361, 382));
+        tableWidget_input->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tableWidget_input->setSelectionMode(QAbstractItemView::SingleSelection);
+        tableWidget_input->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tableWidget_input->setShowGrid(false);
+        tableWidget_input->horizontalHeader()->setStretchLastSection(true);
+        tableWidget_input->verticalHeader()->setVisible(false);
         label_funcName_2 = new QLabel(tab);
         label_funcName_2->setObjectName(QStringLiteral("label_funcName_2"));
         label_funcName_2->setGeometry(QRect(20, 30, 81, 16));
@@ -429,7 +429,7 @@ public:
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(1, 1, 1, 1);
-        pushButton_ones = new QPushButton(CMvFindRoundParamWidgetClass);
+        pushButton_ones = new QPushButton(CMvFindRoundParamWidget);
         pushButton_ones->setObjectName(QStringLiteral("pushButton_ones"));
         pushButton_ones->setMinimumSize(QSize(80, 40));
         pushButton_ones->setMaximumSize(QSize(80, 40));
@@ -440,14 +440,14 @@ public:
 
         horizontalLayout_2->addItem(horizontalSpacer_2);
 
-        pushButton_affirm = new QPushButton(CMvFindRoundParamWidgetClass);
+        pushButton_affirm = new QPushButton(CMvFindRoundParamWidget);
         pushButton_affirm->setObjectName(QStringLiteral("pushButton_affirm"));
         pushButton_affirm->setMinimumSize(QSize(80, 40));
         pushButton_affirm->setMaximumSize(QSize(80, 40));
 
         horizontalLayout_2->addWidget(pushButton_affirm);
 
-        pbPrev_cancel = new QPushButton(CMvFindRoundParamWidgetClass);
+        pbPrev_cancel = new QPushButton(CMvFindRoundParamWidget);
         pbPrev_cancel->setObjectName(QStringLiteral("pbPrev_cancel"));
         pbPrev_cancel->setMinimumSize(QSize(80, 40));
         pbPrev_cancel->setMaximumSize(QSize(80, 40));
@@ -461,137 +461,137 @@ public:
         horizontalLayout_3->addLayout(verticalLayout_2);
 
 
-        retranslateUi(CMvFindRoundParamWidgetClass);
+        retranslateUi(CMvFindRoundParamWidget);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
-        QMetaObject::connectSlotsByName(CMvFindRoundParamWidgetClass);
+        QMetaObject::connectSlotsByName(CMvFindRoundParamWidget);
     } // setupUi
 
-    void retranslateUi(QWidget *CMvFindRoundParamWidgetClass)
+    void retranslateUi(QWidget *CMvFindRoundParamWidget)
     {
-        CMvFindRoundParamWidgetClass->setWindowTitle(QApplication::translate("CMvFindRoundParamWidgetClass", "CMvFindRoundParamWidget", Q_NULLPTR));
-        pushButton_zoomIn->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\224\276\345\244\247", Q_NULLPTR));
-        pushButton_zoomOut->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\274\251\345\260\217", Q_NULLPTR));
-        pushButton_zoomBest->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\234\200\345\245\275\345\260\272\345\257\270", Q_NULLPTR));
-        pushButton_lockRoiMove->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\351\224\201\345\256\232ROI", Q_NULLPTR));
-        label_mousePos->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "TextLabel", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget_input_2->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\350\276\223\345\205\245\345\220\215\347\247\260", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget_input_2->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\225\260\346\215\256\346\235\245\346\272\220", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem2 = tableWidget_input_2->verticalHeaderItem(0);
-        ___qtablewidgetitem2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "1", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem3 = tableWidget_input_2->verticalHeaderItem(1);
-        ___qtablewidgetitem3->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "2", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem4 = tableWidget_input_2->verticalHeaderItem(2);
-        ___qtablewidgetitem4->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "3", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem5 = tableWidget_input_2->verticalHeaderItem(3);
-        ___qtablewidgetitem5->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "4", Q_NULLPTR));
+        CMvFindRoundParamWidget->setWindowTitle(QApplication::translate("CMvFindRoundParamWidget", "CMvFindRoundParamWidget", Q_NULLPTR));
+        pushButton_zoomIn->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\224\276\345\244\247", Q_NULLPTR));
+        pushButton_zoomOut->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\274\251\345\260\217", Q_NULLPTR));
+        pushButton_zoomBest->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\234\200\345\245\275\345\260\272\345\257\270", Q_NULLPTR));
+        pushButton_lockRoiMove->setText(QApplication::translate("CMvFindRoundParamWidget", "\351\224\201\345\256\232ROI", Q_NULLPTR));
+        label_mousePos->setText(QApplication::translate("CMvFindRoundParamWidget", "TextLabel", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem = tableWidget_input->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QApplication::translate("CMvFindRoundParamWidget", "\350\276\223\345\205\245\345\220\215\347\247\260", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem1 = tableWidget_input->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\225\260\346\215\256\346\235\245\346\272\220", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem2 = tableWidget_input->verticalHeaderItem(0);
+        ___qtablewidgetitem2->setText(QApplication::translate("CMvFindRoundParamWidget", "1", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem3 = tableWidget_input->verticalHeaderItem(1);
+        ___qtablewidgetitem3->setText(QApplication::translate("CMvFindRoundParamWidget", "2", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem4 = tableWidget_input->verticalHeaderItem(2);
+        ___qtablewidgetitem4->setText(QApplication::translate("CMvFindRoundParamWidget", "3", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem5 = tableWidget_input->verticalHeaderItem(3);
+        ___qtablewidgetitem5->setText(QApplication::translate("CMvFindRoundParamWidget", "4", Q_NULLPTR));
 
-        const bool __sortingEnabled = tableWidget_input_2->isSortingEnabled();
-        tableWidget_input_2->setSortingEnabled(false);
-        QTableWidgetItem *___qtablewidgetitem6 = tableWidget_input_2->item(0, 0);
-        ___qtablewidgetitem6->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\233\276\345\203\217\346\235\245\346\272\220", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem7 = tableWidget_input_2->item(0, 1);
-        ___qtablewidgetitem7->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem8 = tableWidget_input_2->item(1, 0);
-        ___qtablewidgetitem8->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "ROI\346\235\245\346\272\220", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem9 = tableWidget_input_2->item(1, 1);
-        ___qtablewidgetitem9->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem10 = tableWidget_input_2->item(2, 0);
-        ___qtablewidgetitem10->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "ROI\344\275\215\347\275\256\344\277\256\346\255\243", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem11 = tableWidget_input_2->item(2, 1);
-        ___qtablewidgetitem11->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem12 = tableWidget_input_2->item(3, 0);
-        ___qtablewidgetitem12->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\216\251\350\206\234\346\235\245\346\272\220", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem13 = tableWidget_input_2->item(3, 1);
-        ___qtablewidgetitem13->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
-        tableWidget_input_2->setSortingEnabled(__sortingEnabled);
+        const bool __sortingEnabled = tableWidget_input->isSortingEnabled();
+        tableWidget_input->setSortingEnabled(false);
+        QTableWidgetItem *___qtablewidgetitem6 = tableWidget_input->item(0, 0);
+        ___qtablewidgetitem6->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\233\276\345\203\217\346\235\245\346\272\220", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem7 = tableWidget_input->item(0, 1);
+        ___qtablewidgetitem7->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem8 = tableWidget_input->item(1, 0);
+        ___qtablewidgetitem8->setText(QApplication::translate("CMvFindRoundParamWidget", "ROI\346\235\245\346\272\220", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem9 = tableWidget_input->item(1, 1);
+        ___qtablewidgetitem9->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem10 = tableWidget_input->item(2, 0);
+        ___qtablewidgetitem10->setText(QApplication::translate("CMvFindRoundParamWidget", "ROI\344\275\215\347\275\256\344\277\256\346\255\243", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem11 = tableWidget_input->item(2, 1);
+        ___qtablewidgetitem11->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem12 = tableWidget_input->item(3, 0);
+        ___qtablewidgetitem12->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\216\251\350\206\234\346\235\245\346\272\220", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem13 = tableWidget_input->item(3, 1);
+        ___qtablewidgetitem13->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\237\220\344\270\252\346\243\200\346\265\213\345\231\250\347\232\204\350\276\223\345\207\272", Q_NULLPTR));
+        tableWidget_input->setSortingEnabled(__sortingEnabled);
 
-        label_funcName_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\243\200\346\265\213\345\231\250\345\220\215\347\247\260\357\274\232", Q_NULLPTR));
-        label_roiCreat_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "ROI\346\235\245\346\272\220\357\274\232", Q_NULLPTR));
-        checkBox_enableFunc_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\220\257\347\224\250\346\243\200\346\265\213\345\231\250", Q_NULLPTR));
-        checkBox_roiCreat_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\350\207\252\345\267\261\345\210\233\345\273\272", Q_NULLPTR));
+        label_funcName_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\243\200\346\265\213\345\231\250\345\220\215\347\247\260\357\274\232", Q_NULLPTR));
+        label_roiCreat_2->setText(QApplication::translate("CMvFindRoundParamWidget", "ROI\346\235\245\346\272\220\357\274\232", Q_NULLPTR));
+        checkBox_enableFunc_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\220\257\347\224\250\346\243\200\346\265\213\345\231\250", Q_NULLPTR));
+        checkBox_roiCreat_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\350\207\252\345\267\261\345\210\233\345\273\272", Q_NULLPTR));
         comboBox_imageSource_3->clear();
         comboBox_imageSource_3->insertItems(0, QStringList()
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\346\226\260\345\273\272\351\241\271\347\233\256", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\346\226\260\345\273\272\351\241\271\347\233\256", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\346\226\260\345\273\272\351\241\271\347\233\256", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\346\226\260\345\273\272\351\241\271\347\233\256", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\346\226\260\345\273\272\351\241\271\347\233\256", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\346\226\260\345\273\272\351\241\271\347\233\256", Q_NULLPTR)
         );
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("CMvFindRoundParamWidgetClass", "\350\276\223\345\205\245\350\256\276\347\275\256", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("CMvFindRoundParamWidget", "\350\276\223\345\205\245\350\256\276\347\275\256", Q_NULLPTR));
         comboBox_thresholdType_2->clear();
         comboBox_thresholdType_2->insertItems(0, QStringList()
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\350\207\252\345\212\250", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\346\211\213\345\212\250", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\350\207\252\345\212\250", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\346\211\213\345\212\250", Q_NULLPTR)
         );
-        label_thresholdType_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\351\230\210\345\200\274\346\226\271\345\274\217\357\274\232", Q_NULLPTR));
-        label_scanDirection_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\211\253\346\217\217\346\226\271\345\220\221\357\274\232", Q_NULLPTR));
-        label_threshold_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\350\276\271\347\274\230\347\202\271\346\217\220\345\217\226\351\230\210\345\200\274\357\274\232", Q_NULLPTR));
-        label_edgeCheckType_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\350\276\271\347\274\230\346\243\200\346\265\213\346\226\271\345\274\217\357\274\232", Q_NULLPTR));
-        label_scanPointSum_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\211\253\346\217\217\347\202\271\346\225\260\357\274\232", Q_NULLPTR));
-        label_samplingPointSum_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\212\275\346\240\267\347\202\271\346\225\260\357\274\232", Q_NULLPTR));
-        label_fitRange_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\213\237\345\220\210\350\214\203\345\233\264\357\274\232", Q_NULLPTR));
+        label_thresholdType_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\351\230\210\345\200\274\346\226\271\345\274\217\357\274\232", Q_NULLPTR));
+        label_scanDirection_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\211\253\346\217\217\346\226\271\345\220\221\357\274\232", Q_NULLPTR));
+        label_threshold_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\350\276\271\347\274\230\347\202\271\346\217\220\345\217\226\351\230\210\345\200\274\357\274\232", Q_NULLPTR));
+        label_edgeCheckType_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\350\276\271\347\274\230\346\243\200\346\265\213\346\226\271\345\274\217\357\274\232", Q_NULLPTR));
+        label_scanPointSum_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\211\253\346\217\217\347\202\271\346\225\260\357\274\232", Q_NULLPTR));
+        label_samplingPointSum_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\212\275\346\240\267\347\202\271\346\225\260\357\274\232", Q_NULLPTR));
+        label_fitRange_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\213\237\345\220\210\350\214\203\345\233\264\357\274\232", Q_NULLPTR));
         comboBox_scanDirection_2->clear();
         comboBox_scanDirection_2->insertItems(0, QStringList()
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\344\273\216\344\270\212\345\210\260\344\270\213", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\344\273\216\344\270\213\345\210\260\344\270\212", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\344\273\216\344\270\212\345\210\260\344\270\213", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\344\273\216\344\270\213\345\210\260\344\270\212", Q_NULLPTR)
         );
         comboBox_edgeCheckType_2->clear();
         comboBox_edgeCheckType_2->insertItems(0, QStringList()
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\344\273\216\347\231\275\345\210\260\351\273\221", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\344\273\216\351\273\221\345\210\260\347\231\275", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\344\273\216\347\231\275\345\210\260\351\273\221", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\344\273\216\351\273\221\345\210\260\347\231\275", Q_NULLPTR)
         );
-        label_titleJudged_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "  \347\273\223\346\236\234\345\210\244\345\256\232", Q_NULLPTR));
-        spinBox_scanPointSum_2->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\202\271", Q_NULLPTR));
-        spinBox_samplingPointSum_2->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\202\271", Q_NULLPTR));
-        spinBox_fitRange_2->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\202\271", Q_NULLPTR));
-        checkBox_concaveConvex->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\274\200\345\220\257\345\207\271\345\207\270\346\200\247\346\243\200\346\265\213", Q_NULLPTR));
-        spinBox_fitBias_2->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\202\271", Q_NULLPTR));
-        label_fitBias_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\213\237\345\220\210\350\257\257\345\267\256\351\231\220\345\210\266\357\274\232", Q_NULLPTR));
-        spinBox_minRoundRadius->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\202\271", Q_NULLPTR));
-        label_minRoundRadius->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\215\212\345\276\204\344\270\213\351\231\220", Q_NULLPTR));
-        spinBox_maxRoundRadius->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\202\271", Q_NULLPTR));
-        label_maxRoundRadius->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\215\212\345\276\204\344\270\212\351\231\220", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("CMvFindRoundParamWidgetClass", "\345\217\202\346\225\260\350\256\276\347\275\256", Q_NULLPTR));
-        label_penWidth_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\224\273\347\254\224\345\260\272\345\257\270\357\274\232", Q_NULLPTR));
-        spinBox_lightTime_3->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\203\217\347\264\240", Q_NULLPTR));
-        pushButton_maskAll_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\216\251\347\233\226\346\211\200\346\234\211", Q_NULLPTR));
-        pushButton_maskNull_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\270\205\347\251\272\346\216\251\350\206\234", Q_NULLPTR));
-        pushButton_saveMask_2->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\344\277\235\345\255\230\344\277\256\346\224\271", Q_NULLPTR));
-        label_lightOutputIo_10->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\274\226\350\276\221\346\226\271\345\274\217\357\274\232", Q_NULLPTR));
+        label_titleJudged_2->setText(QApplication::translate("CMvFindRoundParamWidget", "  \347\273\223\346\236\234\345\210\244\345\256\232", Q_NULLPTR));
+        spinBox_scanPointSum_2->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\202\271", Q_NULLPTR));
+        spinBox_samplingPointSum_2->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\202\271", Q_NULLPTR));
+        spinBox_fitRange_2->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\202\271", Q_NULLPTR));
+        checkBox_concaveConvex->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\274\200\345\220\257\345\207\271\345\207\270\346\200\247\346\243\200\346\265\213", Q_NULLPTR));
+        spinBox_fitBias_2->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\202\271", Q_NULLPTR));
+        label_fitBias_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\213\237\345\220\210\350\257\257\345\267\256\351\231\220\345\210\266\357\274\232", Q_NULLPTR));
+        spinBox_minRoundRadius->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\202\271", Q_NULLPTR));
+        label_minRoundRadius->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\215\212\345\276\204\344\270\213\351\231\220", Q_NULLPTR));
+        spinBox_maxRoundRadius->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\202\271", Q_NULLPTR));
+        label_maxRoundRadius->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\215\212\345\276\204\344\270\212\351\231\220", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("CMvFindRoundParamWidget", "\345\217\202\346\225\260\350\256\276\347\275\256", Q_NULLPTR));
+        label_penWidth_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\224\273\347\254\224\345\260\272\345\257\270\357\274\232", Q_NULLPTR));
+        spinBox_lightTime_3->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\345\203\217\347\264\240", Q_NULLPTR));
+        pushButton_maskAll_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\216\251\347\233\226\346\211\200\346\234\211", Q_NULLPTR));
+        pushButton_maskNull_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\270\205\347\251\272\346\216\251\350\206\234", Q_NULLPTR));
+        pushButton_saveMask_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\344\277\235\345\255\230\344\277\256\346\224\271", Q_NULLPTR));
+        label_lightOutputIo_10->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\274\226\350\276\221\346\226\271\345\274\217\357\274\232", Q_NULLPTR));
         comboBox_lightOutputIo_7->clear();
         comboBox_lightOutputIo_7->insertItems(0, QStringList()
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\345\242\236\345\212\240\346\216\251\350\206\234", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\345\210\240\351\231\244\346\216\251\350\206\234", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\345\242\236\345\212\240\346\216\251\350\206\234", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\345\210\240\351\231\244\346\216\251\350\206\234", Q_NULLPTR)
         );
-        label_dEtectionMask->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\346\243\200\346\265\213\345\214\272\345\237\237\347\232\204\346\216\251\350\206\234\357\274\232", Q_NULLPTR));
+        label_dEtectionMask->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\243\200\346\265\213\345\214\272\345\237\237\347\232\204\346\216\251\350\206\234\357\274\232", Q_NULLPTR));
         comboBox_dEtectionMask->clear();
         comboBox_dEtectionMask->insertItems(0, QStringList()
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\344\270\215\344\275\277\347\224\250\346\216\251\350\206\234", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\346\234\254\346\243\200\346\265\213\345\231\250ROI\345\206\205\346\216\251\350\206\234", Q_NULLPTR)
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\345\205\266\344\273\226\347\256\227\346\263\225\347\232\204\346\216\251\350\206\234", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\344\270\215\344\275\277\347\224\250\346\216\251\350\206\234", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\346\234\254\346\243\200\346\265\213\345\231\250ROI\345\206\205\346\216\251\350\206\234", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\345\205\266\344\273\226\347\256\227\346\263\225\347\232\204\346\216\251\350\206\234", Q_NULLPTR)
         );
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("CMvFindRoundParamWidgetClass", "\346\216\251\350\206\234\350\256\276\347\275\256", Q_NULLPTR));
-        checkBox_valuTrig_4->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\220\257\347\224\250\347\273\230\345\210\266", Q_NULLPTR));
-        label_lightOutputIo_19->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\272\277\346\235\241\351\242\234\350\211\262\357\274\232", Q_NULLPTR));
-        spinBox_lightTime_5->setSuffix(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\243\205", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("CMvFindRoundParamWidget", "\346\216\251\350\206\234\350\256\276\347\275\256", Q_NULLPTR));
+        checkBox_valuTrig_4->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\220\257\347\224\250\347\273\230\345\210\266", Q_NULLPTR));
+        label_lightOutputIo_19->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\272\277\346\235\241\351\242\234\350\211\262\357\274\232", Q_NULLPTR));
+        spinBox_lightTime_5->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\243\205", Q_NULLPTR));
         comboBox_lightOutputIo_11->clear();
         comboBox_lightOutputIo_11->insertItems(0, QStringList()
-         << QApplication::translate("CMvFindRoundParamWidgetClass", "\351\242\234\350\211\262", Q_NULLPTR)
+         << QApplication::translate("CMvFindRoundParamWidget", "\351\242\234\350\211\262", Q_NULLPTR)
         );
-        label_lightOutputIo_20->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\272\277\346\235\241\345\256\275\345\272\246\357\274\232", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("CMvFindRoundParamWidgetClass", "\347\273\223\346\236\234\347\273\230\345\210\266", Q_NULLPTR));
-        pushButton_ones->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\215\225\346\254\241", Q_NULLPTR));
-        pushButton_affirm->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\347\241\256\345\256\232", Q_NULLPTR));
-        pbPrev_cancel->setText(QApplication::translate("CMvFindRoundParamWidgetClass", "\345\217\226\346\266\210", Q_NULLPTR));
+        label_lightOutputIo_20->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\272\277\346\235\241\345\256\275\345\272\246\357\274\232", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("CMvFindRoundParamWidget", "\347\273\223\346\236\234\347\273\230\345\210\266", Q_NULLPTR));
+        pushButton_ones->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\215\225\346\254\241", Q_NULLPTR));
+        pushButton_affirm->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\241\256\345\256\232", Q_NULLPTR));
+        pbPrev_cancel->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\217\226\346\266\210", Q_NULLPTR));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class CMvFindRoundParamWidgetClass: public Ui_CMvFindRoundParamWidgetClass {};
+    class CMvFindRoundParamWidget: public Ui_CMvFindRoundParamWidget {};
 } // namespace Ui
 
 QT_END_NAMESPACE

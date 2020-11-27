@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CMvFindRoundParamWidgetClass</class>
- <widget class="QWidget" name="CMvFindRoundParamWidgetClass">
+ <class>CMvFindRoundParamWidget</class>
+ <widget class="QWidget" name="CMvFindRoundParamWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>886</width>
+    <width>892</width>
     <height>652</height>
    </rect>
   </property>
@@ -14,9 +14,6 @@
    <string>CMvFindRoundParamWidget</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
-   <property name="spacing">
-    <number>0</number>
-   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -216,7 +213,7 @@
         <attribute name="title">
          <string>输入设置</string>
         </attribute>
-        <widget class="QTableWidget" name="tableWidget_input_2">
+        <widget class="QTableWidget" name="tableWidget_input">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -667,7 +664,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>250</y>
+           <y>230</y>
            <width>381</width>
            <height>31</height>
           </rect>
@@ -779,8 +776,8 @@ color: rgb(255, 255, 255);</string>
         <widget class="QCheckBox" name="checkBox_concaveConvex">
          <property name="geometry">
           <rect>
-           <x>250</x>
-           <y>120</y>
+           <x>10</x>
+           <y>430</y>
            <width>111</width>
            <height>31</height>
           </rect>
@@ -793,7 +790,7 @@ color: rgb(255, 255, 255);</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>290</y>
+           <y>260</y>
            <width>371</width>
            <height>161</height>
           </rect>
@@ -895,6 +892,106 @@ color: rgb(255, 255, 255);</string>
           </property>
          </widget>
         </widget>
+        <widget class="QWidget" name="widget_concaveConvex" native="true">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>460</y>
+           <width>361</width>
+           <height>101</height>
+          </rect>
+         </property>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_minimumDepth">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_minimumDepth">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>最小深度</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_minimumSamplingPoints">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2_minimumSamplingPoints">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>最小抽样点数</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_unqualifiedPiont">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>显示凹凸点信息</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_unqualifiedPiont">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>不合格点信息</string>
+          </property>
+         </widget>
+        </widget>
+        <zorder>widget_concaveConvex</zorder>
+        <zorder>spinBox_threshold_2</zorder>
+        <zorder>comboBox_thresholdType_2</zorder>
+        <zorder>label_thresholdType_2</zorder>
+        <zorder>label_scanDirection_2</zorder>
+        <zorder>label_threshold_2</zorder>
+        <zorder>label_edgeCheckType_2</zorder>
+        <zorder>label_scanPointSum_2</zorder>
+        <zorder>label_samplingPointSum_2</zorder>
+        <zorder>label_fitRange_2</zorder>
+        <zorder>comboBox_scanDirection_2</zorder>
+        <zorder>comboBox_edgeCheckType_2</zorder>
+        <zorder>label_titleJudged_2</zorder>
+        <zorder>spinBox_scanPointSum_2</zorder>
+        <zorder>spinBox_samplingPointSum_2</zorder>
+        <zorder>spinBox_fitRange_2</zorder>
+        <zorder>checkBox_concaveConvex</zorder>
+        <zorder>widget_Judged_2</zorder>
        </widget>
        <widget class="QWidget" name="tab_3">
         <attribute name="title">
