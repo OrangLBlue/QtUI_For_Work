@@ -207,7 +207,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -416,6 +416,9 @@
            <width>131</width>
            <height>31</height>
           </size>
+         </property>
+         <property name="overwriteMode">
+          <bool>false</bool>
          </property>
         </widget>
         <widget class="QComboBox" name="comboBox_imageSource_3">
@@ -893,6 +896,9 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </widget>
         <widget class="QWidget" name="widget_concaveConvex" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="geometry">
           <rect>
            <x>10</x>

@@ -109,7 +109,6 @@ QMenu * CySecondLevelMenu::getDataToInitMenu(QVector<cyMenu*> AllData, QWidget* 
 	{
 		QMenu * ChildMenu = new QMenu(AllData[indexI]->MenuName);//创建算法子菜单,并命名
 
-
 		for (int indexJ = 0; indexJ < AllData[indexI]->childenAction.size(); indexJ++)
 		{
 			AllData[indexI]->childenAction[indexJ]->pAction = new QAction(AllData[indexI]->childenAction[indexJ]->ActionName);//创建动作

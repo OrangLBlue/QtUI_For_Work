@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CMvFindLineParamWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CMvFindRoundParamWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CMvSecondLevelMenu.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_css.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CMvFindLineParamWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CMvFindRoundParamWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CMvSecondLevelMenu.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\CMvFindLineParamWidget.cpp" />
+    <ClCompile Include="src\CMvFindRoundParamWidget.cpp" />
+    <ClCompile Include="src\CMvSecondLevelMenu.cpp" />
+    <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="formFiles\CMvFindLineParamWidget.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_CMvFindLineParamWidget.h" />
+    <ClInclude Include="GeneratedFiles\ui_CMvFindRoundParamWidget.h" />
+    <CustomBuild Include="include\CMvSecondLevelMenu.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing CMvSecondLevelMenu.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing CMvSecondLevelMenu.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+    <CustomBuild Include="include\CMvFindRoundParamWidget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing CMvFindRoundParamWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing CMvFindRoundParamWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+    <CustomBuild Include="include\CMvFindLineParamWidget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing CMvFindLineParamWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing CMvFindLineParamWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="formFiles\CMvFindRoundParamWidget.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\projectResources\css.qrc">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(FullPath);..\projectResources\css\BlackCss\Black\arrowBottom.png;..\projectResources\css\BlackCss\Black\arrowLeft.png;..\projectResources\css\BlackCss\Black\arrowRight.png;..\projectResources\css\BlackCss\Black\arrowTop.png;..\projectResources\css\BlackCss\Black\bottomArrow.png;..\projectResources\css\BlackCss\Black\bottomArrowHover.png;..\projectResources\css\BlackCss\Black\checkBox.png;..\projectResources\css\BlackCss\Black\checkBoxChecked.png;..\projectResources\css\BlackCss\Black\checkBoxCheckedHover.png;..\projectResources\css\BlackCss\Black\checkBoxCheckedPressed.png;..\projectResources\css\BlackCss\Black\checkBoxHover.png;..\projectResources\css\BlackCss\Black\checkBoxIndeterminate.png;..\projectResources\css\BlackCss\Black\checkBoxIndeterminateHover.png;..\projectResources\css\BlackCss\Black\checkBoxIndeterminatePressed.png;..\projectResources\css\BlackCss\Black\checkBoxPressed.png;..\projectResources\css\BlackCss\Black\close.png;..\projectResources\css\BlackCss\Black\closeHover.png;..\projectResources\css\BlackCss\Black\closePressed.png;..\projectResources\css\BlackCss\Black\delete.png;..\projectResources\css\BlackCss\Black\deleteHover.png;..\projectResources\css\BlackCss\Black\deletePressed.png;..\projectResources\css\BlackCss\Black\downButton.png;..\projectResources\css\BlackCss\Black\error.png;..\projectResources\css\BlackCss\Black\feedback.png;..\projectResources\css\BlackCss\Black\feedbackHover.png;..\projectResources\css\BlackCss\Black\feedbackPressed.png;..\projectResources\css\BlackCss\Black\information.png;..\projectResources\css\BlackCss\Black\left.png;..\projectResources\css\BlackCss\Black\maximize.png;..\projectResources\css\BlackCss\Black\maximizeHover.png;..\projectResources\css\BlackCss\Black\maximizePressed.png;..\projectResources\css\BlackCss\Black\minimize.png;..\projectResources\css\BlackCss\Black\minimizeHover.png;..\projectResources\css\BlackCss\Black\minimizePressed.png;..\projectResources\css\BlackCss\Black\nscc.png;..\projectResources\css\BlackCss\Black\open.png;..\projectResources\css\BlackCss\Black\openHover.png;..\projectResources\css\BlackCss\Black\openPressed.png;..\projectResources\css\BlackCss\Black\progressBar.png;..\projectResources\css\BlackCss\Black\progressBarChunk.png;..\projectResources\css\BlackCss\Black\question.png;..\projectResources\css\BlackCss\Black\radioButton.png;..\projectResources\css\BlackCss\Black\radioButtonChecked.png;..\projectResources\css\BlackCss\Black\radioButtonCheckedHover.png;..\projectResources\css\BlackCss\Black\radioButtonCheckedPressed.png;..\projectResources\css\BlackCss\Black\radioButtonHover.png;..\projectResources\css\BlackCss\Black\radioButtonPressed.png;..\projectResources\css\BlackCss\Black\restore.png;..\projectResources\css\BlackCss\Black\restoreHover.png;..\projectResources\css\BlackCss\Black\restorePressed.png;..\projectResources\css\BlackCss\Black\right.png;..\projectResources\css\BlackCss\Black\scan.png;..\projectResources\css\BlackCss\Black\skin.png;..\projectResources\css\BlackCss\Black\skinHover.png;..\projectResources\css\BlackCss\Black\skinPressed.png;..\projectResources\css\BlackCss\Black\success.png;..\projectResources\css\BlackCss\Black\topArrow.png;..\projectResources\css\BlackCss\Black\topArrowHover.png;..\projectResources\css\BlackCss\Black\transfer.png;..\projectResources\css\BlackCss\Black\upButton.png;..\projectResources\css\BlackCss\Black\warning.png;..\projectResources\css\BlackCss\Black.css;..\projectResources\css\BlackCss2\Black2\add_bottom.png;..\projectResources\css\BlackCss2\Black2\add_left.png;..\projectResources\css\BlackCss2\Black2\add_right.png;..\projectResources\css\BlackCss2\Black2\add_top.png;..\projectResources\css\BlackCss2\Black2\branch_close.png;..\projectResources\css\BlackCss2\Black2\branch_open.png;..\projectResources\css\BlackCss2\Black2\calendar_nextmonth.png;..\projectResources\css\BlackCss2\Black2\calendar_prevmonth.png;..\projectResources\css\BlackCss2\Black2\checkbox_checked.png;..\projectResources\css\BlackCss2\Black2\checkbox_checked_disable.png;..\projectResources\css\BlackCss2\Black2\checkbox_parcial.png;..\projectResources\css\BlackCss2\Black2\checkbox_parcial_disable.png;..\projectResources\css\BlackCss2\Black2\checkbox_unchecked.png;..\projectResources\css\BlackCss2\Black2\checkbox_unchecked_disable.png;..\projectResources\css\BlackCss2\Black2\radiobutton_checked.png;..\projectResources\css\BlackCss2\Black2\radiobutton_checked_disable.png;..\projectResources\css\BlackCss2\Black2\radiobutton_unchecked.png;..\projectResources\css\BlackCss2\Black2\radiobutton_unchecked_disable.png;..\projectResources\css\BlackCss2\Black2.css;..\projectResources\css\WhiteCss\White\arrowBottom.png;..\projectResources\css\WhiteCss\White\arrowLeft.png;..\projectResources\css\WhiteCss\White\arrowRight.png;..\projectResources\css\WhiteCss\White\arrowTop.png;..\projectResources\css\WhiteCss\White\bottomArrow.png;..\projectResources\css\WhiteCss\White\bottomArrowHover.png;..\projectResources\css\WhiteCss\White\checkBox.png;..\projectResources\css\WhiteCss\White\checkBoxChecked.png;..\projectResources\css\WhiteCss\White\checkBoxCheckedHover.png;..\projectResources\css\WhiteCss\White\checkBoxCheckedPressed.png;..\projectResources\css\WhiteCss\White\checkBoxHover.png;..\projectResources\css\WhiteCss\White\checkBoxIndeterminate.png;..\projectResources\css\WhiteCss\White\checkBoxIndeterminateHover.png;..\projectResources\css\WhiteCss\White\checkBoxIndeterminatePressed.png;..\projectResources\css\WhiteCss\White\checkBoxPressed.png;..\projectResources\css\WhiteCss\White\close.png;..\projectResources\css\WhiteCss\White\closeHover.png;..\projectResources\css\WhiteCss\White\closePressed.png;..\projectResources\css\WhiteCss\White\delete.png;..\projectResources\css\WhiteCss\White\deleteHover.png;..\projectResources\css\WhiteCss\White\deletePressed.png;..\projectResources\css\WhiteCss\White\downButton.png;..\projectResources\css\WhiteCss\White\error.png;..\projectResources\css\WhiteCss\White\feedback.png;..\projectResources\css\WhiteCss\White\feedbackHover.png;..\projectResources\css\WhiteCss\White\feedbackPressed.png;..\projectResources\css\WhiteCss\White\information.png;..\projectResources\css\WhiteCss\White\left.png;..\projectResources\css\WhiteCss\White\maximize.png;..\projectResources\css\WhiteCss\White\maximizeHover.png;..\projectResources\css\WhiteCss\White\maximizePressed.png;..\projectResources\css\WhiteCss\White\minimize.png;..\projectResources\css\WhiteCss\White\minimizeHover.png;..\projectResources\css\WhiteCss\White\minimizePressed.png;..\projectResources\css\WhiteCss\White\nscc.png;..\projectResources\css\WhiteCss\White\open.png;..\projectResources\css\WhiteCss\White\openHover.png;..\projectResources\css\WhiteCss\White\openPressed.png;..\projectResources\css\WhiteCss\White\progressBar.png;..\projectResources\css\WhiteCss\White\progressBarChunk.png;..\projectResources\css\WhiteCss\White\question.png;..\projectResources\css\WhiteCss\White\radioButton.png;..\projectResources\css\WhiteCss\White\radioButtonChecked.png;..\projectResources\css\WhiteCss\White\radioButtonCheckedHover.png;..\projectResources\css\WhiteCss\White\radioButtonCheckedPressed.png;..\projectResources\css\WhiteCss\White\radioButtonHover.png;..\projectResources\css\WhiteCss\White\radioButtonPressed.png;..\projectResources\css\WhiteCss\White\restore.png;..\projectResources\css\WhiteCss\White\restoreHover.png;..\projectResources\css\WhiteCss\White\restorePressed.png;..\projectResources\css\WhiteCss\White\right.png;..\projectResources\css\WhiteCss\White\scan.png;..\projectResources\css\WhiteCss\White\skin.png;..\projectResources\css\WhiteCss\White\skinHover.png;..\projectResources\css\WhiteCss\White\skinPressed.png;..\projectResources\css\WhiteCss\White\success.png;..\projectResources\css\WhiteCss\White\topArrow.png;..\projectResources\css\WhiteCss\White\topArrowHover.png;..\projectResources\css\WhiteCss\White\transfer.png;..\projectResources\css\WhiteCss\White\upButton.png;..\projectResources\css\WhiteCss\White\warning.png;..\projectResources\css\WhiteCss\White.css;..\projectResources\css\WhiteCss2\White2\add_bottom.png;..\projectResources\css\WhiteCss2\White2\add_left.png;..\projectResources\css\WhiteCss2\White2\add_right.png;..\projectResources\css\WhiteCss2\White2\add_top.png;..\projectResources\css\WhiteCss2\White2\branch_close.png;..\projectResources\css\WhiteCss2\White2\branch_open.png;..\projectResources\css\WhiteCss2\White2\calendar_nextmonth.png;..\projectResources\css\WhiteCss2\White2\calendar_prevmonth.png;..\projectResources\css\WhiteCss2\White2\checkbox_checked.png;..\projectResources\css\WhiteCss2\White2\checkbox_checked_disable.png;..\projectResources\css\WhiteCss2\White2\checkbox_parcial.png;..\projectResources\css\WhiteCss2\White2\checkbox_parcial_disable.png;..\projectResources\css\WhiteCss2\White2\checkbox_unchecked.png;..\projectResources\css\WhiteCss2\White2\checkbox_unchecked_disable.png;..\projectResources\css\WhiteCss2\White2\radiobutton_checked.png;..\projectResources\css\WhiteCss2\White2\radiobutton_checked_disable.png;..\projectResources\css\WhiteCss2\White2\radiobutton_unchecked.png;..\projectResources\css\WhiteCss2\White2\radiobutton_unchecked_disable.png;..\projectResources\css\WhiteCss2\White2.css;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(FullPath);..\projectResources\css\BlackCss\Black\arrowBottom.png;..\projectResources\css\BlackCss\Black\arrowLeft.png;..\projectResources\css\BlackCss\Black\arrowRight.png;..\projectResources\css\BlackCss\Black\arrowTop.png;..\projectResources\css\BlackCss\Black\bottomArrow.png;..\projectResources\css\BlackCss\Black\bottomArrowHover.png;..\projectResources\css\BlackCss\Black\checkBox.png;..\projectResources\css\BlackCss\Black\checkBoxChecked.png;..\projectResources\css\BlackCss\Black\checkBoxCheckedHover.png;..\projectResources\css\BlackCss\Black\checkBoxCheckedPressed.png;..\projectResources\css\BlackCss\Black\checkBoxHover.png;..\projectResources\css\BlackCss\Black\checkBoxIndeterminate.png;..\projectResources\css\BlackCss\Black\checkBoxIndeterminateHover.png;..\projectResources\css\BlackCss\Black\checkBoxIndeterminatePressed.png;..\projectResources\css\BlackCss\Black\checkBoxPressed.png;..\projectResources\css\BlackCss\Black\close.png;..\projectResources\css\BlackCss\Black\closeHover.png;..\projectResources\css\BlackCss\Black\closePressed.png;..\projectResources\css\BlackCss\Black\delete.png;..\projectResources\css\BlackCss\Black\deleteHover.png;..\projectResources\css\BlackCss\Black\deletePressed.png;..\projectResources\css\BlackCss\Black\downButton.png;..\projectResources\css\BlackCss\Black\error.png;..\projectResources\css\BlackCss\Black\feedback.png;..\projectResources\css\BlackCss\Black\feedbackHover.png;..\projectResources\css\BlackCss\Black\feedbackPressed.png;..\projectResources\css\BlackCss\Black\information.png;..\projectResources\css\BlackCss\Black\left.png;..\projectResources\css\BlackCss\Black\maximize.png;..\projectResources\css\BlackCss\Black\maximizeHover.png;..\projectResources\css\BlackCss\Black\maximizePressed.png;..\projectResources\css\BlackCss\Black\minimize.png;..\projectResources\css\BlackCss\Black\minimizeHover.png;..\projectResources\css\BlackCss\Black\minimizePressed.png;..\projectResources\css\BlackCss\Black\nscc.png;..\projectResources\css\BlackCss\Black\open.png;..\projectResources\css\BlackCss\Black\openHover.png;..\projectResources\css\BlackCss\Black\openPressed.png;..\projectResources\css\BlackCss\Black\progressBar.png;..\projectResources\css\BlackCss\Black\progressBarChunk.png;..\projectResources\css\BlackCss\Black\question.png;..\projectResources\css\BlackCss\Black\radioButton.png;..\projectResources\css\BlackCss\Black\radioButtonChecked.png;..\projectResources\css\BlackCss\Black\radioButtonCheckedHover.png;..\projectResources\css\BlackCss\Black\radioButtonCheckedPressed.png;..\projectResources\css\BlackCss\Black\radioButtonHover.png;..\projectResources\css\BlackCss\Black\radioButtonPressed.png;..\projectResources\css\BlackCss\Black\restore.png;..\projectResources\css\BlackCss\Black\restoreHover.png;..\projectResources\css\BlackCss\Black\restorePressed.png;..\projectResources\css\BlackCss\Black\right.png;..\projectResources\css\BlackCss\Black\scan.png;..\projectResources\css\BlackCss\Black\skin.png;..\projectResources\css\BlackCss\Black\skinHover.png;..\projectResources\css\BlackCss\Black\skinPressed.png;..\projectResources\css\BlackCss\Black\success.png;..\projectResources\css\BlackCss\Black\topArrow.png;..\projectResources\css\BlackCss\Black\topArrowHover.png;..\projectResources\css\BlackCss\Black\transfer.png;..\projectResources\css\BlackCss\Black\upButton.png;..\projectResources\css\BlackCss\Black\warning.png;..\projectResources\css\BlackCss\Black.css;..\projectResources\css\BlackCss2\Black2\add_bottom.png;..\projectResources\css\BlackCss2\Black2\add_left.png;..\projectResources\css\BlackCss2\Black2\add_right.png;..\projectResources\css\BlackCss2\Black2\add_top.png;..\projectResources\css\BlackCss2\Black2\branch_close.png;..\projectResources\css\BlackCss2\Black2\branch_open.png;..\projectResources\css\BlackCss2\Black2\calendar_nextmonth.png;..\projectResources\css\BlackCss2\Black2\calendar_prevmonth.png;..\projectResources\css\BlackCss2\Black2\checkbox_checked.png;..\projectResources\css\BlackCss2\Black2\checkbox_checked_disable.png;..\projectResources\css\BlackCss2\Black2\checkbox_parcial.png;..\projectResources\css\BlackCss2\Black2\checkbox_parcial_disable.png;..\projectResources\css\BlackCss2\Black2\checkbox_unchecked.png;..\projectResources\css\BlackCss2\Black2\checkbox_unchecked_disable.png;..\projectResources\css\BlackCss2\Black2\radiobutton_checked.png;..\projectResources\css\BlackCss2\Black2\radiobutton_checked_disable.png;..\projectResources\css\BlackCss2\Black2\radiobutton_unchecked.png;..\projectResources\css\BlackCss2\Black2\radiobutton_unchecked_disable.png;..\projectResources\css\BlackCss2\Black2.css;..\projectResources\css\WhiteCss\White\arrowBottom.png;..\projectResources\css\WhiteCss\White\arrowLeft.png;..\projectResources\css\WhiteCss\White\arrowRight.png;..\projectResources\css\WhiteCss\White\arrowTop.png;..\projectResources\css\WhiteCss\White\bottomArrow.png;..\projectResources\css\WhiteCss\White\bottomArrowHover.png;..\projectResources\css\WhiteCss\White\checkBox.png;..\projectResources\css\WhiteCss\White\checkBoxChecked.png;..\projectResources\css\WhiteCss\White\checkBoxCheckedHover.png;..\projectResources\css\WhiteCss\White\checkBoxCheckedPressed.png;..\projectResources\css\WhiteCss\White\checkBoxHover.png;..\projectResources\css\WhiteCss\White\checkBoxIndeterminate.png;..\projectResources\css\WhiteCss\White\checkBoxIndeterminateHover.png;..\projectResources\css\WhiteCss\White\checkBoxIndeterminatePressed.png;..\projectResources\css\WhiteCss\White\checkBoxPressed.png;..\projectResources\css\WhiteCss\White\close.png;..\projectResources\css\WhiteCss\White\closeHover.png;..\projectResources\css\WhiteCss\White\closePressed.png;..\projectResources\css\WhiteCss\White\delete.png;..\projectResources\css\WhiteCss\White\deleteHover.png;..\projectResources\css\WhiteCss\White\deletePressed.png;..\projectResources\css\WhiteCss\White\downButton.png;..\projectResources\css\WhiteCss\White\error.png;..\projectResources\css\WhiteCss\White\feedback.png;..\projectResources\css\WhiteCss\White\feedbackHover.png;..\projectResources\css\WhiteCss\White\feedbackPressed.png;..\projectResources\css\WhiteCss\White\information.png;..\projectResources\css\WhiteCss\White\left.png;..\projectResources\css\WhiteCss\White\maximize.png;..\projectResources\css\WhiteCss\White\maximizeHover.png;..\projectResources\css\WhiteCss\White\maximizePressed.png;..\projectResources\css\WhiteCss\White\minimize.png;..\projectResources\css\WhiteCss\White\minimizeHover.png;..\projectResources\css\WhiteCss\White\minimizePressed.png;..\projectResources\css\WhiteCss\White\nscc.png;..\projectResources\css\WhiteCss\White\open.png;..\projectResources\css\WhiteCss\White\openHover.png;..\projectResources\css\WhiteCss\White\openPressed.png;..\projectResources\css\WhiteCss\White\progressBar.png;..\projectResources\css\WhiteCss\White\progressBarChunk.png;..\projectResources\css\WhiteCss\White\question.png;..\projectResources\css\WhiteCss\White\radioButton.png;..\projectResources\css\WhiteCss\White\radioButtonChecked.png;..\projectResources\css\WhiteCss\White\radioButtonCheckedHover.png;..\projectResources\css\WhiteCss\White\radioButtonCheckedPressed.png;..\projectResources\css\WhiteCss\White\radioButtonHover.png;..\projectResources\css\WhiteCss\White\radioButtonPressed.png;..\projectResources\css\WhiteCss\White\restore.png;..\projectResources\css\WhiteCss\White\restoreHover.png;..\projectResources\css\WhiteCss\White\restorePressed.png;..\projectResources\css\WhiteCss\White\right.png;..\projectResources\css\WhiteCss\White\scan.png;..\projectResources\css\WhiteCss\White\skin.png;..\projectResources\css\WhiteCss\White\skinHover.png;..\projectResources\css\WhiteCss\White\skinPressed.png;..\projectResources\css\WhiteCss\White\success.png;..\projectResources\css\WhiteCss\White\topArrow.png;..\projectResources\css\WhiteCss\White\topArrowHover.png;..\projectResources\css\WhiteCss\White\transfer.png;..\projectResources\css\WhiteCss\White\upButton.png;..\projectResources\css\WhiteCss\White\warning.png;..\projectResources\css\WhiteCss\White.css;..\projectResources\css\WhiteCss2\White2\add_bottom.png;..\projectResources\css\WhiteCss2\White2\add_left.png;..\projectResources\css\WhiteCss2\White2\add_right.png;..\projectResources\css\WhiteCss2\White2\add_top.png;..\projectResources\css\WhiteCss2\White2\branch_close.png;..\projectResources\css\WhiteCss2\White2\branch_open.png;..\projectResources\css\WhiteCss2\White2\calendar_nextmonth.png;..\projectResources\css\WhiteCss2\White2\calendar_prevmonth.png;..\projectResources\css\WhiteCss2\White2\checkbox_checked.png;..\projectResources\css\WhiteCss2\White2\checkbox_checked_disable.png;..\projectResources\css\WhiteCss2\White2\checkbox_parcial.png;..\projectResources\css\WhiteCss2\White2\checkbox_parcial_disable.png;..\projectResources\css\WhiteCss2\White2\checkbox_unchecked.png;..\projectResources\css\WhiteCss2\White2\checkbox_unchecked_disable.png;..\projectResources\css\WhiteCss2\White2\radiobutton_checked.png;..\projectResources\css\WhiteCss2\White2\radiobutton_checked_disable.png;..\projectResources\css\WhiteCss2\White2\radiobutton_unchecked.png;..\projectResources\css\WhiteCss2\White2\radiobutton_unchecked_disable.png;..\projectResources\css\WhiteCss2\White2.css;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(ProjectDir);C:\cy\CMvVisionParamWidget\CMvVisionParamWidget\include;C:\Program Files (x86)\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <ExecutablePath>C:\Program Files (x86)\Visual Leak Detector\bin\Win64;$(ExecutablePath)</ExecutablePath>
+    <LibraryPath>C:\Program Files (x86)\Visual Leak Detector\lib\Win64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_x64="Qt5.8" MocOptions="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

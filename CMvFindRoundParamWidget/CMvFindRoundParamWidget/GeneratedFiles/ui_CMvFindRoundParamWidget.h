@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
@@ -79,6 +80,13 @@ public:
     QLabel *label_minRoundRadius;
     QSpinBox *spinBox_maxRoundRadius;
     QLabel *label_maxRoundRadius;
+    QWidget *widget_concaveConvex;
+    QDoubleSpinBox *doubleSpinBox_minimumDepth;
+    QLabel *label_minimumDepth;
+    QDoubleSpinBox *doubleSpinBox_minimumSamplingPoints;
+    QLabel *label_2_minimumSamplingPoints;
+    QPushButton *pushButton_unqualifiedPiont;
+    QLabel *label_unqualifiedPiont;
     QWidget *tab_3;
     QWidget *widget_3;
     QLabel *label_penWidth_2;
@@ -251,6 +259,7 @@ public:
         plainTextEdit_funcName_2->setGeometry(QRect(130, 20, 131, 31));
         plainTextEdit_funcName_2->setMinimumSize(QSize(131, 31));
         plainTextEdit_funcName_2->setMaximumSize(QSize(131, 31));
+        plainTextEdit_funcName_2->setOverwriteMode(false);
         comboBox_imageSource_3 = new QComboBox(tab);
         comboBox_imageSource_3->setObjectName(QStringLiteral("comboBox_imageSource_3"));
         comboBox_imageSource_3->setGeometry(QRect(130, 60, 131, 31));
@@ -302,7 +311,7 @@ public:
         comboBox_edgeCheckType_2->setMinimumSize(QSize(101, 31));
         label_titleJudged_2 = new QLabel(tab_2);
         label_titleJudged_2->setObjectName(QStringLiteral("label_titleJudged_2"));
-        label_titleJudged_2->setGeometry(QRect(0, 250, 381, 31));
+        label_titleJudged_2->setGeometry(QRect(0, 230, 381, 31));
         label_titleJudged_2->setStyleSheet(QLatin1String("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 120));\n"
 "color: rgb(255, 255, 255);"));
         label_titleJudged_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
@@ -329,10 +338,10 @@ public:
         spinBox_fitRange_2->setMaximum(299);
         checkBox_concaveConvex = new QCheckBox(tab_2);
         checkBox_concaveConvex->setObjectName(QStringLiteral("checkBox_concaveConvex"));
-        checkBox_concaveConvex->setGeometry(QRect(250, 120, 111, 31));
+        checkBox_concaveConvex->setGeometry(QRect(10, 430, 111, 31));
         widget_Judged_2 = new QWidget(tab_2);
         widget_Judged_2->setObjectName(QStringLiteral("widget_Judged_2"));
-        widget_Judged_2->setGeometry(QRect(0, 290, 371, 161));
+        widget_Judged_2->setGeometry(QRect(0, 260, 371, 161));
         spinBox_fitBias_2 = new QSpinBox(widget_Judged_2);
         spinBox_fitBias_2->setObjectName(QStringLiteral("spinBox_fitBias_2"));
         spinBox_fitBias_2->setGeometry(QRect(10, 40, 101, 31));
@@ -357,7 +366,47 @@ public:
         label_maxRoundRadius = new QLabel(widget_Judged_2);
         label_maxRoundRadius->setObjectName(QStringLiteral("label_maxRoundRadius"));
         label_maxRoundRadius->setGeometry(QRect(130, 80, 111, 31));
+        widget_concaveConvex = new QWidget(tab_2);
+        widget_concaveConvex->setObjectName(QStringLiteral("widget_concaveConvex"));
+        widget_concaveConvex->setEnabled(false);
+        widget_concaveConvex->setGeometry(QRect(10, 460, 361, 101));
+        doubleSpinBox_minimumDepth = new QDoubleSpinBox(widget_concaveConvex);
+        doubleSpinBox_minimumDepth->setObjectName(QStringLiteral("doubleSpinBox_minimumDepth"));
+        doubleSpinBox_minimumDepth->setGeometry(QRect(0, 40, 101, 31));
+        label_minimumDepth = new QLabel(widget_concaveConvex);
+        label_minimumDepth->setObjectName(QStringLiteral("label_minimumDepth"));
+        label_minimumDepth->setGeometry(QRect(0, 10, 111, 31));
+        doubleSpinBox_minimumSamplingPoints = new QDoubleSpinBox(widget_concaveConvex);
+        doubleSpinBox_minimumSamplingPoints->setObjectName(QStringLiteral("doubleSpinBox_minimumSamplingPoints"));
+        doubleSpinBox_minimumSamplingPoints->setGeometry(QRect(120, 40, 101, 31));
+        label_2_minimumSamplingPoints = new QLabel(widget_concaveConvex);
+        label_2_minimumSamplingPoints->setObjectName(QStringLiteral("label_2_minimumSamplingPoints"));
+        label_2_minimumSamplingPoints->setGeometry(QRect(120, 10, 111, 31));
+        pushButton_unqualifiedPiont = new QPushButton(widget_concaveConvex);
+        pushButton_unqualifiedPiont->setObjectName(QStringLiteral("pushButton_unqualifiedPiont"));
+        pushButton_unqualifiedPiont->setGeometry(QRect(240, 40, 101, 31));
+        label_unqualifiedPiont = new QLabel(widget_concaveConvex);
+        label_unqualifiedPiont->setObjectName(QStringLiteral("label_unqualifiedPiont"));
+        label_unqualifiedPiont->setGeometry(QRect(240, 10, 111, 31));
         tabWidget->addTab(tab_2, QString());
+        widget_concaveConvex->raise();
+        spinBox_threshold_2->raise();
+        comboBox_thresholdType_2->raise();
+        label_thresholdType_2->raise();
+        label_scanDirection_2->raise();
+        label_threshold_2->raise();
+        label_edgeCheckType_2->raise();
+        label_scanPointSum_2->raise();
+        label_samplingPointSum_2->raise();
+        label_fitRange_2->raise();
+        comboBox_scanDirection_2->raise();
+        comboBox_edgeCheckType_2->raise();
+        label_titleJudged_2->raise();
+        spinBox_scanPointSum_2->raise();
+        spinBox_samplingPointSum_2->raise();
+        spinBox_fitRange_2->raise();
+        checkBox_concaveConvex->raise();
+        widget_Judged_2->raise();
         tab_3 = new QWidget();
         tab_3->setObjectName(QStringLiteral("tab_3"));
         widget_3 = new QWidget(tab_3);
@@ -554,6 +603,10 @@ public:
         label_minRoundRadius->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\215\212\345\276\204\344\270\213\351\231\220", Q_NULLPTR));
         spinBox_maxRoundRadius->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\347\202\271", Q_NULLPTR));
         label_maxRoundRadius->setText(QApplication::translate("CMvFindRoundParamWidget", "\345\215\212\345\276\204\344\270\212\351\231\220", Q_NULLPTR));
+        label_minimumDepth->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\234\200\345\260\217\346\267\261\345\272\246", Q_NULLPTR));
+        label_2_minimumSamplingPoints->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\234\200\345\260\217\346\212\275\346\240\267\347\202\271\346\225\260", Q_NULLPTR));
+        pushButton_unqualifiedPiont->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\230\276\347\244\272\345\207\271\345\207\270\347\202\271\344\277\241\346\201\257", Q_NULLPTR));
+        label_unqualifiedPiont->setText(QApplication::translate("CMvFindRoundParamWidget", "\344\270\215\345\220\210\346\240\274\347\202\271\344\277\241\346\201\257", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("CMvFindRoundParamWidget", "\345\217\202\346\225\260\350\256\276\347\275\256", Q_NULLPTR));
         label_penWidth_2->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\224\273\347\254\224\345\260\272\345\257\270\357\274\232", Q_NULLPTR));
         spinBox_lightTime_3->setSuffix(QApplication::translate("CMvFindRoundParamWidget", "\345\203\217\347\264\240", Q_NULLPTR));
