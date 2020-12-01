@@ -622,6 +622,8 @@ void CMvFindRoundParamWidget::slotCancelIsClick()
 	//pbPrev_cancel
 }
 /*=========================================================================================================*/
+
+
 CMvFindRoundParamWidget::~CMvFindRoundParamWidget()
 {
 	delete ui;

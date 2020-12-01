@@ -1,7 +1,7 @@
 ﻿#include <QDebug>
 #include "CMvFindLineParamWidget.h"
 #include "ui_CMvFindLineParamWidget.h"
-
+#include <QTableWidgetItem>
 
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
@@ -20,6 +20,10 @@ CMvFindLineParamWidget::CMvFindLineParamWidget(QWidget *parent)
 	m_maskCount = 0;
 	m_signalEnable = true;
 	m_pSecondLevelMenu = new CMvSecondLevelMenu;
+
+	ui->tableWidget_input->setItem(0, 1, new QTableWidgetItem);
+	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
+	ui->tableWidget_input->item(0, 1)->setText("某个检测器的输出");
 
 	/*===============================================================================================*\
 	**====================================输入设置相关函数及信号与槽的链接===========================**
@@ -445,6 +449,8 @@ void CMvFindLineParamWidget::soltMenuTriggered(QAction* action)
 		}//if ((*it)->pAction.get() == action)
 	}//for (auto it = allMenuData.cbegin(); it != allMenuData.cend(); ++it)
 
+
+	ui->tableWidget_input->item(m_iRow, m_iCol)->setBackground(Qt::transparent);
 	//设置显示内容为选中内容
 	pTableItem->setText(showInfoText);
 

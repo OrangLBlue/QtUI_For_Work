@@ -501,7 +501,7 @@ public:
 
         retranslateUi(CMvFindLineParamWidget);
 
-        tabWidget_param->setCurrentIndex(2);
+        tabWidget_param->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(CMvFindLineParamWidget);
@@ -509,7 +509,7 @@ public:
 
     void retranslateUi(QWidget *CMvFindLineParamWidget)
     {
-        CMvFindLineParamWidget->setWindowTitle(QApplication::translate("CMvFindLineParamWidget", "CyMassageSet", Q_NULLPTR));
+        CMvFindLineParamWidget->setWindowTitle(QApplication::translate("CMvFindLineParamWidget", "\346\237\245\346\211\276\347\233\264\347\272\277", Q_NULLPTR));
         pushButton_zoomIn->setText(QApplication::translate("CMvFindLineParamWidget", "\346\224\276\345\244\247", Q_NULLPTR));
         pushButton_zoomOut->setText(QApplication::translate("CMvFindLineParamWidget", "\347\274\251\345\260\217", Q_NULLPTR));
         pushButton_zoomBest->setText(QApplication::translate("CMvFindLineParamWidget", "\346\234\200\345\245\275\345\260\272\345\257\270", Q_NULLPTR));

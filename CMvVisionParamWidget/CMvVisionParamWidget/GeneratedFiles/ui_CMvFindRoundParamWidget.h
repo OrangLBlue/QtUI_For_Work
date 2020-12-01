@@ -520,7 +520,7 @@ public:
 
     void retranslateUi(QWidget *CMvFindRoundParamWidget)
     {
-        CMvFindRoundParamWidget->setWindowTitle(QApplication::translate("CMvFindRoundParamWidget", "CMvFindRoundParamWidget", Q_NULLPTR));
+        CMvFindRoundParamWidget->setWindowTitle(QApplication::translate("CMvFindRoundParamWidget", "\346\237\245\346\211\276\345\234\206", Q_NULLPTR));
         pushButton_zoomIn->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\224\276\345\244\247", Q_NULLPTR));
         pushButton_zoomOut->setText(QApplication::translate("CMvFindRoundParamWidget", "\347\274\251\345\260\217", Q_NULLPTR));
         pushButton_zoomBest->setText(QApplication::translate("CMvFindRoundParamWidget", "\346\234\200\345\245\275\345\260\272\345\257\270", Q_NULLPTR));

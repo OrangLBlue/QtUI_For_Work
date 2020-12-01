@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>CyMassageSet</string>
+   <string>查找直线</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -295,7 +295,7 @@
           <enum>QTabWidget::North</enum>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <property name="iconSize">
           <size>
@@ -1340,8 +1340,6 @@ color: rgb(255, 255, 255);</string>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="../../../cyProject/DeepLearning/备份/cyTrainTool/projectResources/other.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
