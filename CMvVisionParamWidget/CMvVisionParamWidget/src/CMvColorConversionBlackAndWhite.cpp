@@ -8,6 +8,20 @@
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
 
+
+////屏蔽QComboBox控件的鼠标滚动监听
+//void QComboBox::wheelEvent(QWheelEvent *e)
+//{
+//
+//}
+//
+////屏蔽SpinBox控件的鼠标滚动监听
+//void QAbstractSpinBox::wheelEvent(QWheelEvent *e)
+//{
+//
+//}
+
+
 CMvColorConversionBlackAndWhite * CMvColorConversionBlackAndWhite::s_pColorConversionBlackAndWhite = nullptr;
 
 CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent)
@@ -56,6 +70,17 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	/*===============================================================================================*\
 	**====================================功能栏信号与槽的链接=======================================**
 	\*===============================================================================================*/
+	//点击 放大
+	connect(ui->pushButton_zoomIn, SIGNAL(clicked()), this, SLOT(slotAmplifyThePictureIsClick()));
+
+	//点击 缩小
+	connect(ui->pushButton_zoomOut, SIGNAL(clicked()), this, SLOT(slotShrinkThePictureIsClick()));
+
+	//点击 最好尺寸
+	connect(ui->pushButton_zoomBest, SIGNAL(clicked()), this, SLOT(slotBestSizeOfPictureIsClick()));
+
+	//点击 锁定ROI
+	connect(ui->pushButton_lockRoiMove, SIGNAL(clicked()), this, SLOT(slotLockROIIsClick()));
 
 	//点击 单次
 	connect(ui->pushButton_ones, SIGNAL(clicked()), this, SLOT(slotOnceIsClick()));
@@ -65,6 +90,7 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 
 	//点击 取消
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
+
 
 	//获取启动绘制选中信息
 	connect(ui->checkBox_valuTrig_4, SIGNAL(clicked(bool)), this, SLOT(slotGetStartUpDrawingValue(bool)));
@@ -312,25 +338,45 @@ void CMvColorConversionBlackAndWhite::slotGetStartUpDrawingValue(bool State)
 /*===============================================================================================*\
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
+//点击 放大
+void CMvColorConversionBlackAndWhite::slotAmplifyThePictureIsClick()
+{
+	qDebug() << "放大被点了";
+}
+
+//点击 缩小
+void CMvColorConversionBlackAndWhite::slotShrinkThePictureIsClick()
+{
+	qDebug() << "缩小被点了";
+}
+
+//点击 最好尺寸
+void CMvColorConversionBlackAndWhite::slotBestSizeOfPictureIsClick()
+{
+	qDebug() << "最好尺寸被点了";
+}
+
+//点击 锁定ROI
+void CMvColorConversionBlackAndWhite::slotLockROIIsClick()
+{
+	qDebug() << "锁定ROI被点了";
+}
 
 //点击 单次
 void CMvColorConversionBlackAndWhite::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
-	//pushButton_ones
 }
 
 //点击 确定
 void CMvColorConversionBlackAndWhite::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
-	//pushButton_ensure
 }
 
 //点击 取消
 void CMvColorConversionBlackAndWhite::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
-	//pbPrev_cancel
 }
 

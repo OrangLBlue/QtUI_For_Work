@@ -635,10 +635,10 @@
         <widget class="QCheckBox" name="checkBox_valuTrig_4">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>10</y>
+           <x>270</x>
+           <y>20</y>
            <width>80</width>
-           <height>40</height>
+           <height>31</height>
           </rect>
          </property>
          <property name="text">
@@ -651,10 +651,10 @@
         <widget class="QPushButton" name="pushbutton_cuttingPicture">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>40</y>
-           <width>80</width>
-           <height>40</height>
+           <x>130</x>
+           <y>20</y>
+           <width>131</width>
+           <height>31</height>
           </rect>
          </property>
          <property name="text">
@@ -664,10 +664,10 @@
         <widget class="QLabel" name="label_cuttingPicture">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>80</width>
-           <height>40</height>
+           <x>20</x>
+           <y>20</y>
+           <width>111</width>
+           <height>31</height>
           </rect>
          </property>
          <property name="text">

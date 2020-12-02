@@ -8,6 +8,20 @@
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
 
+////屏蔽QComboBox控件的鼠标滚动监听
+//void QComboBox::wheelEvent(QWheelEvent *e)
+//{
+//
+//}
+//
+////屏蔽SpinBox控件的鼠标滚动监听
+//void QAbstractSpinBox::wheelEvent(QWheelEvent *e)
+//{
+//
+//}
+
+
+
 CMvColorImagesCut * CMvColorImagesCut::s_pcolorImages = nullptr;
 
 CMvColorImagesCut::CMvColorImagesCut(QWidget *parent)

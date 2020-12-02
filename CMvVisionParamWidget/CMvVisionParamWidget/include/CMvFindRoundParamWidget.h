@@ -1,7 +1,6 @@
 ﻿#ifndef CMV_FIND_ROUND_PARAM
 #define CMV_FIND_ROUND_PARAM 
 
-#include "ui_CMvFindRoundParamWidget.h"
 #include "CMvSecondLevelMenu.h"
 #include <QWidget>
 #include <QVector>
@@ -17,8 +16,6 @@ namespace Ui {
 class CMvFindRoundParamWidget : public QWidget
 {
     Q_OBJECT
-
-
 
 public:
 	//单例化

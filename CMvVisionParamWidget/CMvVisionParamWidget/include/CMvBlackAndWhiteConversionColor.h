@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CMV_BLACK_AND_WHITE_CONVERSION_COLOR
+#define CMV_BLACK_AND_WHITE_CONVERSION_COLOR
 
 #include <QtWidgets/QWidget>
 #include "CMvSecondLevelMenu.h"
@@ -36,6 +37,17 @@ private slots:
 	/*===============================================================================================*\
 	**======================================功能栏槽函数=============================================**
 	\*===============================================================================================*/
+	//点击 放大
+	void slotAmplifyThePictureIsClick();
+
+	//点击 缩小
+	void slotShrinkThePictureIsClick();
+
+	//点击 最好尺寸
+	void slotBestSizeOfPictureIsClick();
+
+	//点击 锁定ROI
+	void slotLockROIIsClick();
 
 	//点击 单次
 	void slotOnceIsClick();
@@ -76,3 +88,5 @@ private:
 	QVector<CMvSecondLevelMenu::cyAction*>  m_pBlackAndWhiteImageMenuData;//黑白图像菜单数据
 
 };
+
+#endif

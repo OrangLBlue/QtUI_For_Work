@@ -1,7 +1,6 @@
-﻿#ifndef CMV_FIND_ROUND_PARAM
-#define CMV_FIND_ROUND_PARAM 
+﻿#ifndef CMV_BLOB_RAPID_DETECTOION
+#define CMV_BLOB_RAPID_DETECTOION 
 
-#include "ui_CMvFindRoundParamWidget.h"
 #include "CMvSecondLevelMenu.h"
 #include <QWidget>
 #include <QVector>
@@ -11,18 +10,16 @@
 #include <QMutex>
 
 namespace Ui {
-	class CMvFindRoundParamWidget;
+	class CMvBlobRapidDetection;
 }
 
-class CMvFindRoundParamWidget : public QWidget
+class CMvBlobRapidDetection : public QWidget
 {
     Q_OBJECT
 
-
-
 public:
 	//单例化
-	static CMvFindRoundParamWidget* Instance();
+	static CMvBlobRapidDetection* Instance();
 	//释放内存
 	static void destroy();
 
@@ -31,7 +28,7 @@ public:
 	void initMenuByTest();
 
 	//void testInit();
-
+	
 private slots:
 	/*===============================================================================================*\
 	**======================================输入设置槽函数===========================================**
@@ -48,7 +45,6 @@ private slots:
 	//获取自己创建选中信息
 	void slotGetCreateYourselfValue(bool state);
 
-
 	/*===============================================================================================*\
 	**=================================二级菜单相关槽函数声明========================================**
 	\*===============================================================================================*/
@@ -58,52 +54,72 @@ private slots:
 	//根据点击位置选择弹框
 	void slotClickPushButton(int, int);
 
-
 	/*===============================================================================================*\
 	**=======================================结果判断槽函数==========================================**
 	\*===============================================================================================*/
-	//获取边缘阈值 数值
-	void slotGetEdgeThresholdtValue(int index);
+	////获取边缘阈值 数值
+	//获取灰度上限
+	void slotGetGrayLevelMaxValue(int value);
 
-	//获取边缘梯度阈值 数值
-	void slotGetEdgeGradientThresholdtValue(int Value);
+	//获取灰度下限
+	void slotGetGrayLevelMinValue(int value);
 
-	//获取边缘极性 数值
-	void slotGetCoordinateInputValue(int index);
+	//获取面积上限
+	void slotGetAreaMaxValue(int value);
 
-	//获取扫描点数
-	void slotGetScanPointsValue(int Value);
+	//获取面积下限
+	void slotGetAreaMinValue(int value);
 
-	//获取抽样点数 数值
-	void slotGetSamplingPointsValue(int Value);
+	//获取中心x上限
+	void slotGetCenterXMaxValue(int value);
 
-	//获取检测方向 数值
-	void slotGetDirectionOfDetectionValue(int index);
+	//获取中心x下限
+	void slotGetCenterXMinValue(int value);
 
-	//获取拟合范围 数值
-	void slotGetScopeOfFitValue(int Value);
+	//获取中心y上限
+	void slotGetCenterYMaxValue(int value);
 
-	//获取拟合误差限制 数值
-	void slotGetFittingErrorlimitsValue(int Value);
+	//获取中心y下限
+	void slotGetCenterYMinValue(int value);
 
-	//获取半径下限 数值
-	void slotGetMinRoundRadiusValue(int Value);
+	//获取最小矩形宽度上限
+	void slotGetRectangleMaxWidthValue(int value);
 
-	//获取半径上限 数值
-	void slotGetMaxRoundRadiusValue(int Value);
+	//获取最小矩形宽度下限
+	void slotGetRectangleMinWidthValue(int value);
 
-	//获取开启凹凸性检测选中信息
-	void slotGetConcaveConvexIsChecked(bool State);
+	//获取最小矩形高度上限
+	void slotGetRectangleMaxHightValue(int value);
 
-	//获取最小深度 数值
-	void slotGetMinimumDepthValue(double Value);
+	//获取最小矩形高度下限
+	void slotGetRectangleMinHightValue(int value);
 
-	//获取最小抽样点数 数值
-	void slotGetMinimumSamplingPointsValue(double Value);
+	//获取个数上限
+	void slotGetNumberMaxValue(int value);
 
-	//点击显示凹凸点信息
-	void slotGetUnqualifiedPiontIsClick();
+	//获取个数下限
+	void slotGetNumberMinValue(int value);
 
+	//获取总面积上限
+	void slotGetGrossAreaMaxValue(int value);
+
+	//获取总面积下限
+	void slotGetGrossAreaMinValue(int value);
+
+	//开启面积筛选
+	void slotGetAreaMinIsChecked(bool state);
+
+	//开启中心x筛选
+	void slotGetCenterXMaxIsChecked(bool state);
+
+	//开启中心y筛选
+	void slotGetCenterYMaxIsChecked(bool state);
+
+	//开启矩形宽度筛选
+	void slotGetRectangleMaxWidthIsChecked(bool state);
+
+	//开启矩形高度筛选
+	void slotGetRectangleMaxHightIsChecked(bool state);
 
 	/*===============================================================================================*\
 	**=======================================掩膜设置槽函数==========================================**
@@ -165,12 +181,12 @@ private slots:
 	void slotCancelIsClick();
 	
 private:
-	Ui::CMvFindRoundParamWidget *ui;
+	Ui::CMvBlobRapidDetection *ui;
 
-	static CMvFindRoundParamWidget* s_pFindRoundParamWidget;
+	static CMvBlobRapidDetection* s_pBlobRapidDetection;
 
-	CMvFindRoundParamWidget(QWidget *parent = Q_NULLPTR);
-	~CMvFindRoundParamWidget();
+	CMvBlobRapidDetection(QWidget *parent = Q_NULLPTR);
+	~CMvBlobRapidDetection();
 
 	bool m_signalEnable;
 

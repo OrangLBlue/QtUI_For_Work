@@ -44,6 +44,17 @@ CMvBlackAndWhiteConversionColor::CMvBlackAndWhiteConversionColor(QWidget *parent
 	/*===============================================================================================*\
 	**====================================功能栏信号与槽的链接=======================================**
 	\*===============================================================================================*/
+	//点击 放大
+	connect(ui->pushButton_zoomIn, SIGNAL(clicked()), this, SLOT(slotAmplifyThePictureIsClick()));
+
+	//点击 缩小
+	connect(ui->pushButton_zoomOut, SIGNAL(clicked()), this, SLOT(slotShrinkThePictureIsClick()));
+
+	//点击 最好尺寸
+	connect(ui->pushButton_zoomBest, SIGNAL(clicked()), this, SLOT(slotBestSizeOfPictureIsClick()));
+
+	//点击 锁定ROI
+	connect(ui->pushButton_lockRoiMove, SIGNAL(clicked()), this, SLOT(slotLockROIIsClick()));
 
 	//点击 单次
 	connect(ui->pushButton_ones, SIGNAL(clicked()), this, SLOT(slotOnceIsClick()));
@@ -53,6 +64,8 @@ CMvBlackAndWhiteConversionColor::CMvBlackAndWhiteConversionColor(QWidget *parent
 
 	//点击 取消
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
+
+
 
 	//获取启动绘制选中信息
 	connect(ui->checkBox_valuTrig_4, SIGNAL(clicked(bool)), this, SLOT(slotGetStartUpDrawingValue(bool)));
@@ -204,26 +217,45 @@ void CMvBlackAndWhiteConversionColor::slotGetStartUpDrawingValue(bool State)
 /*===============================================================================================*\
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
+//点击 放大
+void CMvBlackAndWhiteConversionColor::slotAmplifyThePictureIsClick()
+{
+	qDebug() << "放大被点了";
+}
+
+//点击 缩小
+void CMvBlackAndWhiteConversionColor::slotShrinkThePictureIsClick()
+{
+	qDebug() << "缩小被点了";
+}
+
+//点击 最好尺寸
+void CMvBlackAndWhiteConversionColor::slotBestSizeOfPictureIsClick()
+{
+	qDebug() << "最好尺寸被点了";
+}
+
+//点击 锁定ROI
+void CMvBlackAndWhiteConversionColor::slotLockROIIsClick()
+{
+	qDebug() << "锁定ROI被点了";
+}
 
 //点击 单次
 void CMvBlackAndWhiteConversionColor::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
-	//pushButton_ones
 }
 
 //点击 确定
 void CMvBlackAndWhiteConversionColor::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
-	//pushButton_ensure
 }
 
 //点击 取消
 void CMvBlackAndWhiteConversionColor::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
-	//pbPrev_cancel
 }
-
 
