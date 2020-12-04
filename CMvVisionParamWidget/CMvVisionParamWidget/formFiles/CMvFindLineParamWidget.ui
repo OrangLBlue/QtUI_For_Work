@@ -495,7 +495,7 @@
             </property>
            </item>
           </widget>
-          <widget class="QComboBox" name="comboBox_imageSource_2">
+          <widget class="QComboBox" name="comboBox_imageSource">
            <property name="geometry">
             <rect>
              <x>130</x>
@@ -663,10 +663,10 @@
             <string>点</string>
            </property>
            <property name="minimum">
-            <number>5</number>
+            <number>0</number>
            </property>
            <property name="maximum">
-            <number>299</number>
+            <number>256</number>
            </property>
           </widget>
           <widget class="QLabel" name="label_samplingPointSum">
@@ -695,10 +695,10 @@
             <string>点</string>
            </property>
            <property name="minimum">
-            <number>5</number>
+            <number>0</number>
            </property>
            <property name="maximum">
-            <number>299</number>
+            <number>256</number>
            </property>
           </widget>
           <widget class="QLabel" name="label_scanPointSum">
@@ -740,10 +740,10 @@
             <string>点</string>
            </property>
            <property name="minimum">
-            <number>5</number>
+            <number>0</number>
            </property>
            <property name="maximum">
-            <number>299</number>
+            <number>6</number>
            </property>
           </widget>
           <widget class="QLabel" name="label_threshold">
@@ -775,10 +775,10 @@
             <string/>
            </property>
            <property name="minimum">
-            <number>5</number>
+            <number>0</number>
            </property>
            <property name="maximum">
-            <number>299</number>
+            <number>1000</number>
            </property>
           </widget>
           <widget class="QWidget" name="widget_Judged" native="true">
@@ -803,7 +803,7 @@
              <string>点</string>
             </property>
             <property name="minimum">
-             <number>5</number>
+             <number>0</number>
             </property>
             <property name="maximum">
              <number>299</number>
@@ -835,7 +835,7 @@
              <string>点</string>
             </property>
             <property name="minimum">
-             <number>5</number>
+             <number>0</number>
             </property>
             <property name="maximum">
              <number>299</number>
@@ -867,10 +867,10 @@
              <string>点</string>
             </property>
             <property name="minimum">
-             <number>5</number>
+             <number>0</number>
             </property>
             <property name="maximum">
-             <number>299</number>
+             <number>256</number>
             </property>
            </widget>
            <widget class="QLabel" name="label_maxLineLong">
@@ -912,7 +912,7 @@ color: rgb(255, 255, 255);</string>
           <attribute name="title">
            <string>掩膜设置</string>
           </attribute>
-          <widget class="QComboBox" name="comboBox_lightOutputIo_5">
+          <widget class="QComboBox" name="comboBox_dEtectionMask">
            <property name="geometry">
             <rect>
              <x>130</x>
@@ -937,7 +937,7 @@ color: rgb(255, 255, 255);</string>
             </property>
            </item>
           </widget>
-          <widget class="QLabel" name="label_lightOutputIo_8">
+          <widget class="QLabel" name="label_dEtectionMask">
            <property name="geometry">
             <rect>
              <x>10</x>
@@ -950,7 +950,7 @@ color: rgb(255, 255, 255);</string>
             <string>检测区域的掩膜：</string>
            </property>
           </widget>
-          <widget class="QWidget" name="widget_3" native="true">
+          <widget class="QWidget" name="widget_Mask" native="true">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -975,7 +975,7 @@ color: rgb(255, 255, 255);</string>
              <string>画笔尺寸：</string>
             </property>
            </widget>
-           <widget class="QSpinBox" name="spinBox_lightTime_2">
+           <widget class="QSpinBox" name="spinBox_lightTime">
             <property name="geometry">
              <rect>
               <x>130</x>
@@ -1072,7 +1072,7 @@ color: rgb(255, 255, 255);</string>
              <string>保存修改</string>
             </property>
            </widget>
-           <widget class="QLabel" name="label_lightOutputIo_9">
+           <widget class="QLabel" name="label_editMode">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -1085,7 +1085,7 @@ color: rgb(255, 255, 255);</string>
              <string>编辑方式：</string>
             </property>
            </widget>
-           <widget class="QComboBox" name="comboBox_lightOutputIo_6">
+           <widget class="QComboBox" name="comboBox_editMode">
             <property name="geometry">
              <rect>
               <x>130</x>
@@ -1111,7 +1111,7 @@ color: rgb(255, 255, 255);</string>
           <attribute name="title">
            <string>结果绘制</string>
           </attribute>
-          <widget class="QLabel" name="label_lightOutputIo_17">
+          <widget class="QLabel" name="label_lineWidth">
            <property name="geometry">
             <rect>
              <x>10</x>
@@ -1124,7 +1124,7 @@ color: rgb(255, 255, 255);</string>
             <string>线条宽度：</string>
            </property>
           </widget>
-          <widget class="QComboBox" name="comboBox_lightOutputIo_10">
+          <widget class="QComboBox" name="comboBox_lineColour">
            <property name="geometry">
             <rect>
              <x>130</x>
@@ -1139,7 +1139,7 @@ color: rgb(255, 255, 255);</string>
             </property>
            </item>
           </widget>
-          <widget class="QSpinBox" name="spinBox_lightTime_3">
+          <widget class="QSpinBox" name="spinBox_lineWidth">
            <property name="geometry">
             <rect>
              <x>130</x>
@@ -1158,7 +1158,7 @@ color: rgb(255, 255, 255);</string>
             <number>5</number>
            </property>
           </widget>
-          <widget class="QLabel" name="label_lightOutputIo_18">
+          <widget class="QLabel" name="label_lineColour">
            <property name="geometry">
             <rect>
              <x>10</x>
@@ -1171,7 +1171,7 @@ color: rgb(255, 255, 255);</string>
             <string>线条颜色：</string>
            </property>
           </widget>
-          <widget class="QCheckBox" name="checkBox_valuTrig_3">
+          <widget class="QCheckBox" name="checkBox_valuTrig">
            <property name="geometry">
             <rect>
              <x>270</x>

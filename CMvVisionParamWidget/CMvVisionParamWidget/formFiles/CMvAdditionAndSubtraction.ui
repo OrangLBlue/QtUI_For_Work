@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CMvColorConversionBlackAndWhite</class>
- <widget class="QWidget" name="CMvColorConversionBlackAndWhite">
+ <class>CMvAdditionAndSubtraction</class>
+ <widget class="QWidget" name="CMvAdditionAndSubtraction">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>彩色转黑白</string>
+   <string>加减法处理</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="leftMargin">
@@ -226,9 +226,9 @@
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>30</y>
-           <width>81</width>
-           <height>16</height>
+           <y>20</y>
+           <width>101</width>
+           <height>31</height>
           </rect>
          </property>
          <property name="text">
@@ -286,7 +286,7 @@
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>70</y>
+           <y>120</y>
            <width>341</width>
            <height>391</height>
           </rect>
@@ -320,6 +320,11 @@
            <string>1</string>
           </property>
          </row>
+         <row>
+          <property name="text">
+           <string>2</string>
+          </property>
+         </row>
          <column>
           <property name="text">
            <string>输入名称</string>
@@ -332,7 +337,7 @@
          </column>
          <item row="0" column="0">
           <property name="text">
-           <string>彩色图像</string>
+           <string>被加图像</string>
           </property>
          </item>
          <item row="0" column="1">
@@ -340,57 +345,49 @@
            <string>某个检测器的输出</string>
           </property>
          </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>待加图像</string>
+          </property>
+         </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
         </widget>
-       </widget>
-       <widget class="QWidget" name="tab_2">
-        <attribute name="title">
-         <string>参数设置</string>
-        </attribute>
-        <widget class="QComboBox" name="comboBox_colorSpace">
+        <widget class="QLabel" name="label_algorithmSelection">
          <property name="geometry">
           <rect>
-           <x>40</x>
-           <y>60</y>
+           <x>20</x>
+           <y>70</y>
            <width>101</width>
            <height>31</height>
           </rect>
          </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_colorChannel">
-         <property name="geometry">
-          <rect>
-           <x>210</x>
-           <y>60</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_colorSpace">
-         <property name="geometry">
-          <rect>
-           <x>40</x>
-           <y>30</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
          <property name="text">
-          <string>颜色空间：</string>
+          <string>处理算法选择：</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_colorChannel">
+        <widget class="QComboBox" name="comboBox_algorithmSelection">
          <property name="geometry">
           <rect>
-           <x>210</x>
-           <y>30</y>
-           <width>111</width>
+           <x>130</x>
+           <y>70</y>
+           <width>131</width>
            <height>31</height>
           </rect>
          </property>
-         <property name="text">
-          <string>颜色通道：</string>
-         </property>
+         <item>
+          <property name="text">
+           <string>加法处理</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>减法处理</string>
+          </property>
+         </item>
         </widget>
        </widget>
        <widget class="QWidget" name="tab_4">

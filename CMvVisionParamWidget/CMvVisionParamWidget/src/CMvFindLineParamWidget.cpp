@@ -7,7 +7,6 @@
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
 
-
 ////屏蔽QComboBox控件的鼠标滚动监听
 //void QComboBox::wheelEvent(QWheelEvent *e)
 //{
@@ -19,7 +18,6 @@
 //{
 //
 //}
-
 
 CMvFindLineParamWidget * CMvFindLineParamWidget::s_pFindLineParamWidget = nullptr;
 
@@ -39,12 +37,13 @@ CMvFindLineParamWidget::CMvFindLineParamWidget(QWidget *parent)
 	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
 	ui->tableWidget_input->item(0, 1)->setText("某个检测器的输出");
 
+	//初始化数据
+	initCMvFindLineParamWidget();
+
 	/*===============================================================================================*\
 	**====================================输入设置相关函数及信号与槽的链接===========================**
 	**=================================二级菜单相关函数及信号与槽的链接==============================**
 	\*===============================================================================================*/
-	//初始化所有二级菜单
-	initMenuByTest();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -68,7 +67,7 @@ CMvFindLineParamWidget::CMvFindLineParamWidget(QWidget *parent)
 	connect(ui->checkBox_enableFunc, SIGNAL(clicked(bool)), this, SLOT(slotGetEnableDetectorValue(bool)));
 
 	//点击ROI来源选择获取选项信息
-	connect(ui->comboBox_imageSource_2, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetROISourcesValue(int)));
+	connect(ui->comboBox_imageSource, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetROISourcesValue(int)));
 
 	//获取自己创建选中信息
 	connect(ui->checkBox_roiCreat, SIGNAL(clicked(bool)), this, SLOT(slotGetCreateYourselfValue(bool)));
@@ -116,13 +115,13 @@ CMvFindLineParamWidget::CMvFindLineParamWidget(QWidget *parent)
 	**====================================掩膜设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
 	//获取检测区域的掩膜
-	connect(ui->comboBox_lightOutputIo_5, SIGNAL(currentIndexChanged(int)), this, SLOT(slotMaskOfDetectionAreaValue(int)));
+	connect(ui->comboBox_dEtectionMask, SIGNAL(currentIndexChanged(int)), this, SLOT(slotMaskOfDetectionAreaValue(int)));
 	
 	//获取编辑方式
-	connect(ui->comboBox_lightOutputIo_6, SIGNAL(activated(int)), this, SLOT(slotEditModeValue(int)));
+	connect(ui->comboBox_editMode, SIGNAL(activated(int)), this, SLOT(slotEditModeValue(int)));
 
 	//获取画笔尺寸 
-	connect(ui->spinBox_lightTime_2, SIGNAL(valueChanged(int)), this, SLOT(slotBrushSizeValue(int)));
+	connect(ui->spinBox_lightTime, SIGNAL(valueChanged(int)), this, SLOT(slotBrushSizeValue(int)));
 
 	//点击清空掩膜
 	connect(ui->pushButton_maskNull, SIGNAL(clicked()), this, SLOT(slotEmptyMaskIsClick()));
@@ -138,13 +137,13 @@ CMvFindLineParamWidget::CMvFindLineParamWidget(QWidget *parent)
 	**====================================结果绘制信号与槽的链接=====================================**
 	\*===============================================================================================*/
 	//获取线条宽度 数值
-	connect(ui->spinBox_lightTime_3, SIGNAL(valueChanged(int)), this, SLOT(slotGetLineWidthValue(int)));
+	connect(ui->spinBox_lineWidth, SIGNAL(valueChanged(int)), this, SLOT(slotGetLineWidthValue(int)));
 
 	//获取启动绘制选中信息
-	connect(ui->checkBox_valuTrig_3, SIGNAL(clicked(bool)), this, SLOT(slotGetStartUpDrawingValue(bool)));
+	connect(ui->checkBox_valuTrig, SIGNAL(clicked(bool)), this, SLOT(slotGetStartUpDrawingValue(bool)));
 
 	//获取线条颜色
-	connect(ui->comboBox_lightOutputIo_10, SIGNAL(activated(int)), this, SLOT(slotGetLineColourValue(int)));
+	connect(ui->comboBox_lineColour, SIGNAL(activated(int)), this, SLOT(slotGetLineColourValue(int)));
 
 
 	/*===============================================================================================*\
@@ -172,7 +171,7 @@ CMvFindLineParamWidget::CMvFindLineParamWidget(QWidget *parent)
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
 
 	//设置关闭窗体时释放资源
-	setAttribute(Qt::WA_DeleteOnClose);
+	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
 CMvFindLineParamWidget::~CMvFindLineParamWidget()
@@ -185,51 +184,10 @@ CMvFindLineParamWidget::~CMvFindLineParamWidget()
 		m_pSecondLevelMenu = nullptr;
 	}
 
-	if (m_pImageSourceMenu)
-	{
-		for (int index = 0; index < m_pImageSourceMenu->actions().size(); index++)
-		{
-			delete m_pImageSourceMenu->actions()[0]->menu();
-		}
-		delete m_pImageSourceMenu;
-		m_pImageSourceMenu = nullptr;
-	}
-
-	if (m_pROISourceMenu)
-	{
-		int roiMenuSize = m_pROISourceMenu->actions().size();
-		for (int index = 0; index < roiMenuSize; ++index)
-		{
-			qDebug() << m_pROISourceMenu->actions()[0]->menu()->title();
-			delete m_pROISourceMenu->actions()[0]->menu();
-		}
-		delete m_pROISourceMenu;
-		m_pROISourceMenu = nullptr;
-	}
-
-	if (m_pROIPositionUpdatingMenu)
-	{
-		for (int index = 0; index < m_pROIPositionUpdatingMenu->actions().size(); index++)
-		{
-			delete m_pROIPositionUpdatingMenu->actions()[0]->menu();
-		}
-		delete m_pROIPositionUpdatingMenu;
-		m_pROIPositionUpdatingMenu = nullptr;
-	}
-
-	if (m_pMaskSourceMenu)
-	{
-		for (int index = 0; index < m_pMaskSourceMenu->actions().size(); index++)
-		{
-			delete m_pMaskSourceMenu->actions()[0]->menu();
-		}
-		delete m_pMaskSourceMenu;
-		m_pMaskSourceMenu = nullptr;
-	}
-
 	if (m_allImageSourceMenuData.size() != 0)
 	{
-		for (int index = 0; index < m_allImageSourceMenuData.size(); index++)
+		int iCount = m_allImageSourceMenuData.size();
+		for (int index = 0; index < iCount; index++)
 		{
 			delete m_allImageSourceMenuData[index]->pAction;
 			delete m_allImageSourceMenuData[index];
@@ -239,7 +197,8 @@ CMvFindLineParamWidget::~CMvFindLineParamWidget()
 
 	if (m_allROISourceMenuData.size() != 0)
 	{
-		for (int index = 0; index < m_allROISourceMenuData.size(); index++)
+		int iCount = m_allROISourceMenuData.size();
+		for (int index = 0; index < iCount; index++)
 		{
 			delete m_allROISourceMenuData[index]->pAction;
 			delete m_allROISourceMenuData[index];
@@ -249,7 +208,8 @@ CMvFindLineParamWidget::~CMvFindLineParamWidget()
 
 	if (m_allROIPositionUpdatingMenuData.size() != 0)
 	{
-		for (int index = 0; index < m_allROIPositionUpdatingMenuData.size(); index++)
+		int iCount = m_allROIPositionUpdatingMenuData.size();
+		for (int index = 0; index < iCount; index++)
 		{
 			delete m_allROIPositionUpdatingMenuData[index]->pAction;
 			delete m_allROIPositionUpdatingMenuData[index];
@@ -259,7 +219,8 @@ CMvFindLineParamWidget::~CMvFindLineParamWidget()
 
 	if (m_allMaskSourceMenuData.size() != 0)
 	{
-		for (int index = 0; index < m_allMaskSourceMenuData.size(); index++)
+		int iCount = m_allMaskSourceMenuData.size();
+		for (int index = 0; index < iCount; index++)
 		{
 			delete m_allMaskSourceMenuData[index]->pAction;
 			delete m_allMaskSourceMenuData[index];
@@ -291,10 +252,87 @@ void CMvFindLineParamWidget::destroy()
 }
 
 
-void CMvFindLineParamWidget::testInit()
+//void CMvFindLineParamWidget::testInit()
+//{
+//	m_signalEnable = false;
+//	ui->comboBox_imageSource_2->setCurrentIndex(2);
+//	m_signalEnable = true;
+//}
+
+//初始化数据
+void CMvFindLineParamWidget::initCMvFindLineParamWidget()
 {
+
 	m_signalEnable = false;
-	ui->comboBox_imageSource_2->setCurrentIndex(2);
+	
+		//初始化所有二级菜单
+	initMenuByTest();
+
+	//设置检测器名称
+	ui->plainTextEdit_funcName->setPlainText("");
+	ui->checkBox_enableFunc->setChecked(true);
+
+	//设置ROI来源
+	ui->comboBox_imageSource->setCurrentIndex(0);
+	ui->checkBox_roiCreat->setChecked(true);
+
+	//设置阈值方式
+	ui->comboBox_thresholdType->setCurrentIndex(0);
+
+	//设置边缘点提取阈值
+	ui->spinBox_threshold->setValue(5);
+	if (ui->comboBox_thresholdType->currentIndex() == 0) {
+		ui->label_threshold->setEnabled(false);
+		ui->spinBox_threshold->setEnabled(false);
+	}
+	else {
+		ui->label_threshold->setEnabled(true);
+		ui->spinBox_threshold->setEnabled(true);
+	}
+
+	//设置扫描方向
+	ui->comboBox_scanDirection->setCurrentIndex(0);
+
+	//设置边缘检测方式
+	ui->comboBox_edgeCheckType->setCurrentIndex(0);
+
+	//设置扫描点数
+	ui->spinBox_scanPointSum->setValue(5);
+
+	//设置抽样点数
+	ui->spinBox_samplingPointSum->setValue(5);
+
+	//设置拟合范围
+	ui->spinBox_fitRange->setValue(5);
+
+	//设置拟合误差限制
+	ui->spinBox_fitBias->setValue(5);
+
+	//设置半径下限
+	ui->spinBox_minLineLong->setValue(5);
+
+	//设置半径上限
+	ui->spinBox_maxLineLong->setValue(5);
+
+	//设置掩膜
+	ui->comboBox_dEtectionMask->setCurrentIndex(0);
+	ui->comboBox_editMode->setCurrentIndex(0);
+	ui->spinBox_lightTime->setValue(5);
+
+	if (ui->comboBox_dEtectionMask->currentIndex() == 0) {
+		ui->widget_Mask->setEnabled(false);
+	}
+	else {
+		ui->widget_Mask->setEnabled(false);
+	}
+
+	//设置绘图
+	ui->checkBox_valuTrig->setChecked(false);
+	ui->comboBox_lineColour->setEnabled(ui->checkBox_valuTrig->isChecked());
+	ui->spinBox_lineWidth->setEnabled(ui->checkBox_valuTrig->isChecked());
+	ui->label_lineWidth->setEnabled(ui->checkBox_valuTrig->isChecked());
+	ui->label_lineColour->setEnabled(ui->checkBox_valuTrig->isChecked());
+
 	m_signalEnable = true;
 }
 
@@ -333,7 +371,7 @@ void CMvFindLineParamWidget::slotGetEnableDetectorValue(bool state)
 void CMvFindLineParamWidget::slotGetROISourcesValue(int index)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取ROI来源选项" << ui->comboBox_imageSource_2->itemText(index);
+		qDebug() << "获取ROI来源选项" << ui->comboBox_imageSource->itemText(index);
 	}
 }
 
@@ -579,13 +617,13 @@ void CMvFindLineParamWidget::slotGetMaximumLineLengthValue(int Value)
 void CMvFindLineParamWidget::slotMaskOfDetectionAreaValue(int Index)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取检测区域的掩膜" << ui->comboBox_lightOutputIo_5->itemText(Index) << " " << Index;
+		qDebug() << "获取检测区域的掩膜" << ui->comboBox_dEtectionMask->itemText(Index) << " " << Index;
 
 		if (Index == 0) {
-			ui->widget_3->setEnabled(false);
+			ui->widget_Mask->setEnabled(false);
 		}
 		else {
-			ui->widget_3->setEnabled(true);
+			ui->widget_Mask->setEnabled(true);
 		}
 	}
 }
@@ -594,7 +632,7 @@ void CMvFindLineParamWidget::slotMaskOfDetectionAreaValue(int Index)
 void CMvFindLineParamWidget::slotEditModeValue(int Index)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取编辑方式" << ui->comboBox_lightOutputIo_6->itemText(Index) << " " << Index;
+		qDebug() << "获取编辑方式" << ui->comboBox_editMode->itemText(Index) << " " << Index;
 
 		if (Index == 0) {//增加掩膜数量
 			m_maskCount++;
@@ -622,7 +660,7 @@ void CMvFindLineParamWidget::slotEditModeValue(int Index)
 void CMvFindLineParamWidget::slotBrushSizeValue(int Value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取画笔尺寸" << ui->spinBox_lightTime_2->value() << " " << Value;
+		qDebug() << "获取画笔尺寸" << ui->spinBox_lightTime->value() << " " << Value;
 	}
 }
 
@@ -660,7 +698,7 @@ void CMvFindLineParamWidget::slotSaveChangesClick()
 void CMvFindLineParamWidget::slotGetLineWidthValue(int Value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取线条宽度" << ui->spinBox_lightTime_3->value() << " " << Value;
+		qDebug() << "获取线条宽度" << ui->spinBox_lineWidth->value() << " " << Value;
 	}
 }
 
@@ -668,19 +706,11 @@ void CMvFindLineParamWidget::slotGetLineWidthValue(int Value)
 void CMvFindLineParamWidget::slotGetStartUpDrawingValue(bool state)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig_3->isChecked();
-		if (state) {
-			ui->spinBox_lightTime_3->setEnabled(true);
-			ui->comboBox_lightOutputIo_10->setEnabled(true);
-			ui->label_lightOutputIo_17->setEnabled(true);
-			ui->label_lightOutputIo_18->setEnabled(true);
-		}
-		else {
-			ui->spinBox_lightTime_3->setEnabled(false);
-			ui->comboBox_lightOutputIo_10->setEnabled(false);
-			ui->label_lightOutputIo_17->setEnabled(false);
-			ui->label_lightOutputIo_18->setEnabled(false);
-		}
+		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
+		ui->spinBox_lineWidth->setEnabled(state);
+		ui->comboBox_lineColour->setEnabled(state);
+		ui->label_lineWidth->setEnabled(state);
+		ui->label_lineColour->setEnabled(state);
 	}
 }
 
@@ -688,7 +718,7 @@ void CMvFindLineParamWidget::slotGetStartUpDrawingValue(bool state)
 void CMvFindLineParamWidget::slotGetLineColourValue(int Index)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取线条颜色" << ui->comboBox_lightOutputIo_10->itemText(Index);
+		qDebug() << "获取线条颜色" << ui->comboBox_lineColour->itemText(Index);
 	}
 }
 
@@ -742,5 +772,4 @@ void CMvFindLineParamWidget::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 	//pbPrev_cancel
-	testInit();
 }

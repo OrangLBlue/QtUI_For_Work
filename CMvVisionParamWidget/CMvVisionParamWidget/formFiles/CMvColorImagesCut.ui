@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>图片裁剪</string>
+   <string>彩色图片裁剪</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="leftMargin">
@@ -192,6 +192,9 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="minimumSize">
@@ -202,7 +205,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>380</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
@@ -213,7 +216,7 @@
         <attribute name="title">
          <string>输入设置</string>
         </attribute>
-        <widget class="QLabel" name="label_funcName_2">
+        <widget class="QLabel" name="label_funcName">
          <property name="geometry">
           <rect>
            <x>20</x>
@@ -226,7 +229,7 @@
           <string>检测器名称：</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_roiCreat_2">
+        <widget class="QLabel" name="label_roiCreat">
          <property name="geometry">
           <rect>
            <x>20</x>
@@ -239,7 +242,7 @@
           <string>ROI来源：</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="checkBox_enableFunc_2">
+        <widget class="QCheckBox" name="checkBox_enableFunc">
          <property name="geometry">
           <rect>
            <x>270</x>
@@ -261,7 +264,7 @@
           <bool>true</bool>
          </property>
         </widget>
-        <widget class="QCheckBox" name="checkBox_roiCreat_2">
+        <widget class="QCheckBox" name="checkBox_roiCreat">
          <property name="geometry">
           <rect>
            <x>270</x>
@@ -286,7 +289,7 @@
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QPlainTextEdit" name="plainTextEdit_funcName_2">
+        <widget class="QPlainTextEdit" name="plainTextEdit_funcName">
          <property name="geometry">
           <rect>
            <x>130</x>
@@ -311,7 +314,7 @@
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QComboBox" name="comboBox_imageSource_3">
+        <widget class="QComboBox" name="comboBox_imageSource">
          <property name="geometry">
           <rect>
            <x>130</x>
@@ -433,19 +436,57 @@
         <attribute name="title">
          <string>掩膜设置</string>
         </attribute>
-        <widget class="QWidget" name="widget_3" native="true">
+        <widget class="QComboBox" name="comboBox_dEtectionMask">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>不使用掩膜</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>本检测器ROI内掩膜</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>其他算法的掩膜</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="label_dEtectionMask">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>检测区域的掩膜：</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="widget_Mask" native="true">
          <property name="enabled">
           <bool>false</bool>
          </property>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>60</y>
+           <y>50</y>
            <width>371</width>
            <height>251</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_penWidth_2">
+         <widget class="QLabel" name="label_penWidth">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -458,7 +499,7 @@
            <string>画笔尺寸：</string>
           </property>
          </widget>
-         <widget class="QSpinBox" name="spinBox_lightTime_3">
+         <widget class="QSpinBox" name="spinBox_lightTime">
           <property name="geometry">
            <rect>
             <x>130</x>
@@ -477,7 +518,7 @@
            <number>1000</number>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_maskAll_2">
+         <widget class="QPushButton" name="pushButton_maskAll">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -502,7 +543,7 @@
            <string>掩盖所有</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_maskNull_2">
+         <widget class="QPushButton" name="pushButton_maskNull">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -530,7 +571,7 @@
            <string>清空掩膜</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_saveMask_2">
+         <widget class="QPushButton" name="pushButton_saveMask">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -555,7 +596,7 @@
            <string>保存修改</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_lightOutputIo_10">
+         <widget class="QLabel" name="label_editMode">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -568,7 +609,7 @@
            <string>编辑方式：</string>
           </property>
          </widget>
-         <widget class="QComboBox" name="comboBox_lightOutputIo_7">
+         <widget class="QComboBox" name="comboBox_editMode">
           <property name="geometry">
            <rect>
             <x>130</x>
@@ -589,53 +630,15 @@
           </item>
          </widget>
         </widget>
-        <widget class="QLabel" name="label_dEtectionMask">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>检测区域的掩膜：</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_dEtectionMask">
-         <property name="geometry">
-          <rect>
-           <x>130</x>
-           <y>20</y>
-           <width>131</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <item>
-          <property name="text">
-           <string>不使用掩膜</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>本检测器ROI内掩膜</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>其他算法的掩膜</string>
-          </property>
-         </item>
-        </widget>
        </widget>
        <widget class="QWidget" name="tab_4">
         <attribute name="title">
          <string>结果绘制</string>
         </attribute>
-        <widget class="QCheckBox" name="checkBox_valuTrig_4">
+        <widget class="QCheckBox" name="checkBox_valuTrig">
          <property name="geometry">
           <rect>
-           <x>270</x>
+           <x>10</x>
            <y>20</y>
            <width>80</width>
            <height>31</height>
@@ -646,32 +649,6 @@
          </property>
          <property name="checked">
           <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushbutton_cuttingPicture">
-         <property name="geometry">
-          <rect>
-           <x>130</x>
-           <y>20</y>
-           <width>131</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>显示裁剪图像</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_cuttingPicture">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>20</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>裁剪图像：</string>
          </property>
         </widget>
        </widget>

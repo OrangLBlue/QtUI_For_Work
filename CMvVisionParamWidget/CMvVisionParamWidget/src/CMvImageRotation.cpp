@@ -1,5 +1,5 @@
-﻿#include "CMvColorConversionBlackAndWhite.h"
-#include "ui_CMvColorConversionBlackAndWhite.h"
+﻿#include "CMvImageRotation.h"
+#include "ui_CMvImageRotation.h"
 #include <QStringList>
 #include <QTableWidgetItem>
 #include <QDebug>
@@ -21,11 +21,11 @@
 //
 //}
 
-CMvColorConversionBlackAndWhite * CMvColorConversionBlackAndWhite::s_pColorConversionBlackAndWhite = nullptr;
+CMvImageRotation * CMvImageRotation::s_pCMvImageRotation = nullptr;
 
-CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent)
+CMvImageRotation::CMvImageRotation(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvColorConversionBlackAndWhite)
+	ui(new Ui::CMvImageRotation)
 { 
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -42,7 +42,7 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	m_signalEnable = true;
 
 	//初始化数据
-	initCMvColorConversionBlackAndWhite();
+	initCMvImageRotation();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -50,11 +50,11 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	//根据彩色图像菜单动作选择，设置单元格显示内容
 	connect(m_pColorImageMenu, SIGNAL(triggered(QAction*)), this, SLOT(soltMenuTriggered(QAction*)));
 
-	//选择颜色空间
-	connect(ui->comboBox_colorSpace, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeColorSpace(int)));
+	//获取旋转角度
+	connect(ui->doubleSpinBox_rsotationAngle, SIGNAL(valueChanged(double)), this, SLOT(slotGetRsotationAngleValue(double)));
 
-	//选择颜色通道
-	connect(ui->comboBox_colorChannel, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeColorChannel(int)));
+	//选择背景类型
+	connect(ui->comboBox_backgroundType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeBackgroundType(int)));
 
 	//获取检测器名称
 	connect(ui->plainTextEdit_funcName, SIGNAL(textChanged()), this, SLOT(slotGetDetectorNameValue()));
@@ -86,7 +86,6 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	//点击 取消
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
 
-
 	//获取启动绘制选中信息
 	connect(ui->checkBox_valuTrig, SIGNAL(clicked(bool)), this, SLOT(slotGetStartUpDrawingValue(bool)));
 
@@ -94,7 +93,7 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
-CMvColorConversionBlackAndWhite::~CMvColorConversionBlackAndWhite()
+CMvImageRotation::~CMvImageRotation()
 {
 	qDebug() << "析构函数";
 
@@ -129,36 +128,30 @@ CMvColorConversionBlackAndWhite::~CMvColorConversionBlackAndWhite()
 
 
 //单例
-CMvColorConversionBlackAndWhite * CMvColorConversionBlackAndWhite::Instance()
+CMvImageRotation * CMvImageRotation::Instance()
 {
-	if (s_pColorConversionBlackAndWhite == nullptr)
+	if (s_pCMvImageRotation == nullptr)
 	{
-		s_pColorConversionBlackAndWhite = new CMvColorConversionBlackAndWhite;
+		s_pCMvImageRotation = new CMvImageRotation;
 	}
-	return s_pColorConversionBlackAndWhite;
+	return s_pCMvImageRotation;
 
 }
 
 //释放内存
-void CMvColorConversionBlackAndWhite::destroy()
+void CMvImageRotation::destroy()
 {
-	if (s_pColorConversionBlackAndWhite)
+	if (s_pCMvImageRotation)
 	{
-		delete s_pColorConversionBlackAndWhite;
-		s_pColorConversionBlackAndWhite = nullptr;
+		delete s_pCMvImageRotation;
+		s_pCMvImageRotation = nullptr;
 	}
 }
 
 //初始化数据
-void CMvColorConversionBlackAndWhite::initCMvColorConversionBlackAndWhite()
+void CMvImageRotation::initCMvImageRotation()
 {
 	m_signalEnable = false;
-
-	//初始化颜色空间
-	initComboBoxOfColorSpace();
-
-	//初始化颜色通道
-	initComboBoxOfColorChannel();
 
 	//初始化所有二级菜单
 	initMenuByTest();
@@ -167,11 +160,11 @@ void CMvColorConversionBlackAndWhite::initCMvColorConversionBlackAndWhite()
 	ui->plainTextEdit_funcName->setPlainText("");
 	ui->checkBox_enableFunc->setChecked(true);
 
-	//设置颜色空间
-	ui->comboBox_colorSpace->setCurrentIndex(0);
+	//设置旋转角度
+	//ui->doubleSpinBox_rsotationAngle->set
 
-	//设置颜色通道
-	ui->comboBox_colorChannel->setCurrentIndex(0);
+	//设置背景类型
+	ui->comboBox_backgroundType->setCurrentIndex(0);
 
 	//设置绘图
 	ui->checkBox_valuTrig->setChecked(false);
@@ -180,98 +173,25 @@ void CMvColorConversionBlackAndWhite::initCMvColorConversionBlackAndWhite()
 
 }
 
-
-//初始化颜色空间
-void CMvColorConversionBlackAndWhite::initComboBoxOfColorSpace()
+//获取旋转角度
+void CMvImageRotation::slotGetRsotationAngleValue(double value)
 {
-	//ui->comboBox_colorSpace = new QComboBox(this);
-	ui->comboBox_colorSpace->setObjectName(QStringLiteral("颜色空间"));
-
-	ui->comboBox_colorSpace->clear();
-	QStringList fonts;
-	fonts << "RGB" << "HSV" << "LAB";
-	ui->comboBox_colorSpace->addItems(fonts);
-
-	//ui->tableWidget_input->setCellWidget(0, 1, ui->comboBox_colorSpace);
+	qDebug() << "获取旋转角度" << ui->doubleSpinBox_rsotationAngle->value() << " " << value;
 }
 
-//初始化颜色通道
-void CMvColorConversionBlackAndWhite::initComboBoxOfColorChannel()
+//选择背景类型
+void CMvImageRotation::slotChangeBackgroundType(int index)
 {
-	//ui->comboBox_colorChannel = new QComboBox(this);
-	ui->comboBox_colorChannel->setObjectName(QStringLiteral("颜色通道"));
-
-	ui->comboBox_colorChannel->clear();
-	QStringList fonts;
-	if (ui->comboBox_colorSpace == nullptr)
-	{
-		initComboBoxOfColorSpace();
-	}
-	switch (ui->comboBox_colorSpace->currentIndex())
-	{
-	case 0:
-		fonts << tr("灰度") << tr("红色") << tr("绿色") << tr("蓝色") << tr("黄色") << tr("青色") << tr("品红");
-		break;
-
-	case 1:
-		fonts << tr("色调") << tr("饱和度") << tr("亮度");
-		break;
-
-	case 2:
-		fonts << tr("亮度") << "A" << "B";
-		break;
-
-	default:
-		break;
-	}
-	
-	ui->comboBox_colorChannel->addItems(fonts);
-
-	//ui->tableWidget_input->setCellWidget(0, 2, ui->comboBox_colorChannel);
+	qDebug() << "选择背景类型" << ui->comboBox_backgroundType->itemText(index) << " " << index;
 }
 
-//选择颜色空间
-void CMvColorConversionBlackAndWhite::slotChangeColorSpace(int index)
+//初始化图片来源菜单
+void CMvImageRotation::initMenuByTest()
 {
-	qDebug() << "选择颜色空间" << ui->comboBox_colorSpace->itemText(index) << " " << index;
-
-	ui->comboBox_colorChannel->blockSignals(true);
-	ui->comboBox_colorChannel->clear();
-	ui->comboBox_colorChannel->blockSignals(false);
-	QStringList fonts;
-	switch (index)
-	{
-	case 0:
-		fonts << tr("灰度") << tr("红色") << tr("绿色") << tr("蓝色") << tr("黄色") << tr("青色") << tr("品红");
-		break;
-
-	case 1:
-		fonts << tr("色调") << tr("饱和度") << tr("亮度");
-		break;
-
-	case 2:
-		fonts << tr("亮度") << "A" << "B";
-		break;
-
-	default:
-		break;
-	}
-	ui->comboBox_colorChannel->addItems(fonts);
-}
-
-//选择颜色通道
-void CMvColorConversionBlackAndWhite::slotChangeColorChannel(int index)
-{
-	qDebug() << "选择颜色通道" << ui->comboBox_colorChannel->itemText(index) << " " << index;
-}
-
-void CMvColorConversionBlackAndWhite::initMenuByTest()
-{
-	//初始化图片来源菜单
 	m_pColorImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pColorImageMenuData);
 }
 
-void CMvColorConversionBlackAndWhite::slotClickPushButton(int row, int col)
+void CMvImageRotation::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -287,7 +207,7 @@ void CMvColorConversionBlackAndWhite::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvColorConversionBlackAndWhite::soltMenuTriggered(QAction* action)
+void CMvImageRotation::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -325,7 +245,7 @@ void CMvColorConversionBlackAndWhite::soltMenuTriggered(QAction* action)
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvColorConversionBlackAndWhite::slotGetDetectorNameValue()
+void CMvImageRotation::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -344,7 +264,7 @@ void CMvColorConversionBlackAndWhite::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvColorConversionBlackAndWhite::slotGetEnableDetectorValue(bool state)
+void CMvImageRotation::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -355,7 +275,7 @@ void CMvColorConversionBlackAndWhite::slotGetEnableDetectorValue(bool state)
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取启动绘制选中信息
-void CMvColorConversionBlackAndWhite::slotGetStartUpDrawingValue(bool State)
+void CMvImageRotation::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
@@ -366,43 +286,43 @@ void CMvColorConversionBlackAndWhite::slotGetStartUpDrawingValue(bool State)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvColorConversionBlackAndWhite::slotAmplifyThePictureIsClick()
+void CMvImageRotation::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvColorConversionBlackAndWhite::slotShrinkThePictureIsClick()
+void CMvImageRotation::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvColorConversionBlackAndWhite::slotBestSizeOfPictureIsClick()
+void CMvImageRotation::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvColorConversionBlackAndWhite::slotLockROIIsClick()
+void CMvImageRotation::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvColorConversionBlackAndWhite::slotOnceIsClick()
+void CMvImageRotation::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvColorConversionBlackAndWhite::slotMakeSureIsClick()
+void CMvImageRotation::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvColorConversionBlackAndWhite::slotCancelIsClick()
+void CMvImageRotation::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

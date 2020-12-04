@@ -83,7 +83,7 @@ QMenu* CMvSecondLevelMenu::initMenuByTest(QWidget* parent, QVector<CMvSecondLeve
 			pMenuAction->funcName = funcName;
 			pMenuAction->portId = jIndex;
 			pMenuAction->portName = portName;
-			pMenuAction->pAction = new QAction(portName);
+			pMenuAction->pAction = new QAction(portName, parent);
 
 			pChildMenu->addAction(pMenuAction->pAction);
 			menuActionList.push_back(pMenuAction);

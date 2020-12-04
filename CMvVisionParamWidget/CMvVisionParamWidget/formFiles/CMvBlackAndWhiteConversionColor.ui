@@ -198,8 +198,14 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QTabWidget" name="tabWidget">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="minimumSize">
         <size>
          <width>382</width>
@@ -208,8 +214,8 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>380</width>
-         <height>602</height>
+         <width>16777215</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="currentIndex">
@@ -219,7 +225,7 @@
         <attribute name="title">
          <string>输入设置</string>
         </attribute>
-        <widget class="QLabel" name="label_funcName_2">
+        <widget class="QLabel" name="label_funcName">
          <property name="geometry">
           <rect>
            <x>20</x>
@@ -232,7 +238,7 @@
           <string>检测器名称：</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="checkBox_enableFunc_2">
+        <widget class="QCheckBox" name="checkBox_enableFunc">
          <property name="geometry">
           <rect>
            <x>270</x>
@@ -254,7 +260,7 @@
           <bool>true</bool>
          </property>
         </widget>
-        <widget class="QPlainTextEdit" name="plainTextEdit_funcName_2">
+        <widget class="QPlainTextEdit" name="plainTextEdit_funcName">
          <property name="geometry">
           <rect>
            <x>130</x>
@@ -283,7 +289,7 @@
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>100</y>
+           <y>70</y>
            <width>331</width>
            <height>311</height>
           </rect>
@@ -334,7 +340,7 @@
         <attribute name="title">
          <string>结果绘制</string>
         </attribute>
-        <widget class="QCheckBox" name="checkBox_valuTrig_4">
+        <widget class="QCheckBox" name="checkBox_valuTrig">
          <property name="geometry">
           <rect>
            <x>30</x>

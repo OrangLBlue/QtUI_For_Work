@@ -27,6 +27,9 @@ public:
 	void initMenu();
 	void initMenuByTest();
 
+	//初始化界面
+	void initBlobRapidDetection();
+
 	//void testInit();
 	
 private slots:
@@ -65,10 +68,10 @@ private slots:
 	void slotGetGrayLevelMinValue(int value);
 
 	//获取面积上限
-	void slotGetAreaMaxValue(int value);
+	void slotGetAreaMaxValue(double value);
 
 	//获取面积下限
-	void slotGetAreaMinValue(int value);
+	void slotGetAreaMinValue(double value);
 
 	//获取中心x上限
 	void slotGetCenterXMaxValue(int value);
@@ -83,16 +86,16 @@ private slots:
 	void slotGetCenterYMinValue(int value);
 
 	//获取最小矩形宽度上限
-	void slotGetRectangleMaxWidthValue(int value);
+	void slotGetRectangleMaxWidthValue(double value);
 
 	//获取最小矩形宽度下限
-	void slotGetRectangleMinWidthValue(int value);
+	void slotGetRectangleMinWidthValue(double value);
 
 	//获取最小矩形高度上限
-	void slotGetRectangleMaxHightValue(int value);
+	void slotGetRectangleMaxHightValue(double value);
 
 	//获取最小矩形高度下限
-	void slotGetRectangleMinHightValue(int value);
+	void slotGetRectangleMinHightValue(double value);
 
 	//获取个数上限
 	void slotGetNumberMaxValue(int value);

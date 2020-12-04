@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CMvColorConversionBlackAndWhite</class>
- <widget class="QWidget" name="CMvColorConversionBlackAndWhite">
+ <class>CMvColorSelection</class>
+ <widget class="QWidget" name="CMvColorSelection">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>彩色转黑白</string>
+   <string>颜色选定</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="leftMargin">
@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -39,25 +39,19 @@
          <height>600</height>
         </size>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
       </widget>
      </item>
      <item>
       <widget class="QFrame" name="frame">
        <property name="minimumSize">
         <size>
-         <width>500</width>
+         <width>0</width>
          <height>42</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>500</width>
+         <width>16777215</width>
          <height>42</height>
         </size>
        </property>
@@ -197,7 +191,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -211,17 +205,82 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>380</width>
          <height>16777215</height>
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
          <string>输入设置</string>
         </attribute>
+        <widget class="QTableWidget" name="tableWidget_input">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>361</width>
+           <height>382</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>361</width>
+           <height>382</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>361</width>
+           <height>382</height>
+          </size>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="showGrid">
+          <bool>false</bool>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <row>
+          <property name="text">
+           <string>1</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>输入名称</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>数据来源</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>图像来源</string>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
+        </widget>
         <widget class="QLabel" name="label_funcName">
          <property name="geometry">
           <rect>
@@ -282,95 +341,29 @@
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QTableWidget" name="tableWidget_input">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>70</y>
-           <width>341</width>
-           <height>391</height>
-          </rect>
-         </property>
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="textElideMode">
-          <enum>Qt::ElideRight</enum>
-         </property>
-         <property name="verticalScrollMode">
-          <enum>QAbstractItemView::ScrollPerItem</enum>
-         </property>
-         <property name="showGrid">
-          <bool>false</bool>
-         </property>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>true</bool>
-         </attribute>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderCascadingSectionResizes">
-          <bool>false</bool>
-         </attribute>
-         <row>
-          <property name="text">
-           <string>1</string>
-          </property>
-         </row>
-         <column>
-          <property name="text">
-           <string>输入名称</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>输入来源</string>
-          </property>
-         </column>
-         <item row="0" column="0">
-          <property name="text">
-           <string>彩色图像</string>
-          </property>
-         </item>
-         <item row="0" column="1">
-          <property name="text">
-           <string>某个检测器的输出</string>
-          </property>
-         </item>
-        </widget>
        </widget>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
          <string>参数设置</string>
         </attribute>
-        <widget class="QComboBox" name="comboBox_colorSpace">
+        <widget class="QLabel" name="label_tcolorHistogram">
          <property name="geometry">
           <rect>
-           <x>40</x>
-           <y>60</y>
-           <width>101</width>
+           <x>130</x>
+           <y>20</y>
+           <width>111</width>
            <height>31</height>
           </rect>
          </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_colorChannel">
-         <property name="geometry">
-          <rect>
-           <x>210</x>
-           <y>60</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
+         <property name="text">
+          <string>颜色直方图：</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_colorSpace">
          <property name="geometry">
           <rect>
-           <x>40</x>
-           <y>30</y>
+           <x>10</x>
+           <y>20</y>
            <width>111</width>
            <height>31</height>
           </rect>
@@ -379,19 +372,211 @@
           <string>颜色空间：</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_colorChannel">
+        <widget class="QComboBox" name="comboBox_colorSpace">
          <property name="geometry">
           <rect>
-           <x>210</x>
-           <y>30</y>
+           <x>10</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>101</width>
+           <height>31</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>RBG</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>HSV</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QComboBox" name="comboBox_backgroundType">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>300</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>101</width>
+           <height>31</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>黑色背景</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>白色背景</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>灰色背景</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>红色背景</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>绿色背景</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>蓝色背景</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="label_titleJudged">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>120</y>
+           <width>381</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 120));
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>  结果判定</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_miscellaneousElimination">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>180</y>
            <width>111</width>
            <height>31</height>
           </rect>
          </property>
          <property name="text">
-          <string>颜色通道：</string>
+          <string>启用杂点剔除</string>
          </property>
         </widget>
+        <widget class="QWidget" name="widget_miscellaneousElimination" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>190</y>
+           <width>231</width>
+           <height>81</height>
+          </rect>
+         </property>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_maxArea">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>50000000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_maxArea">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>面积上限：</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_minArea">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>50000000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_minArea">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>面积下限：</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QPushButton" name="pushButton_colorHistogram">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>显示颜色直方图</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_backgroundType">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>270</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>背景图像类型：</string>
+         </property>
+        </widget>
+        <zorder>widget_miscellaneousElimination</zorder>
+        <zorder>label_tcolorHistogram</zorder>
+        <zorder>label_colorSpace</zorder>
+        <zorder>comboBox_colorSpace</zorder>
+        <zorder>comboBox_backgroundType</zorder>
+        <zorder>label_titleJudged</zorder>
+        <zorder>checkBox_miscellaneousElimination</zorder>
+        <zorder>pushButton_colorHistogram</zorder>
+        <zorder>label_backgroundType</zorder>
        </widget>
        <widget class="QWidget" name="tab_4">
         <attribute name="title">
@@ -400,7 +585,7 @@
         <widget class="QCheckBox" name="checkBox_valuTrig">
          <property name="geometry">
           <rect>
-           <x>30</x>
+           <x>20</x>
            <y>20</y>
            <width>101</width>
            <height>31</height>

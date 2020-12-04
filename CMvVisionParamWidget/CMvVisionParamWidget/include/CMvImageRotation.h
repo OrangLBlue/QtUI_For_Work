@@ -1,41 +1,35 @@
-﻿#ifndef CMV_COLOR_CONVERSION_BLACK_AND_WHITE
-#define CMV_COLOR_CONVERSION_BLACK_AND_WHITE
+﻿#ifndef CMV_IMAGE_ROTATION
+#define CMV_IMAGE_ROTATION
 
 #include <QtWidgets/QWidget>
 #include "CMvSecondLevelMenu.h"
 
 namespace Ui {
-	class CMvColorConversionBlackAndWhite;
+	class CMvImageRotation;
 }
 
-class CMvColorConversionBlackAndWhite : public QWidget
+class CMvImageRotation : public QWidget
 {
 	Q_OBJECT
 public:
     
 	//单列
-	static CMvColorConversionBlackAndWhite * Instance();
+	static CMvImageRotation * Instance();
 	
 	//释放内存
 	static void destroy();
 
 	//初始化数据
-	void initCMvColorConversionBlackAndWhite();
-
-	//初始化颜色空间
-	void initComboBoxOfColorSpace();
-
-	//初始化颜色通道
-	void initComboBoxOfColorChannel();
+	void initCMvImageRotation();
 
 	void initMenuByTest();
 
 private slots:
 	//选择颜色空间
-	void slotChangeColorSpace(int index);
+	void slotGetRsotationAngleValue(double value);
 
-	//选择颜色通道
-	void slotChangeColorChannel(int index);
+	//选择背景类型
+	void slotChangeBackgroundType(int index);
 
 	//根据点击位置选择弹框
 	void slotClickPushButton(int row, int col);
@@ -83,9 +77,9 @@ private slots:
 	void slotGetEnableDetectorValue(bool state);
 
 private:
-    Ui::CMvColorConversionBlackAndWhite * ui;
+    Ui::CMvImageRotation * ui;
 
-	static CMvColorConversionBlackAndWhite * s_pColorConversionBlackAndWhite;
+	static CMvImageRotation * s_pCMvImageRotation;
 
 	// 记录当前点击的位置
 	int m_iRow;
@@ -99,8 +93,8 @@ private:
 
 	QVector<CMvSecondLevelMenu::cyAction*>  m_pColorImageMenuData;//彩色图像菜单数据
 
-	CMvColorConversionBlackAndWhite(QWidget *parent = Q_NULLPTR);
-	~CMvColorConversionBlackAndWhite();
+	CMvImageRotation(QWidget *parent = Q_NULLPTR);
+	~CMvImageRotation();
 };
 
 #endif

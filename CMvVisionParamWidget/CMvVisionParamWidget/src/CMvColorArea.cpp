@@ -1,5 +1,5 @@
-﻿#include "CMvFindRoundParamWidget.h"
-#include "ui_CMvFindRoundParamWidget.h"
+﻿#include "CMvColorArea.h"
+#include "ui_CMvColorArea.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QTableWidgetItem>
@@ -22,11 +22,11 @@
 //}
 //
 
-CMvFindRoundParamWidget* CMvFindRoundParamWidget::s_pFindRoundParamWidget = nullptr;
+CMvColorArea* CMvColorArea::s_pColorArea = nullptr;
 
-CMvFindRoundParamWidget::CMvFindRoundParamWidget(QWidget *parent)
+CMvColorArea::CMvColorArea(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvFindRoundParamWidget)
+	ui(new Ui::CMvColorArea)
 {
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -45,7 +45,7 @@ CMvFindRoundParamWidget::CMvFindRoundParamWidget(QWidget *parent)
 	\*===============================================================================================*/
 
 	//初始化数据
-	initCMvFindRoundParamWidget();
+	initCMvColorArea();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -78,52 +78,51 @@ CMvFindRoundParamWidget::CMvFindRoundParamWidget(QWidget *parent)
 	/*===============================================================================================*\
 	**====================================参数设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
-	//获取边缘阈值
-	connect(ui->comboBox_thresholdType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetEdgeThresholdtValue(int)));
+	
+	//获取颜色空间 数值
+	connect(ui->comboBox_colorSpace, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetColorSpaceValue(int)));
 
-	//获取边缘梯度阈值 数值
-	connect(ui->spinBox_threshold, SIGNAL(valueChanged(int)), this, SLOT(slotGetEdgeGradientThresholdtValue(int)));
+	//点击颜色直方图
+	connect(ui->pushButton_colorHistogram, SIGNAL(clicked()), this, SLOT(slotGetEdgeGradientThresholdtIsClicked()));
 
-	//获取扫描点数 数值
-	connect(ui->spinBox_scanPointSum, SIGNAL(valueChanged(int)), this, SLOT(slotGetScanPointsValue(int)));
+	//获取显示选定图像选中信息
+	connect(ui->checkBox_DisplaySelectedImages, SIGNAL(clicked(bool)), this, SLOT(slotGetDisplaySelectedImagesIsChecked(bool)));
 
-	//获取抽样点数 数值
-	connect(ui->spinBox_samplingPointSum, SIGNAL(valueChanged(int)), this, SLOT(slotGetSamplingPointsValue(int)));
+	//获取面积上限
+	connect(ui->spinBox_areaMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetAreaMaxValue(int)));
 
-	//获取扫描方向
-	connect(ui->comboBox_scanDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetDirectionOfDetectionValue(int)));
+	//获取面积下限
+	connect(ui->spinBox_areaMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetAreaMinValue(int)));
 
-	//获取边缘极性检测方式
-	connect(ui->comboBox_edgeCheckType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetCoordinateInputValue(int)));
+	//点击面积显示信息
+	connect(ui->pushButton_areaInformation, SIGNAL(clicked()), this, SLOT(slotGetReaInformationIsClicked()));
 
-	//获取拟合范围 数值
-	connect(ui->spinBox_fitRange, SIGNAL(valueChanged(int)), this, SLOT(slotGetScopeOfFitValue(int)));
+	//获取开启个数限定定选中信息
+	connect(ui->checkBox_number, SIGNAL(clicked(bool)), this, SLOT(slotGetNumberIsChecked(bool)));
 
+	//获取个数上限
+	connect(ui->spinBox_numberMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetNumberMaxValue(int)));
 
-	/*===============================================================================================*\
-	**====================================结果判断信号与槽的链接=====================================**
-	\*===============================================================================================*/
-	//获取拟合误差限制 数值
-	connect(ui->spinBox_fitBias, SIGNAL(valueChanged(int)), this, SLOT(slotGetFittingErrorlimitsValue(int)));
+	//获取个数下限
+	connect(ui->spinBox_numberMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetNumberMinValue(int)));
 
-	//获取半径下限 数值
-	connect(ui->spinBox_minRoundRadius, SIGNAL(valueChanged(int)), this, SLOT(slotGetMinRoundRadiusValue(int)));
+	//获取开启总面积限定定选中信息
+	connect(ui->checkBox_grossArea, SIGNAL(clicked(bool)), this, SLOT(slotGetGrossAreaIsChecked(bool)));
 
-	//获取半径上限 数值
-	connect(ui->spinBox_maxRoundRadius, SIGNAL(valueChanged(int)), this, SLOT(slotGetMaxRoundRadiusValue(int)));
+	//获取总面积上限
+	connect(ui->spinBox_grossAreaMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrossAreaMaxValue(int)));
 
-	//获取开启凹凸性检测选中信息
-	connect(ui->checkBox_concaveConvex, SIGNAL(clicked(bool)), this, SLOT(slotGetConcaveConvexIsChecked(bool)));
+	//获取总面积下限
+	connect(ui->spinBox_grossAreaMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrossAreaMinValue(int)));
 
-	//获取最小深度 数值
-	connect(ui->doubleSpinBox_minimumDepth, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinimumDepthValue(double)));
+	//获取开启轮廓总长限定选中信息
+	connect(ui->checkBox_totalOutlineLength, SIGNAL(clicked(bool)), this, SLOT(slotGetTotalOutlineLengthIsChecked(bool)));
 
-	//获取最小抽样点数 数值
-	connect(ui->doubleSpinBox_minimumSamplingPoints, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinimumSamplingPointsValue(double)));
+	//获取轮廓总长上限 数值
+	connect(ui->spinBox_totalOutlineLengthMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetTotalOutlineLengthMaxValue(int)));
 
-	//点击显示凹凸点信息
-	connect(ui->pushButton_unqualifiedPiont, SIGNAL(clicked()), this, SLOT(slotGetUnqualifiedPiontIsClick()));
-
+	//获取轮廓总长下限 数值
+	connect(ui->spinBox_totalOutlineLengthMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetTotalOutlineLengthMinValue(int)));
 
 	/*===============================================================================================*\
 	**====================================掩膜设置信号与槽的链接=====================================**
@@ -190,7 +189,7 @@ CMvFindRoundParamWidget::CMvFindRoundParamWidget(QWidget *parent)
 
 
 //析构函数
-CMvFindRoundParamWidget::~CMvFindRoundParamWidget()
+CMvColorArea::~CMvColorArea()
 {
 	qDebug() << "析构函数";
 
@@ -287,27 +286,28 @@ CMvFindRoundParamWidget::~CMvFindRoundParamWidget()
 
 
 //单例化
-CMvFindRoundParamWidget* CMvFindRoundParamWidget::Instance()
+CMvColorArea* CMvColorArea::Instance()
 {
-	if (s_pFindRoundParamWidget == nullptr) {
-		s_pFindRoundParamWidget = new CMvFindRoundParamWidget;
+	if (s_pColorArea == nullptr) {
+		s_pColorArea = new CMvColorArea;
 	}
-	return s_pFindRoundParamWidget;
+	return s_pColorArea;
 }
 
 
 //释放内存
-void CMvFindRoundParamWidget::destroy()
+void CMvColorArea::destroy()
 {
-	if (s_pFindRoundParamWidget)
+	if (s_pColorArea)
 	{
-		delete s_pFindRoundParamWidget;
-		s_pFindRoundParamWidget = nullptr;
+		delete s_pColorArea;
+		s_pColorArea = nullptr;
 	}//if (c_pUniqueShowMessage)
 }
 
+
 //初始化数据
-void CMvFindRoundParamWidget::initCMvFindRoundParamWidget()
+void CMvColorArea::initCMvColorArea()
 {
 	m_signalEnable = false;
 
@@ -322,65 +322,64 @@ void CMvFindRoundParamWidget::initCMvFindRoundParamWidget()
 	ui->comboBox_imageSource->setCurrentIndex(0);
 	ui->checkBox_roiCreat->setChecked(true);
 
-	//设置阈值方式
-	ui->comboBox_thresholdType->setCurrentIndex(0);
+	//设置颜色空间
+	ui->comboBox_colorSpace->setCurrentIndex(0);
 
-	//设置边缘点提取阈值
-	ui->spinBox_threshold->setValue(5);
-	if (ui->comboBox_thresholdType->currentIndex() == 0){
-		ui->label_threshold->setEnabled(false);
-		ui->spinBox_threshold->setEnabled(false);
-	}else {
-		ui->label_threshold->setEnabled(true);
-		ui->spinBox_threshold->setEnabled(true);
-	}
+	//显示选定图像
+	ui->checkBox_DisplaySelectedImages->setChecked(true);
 
-	//设置扫描方向
-	ui->comboBox_scanDirection->setCurrentIndex(0);
+	//设置面积筛选上限
+	ui->spinBox_areaMax->setValue(5);
 
-	//设置边缘检测方式
-	ui->comboBox_edgeCheckType->setCurrentIndex(0);
-	
-	//设置扫描点数
-	ui->spinBox_scanPointSum->setValue(5);
+	//设置面积筛选下限
+	ui->spinBox_areaMin->setValue(5);
 
-	//设置抽样点数
-	ui->spinBox_samplingPointSum->setValue(5);
+	//设置个数上限
+	ui->spinBox_numberMax->setValue(5);
 
-	//设置拟合范围
-	ui->spinBox_fitRange->setValue(5);
+	//设置个数下限
+	ui->spinBox_numberMin->setValue(5);
 
-	//设置拟合误差限制
-	ui->spinBox_fitBias->setValue(5);
+	//设置总面积上限
+	ui->spinBox_grossAreaMax->setValue(5);
 
-	//设置半径下限
-	ui->spinBox_minRoundRadius->setValue(5);
+	//设置总面积下限
+	ui->spinBox_grossAreaMin->setValue(5);
 
-	//设置半径上限
-	ui->spinBox_maxRoundRadius->setValue(5);
+	//设置总长度上限
+	ui->spinBox_grossAreaMax->setValue(5);
 
-	//设置凹凸性检测
-	ui->checkBox_concaveConvex->setChecked(false);
-	ui->widget_concaveConvex->setEnabled(ui->checkBox_concaveConvex->isChecked());
-	
-	ui->doubleSpinBox_minimumDepth->setValue(0);
-	ui->doubleSpinBox_minimumSamplingPoints->setValue(0);
+	//设置总长度下限
+	ui->spinBox_grossAreaMin->setValue(5);
+
+	//设置个数限定
+	ui->checkBox_number->setChecked(true);
+	ui->groupBox_number->setEnabled(ui->checkBox_number->isChecked());
+
+	//设置总面积限定
+	ui->checkBox_number->setChecked(false);
+	ui->groupBox_number->setEnabled(ui->groupBox_grossArea->isChecked());
+
+	//设置轮廓总长限定
+	ui->checkBox_number->setChecked(false);
+	ui->groupBox_number->setEnabled(ui->groupBox_TotalOutlineLength->isChecked());
 
 	//设置掩膜
 	ui->comboBox_dEtectionMask->setCurrentIndex(0);
 	ui->comboBox_editMode->setCurrentIndex(0);
 	ui->spinBox_lightTime->setValue(5);
 
-	if (ui->comboBox_dEtectionMask->currentIndex() == 0){
+	if (ui->comboBox_dEtectionMask->currentIndex() == 0) {
 		ui->widget_Mask->setEnabled(false);
-	}else{
+	}
+	else {
 		ui->widget_Mask->setEnabled(false);
 	}
 
 	//设置绘图
 	ui->checkBox_valuTrig->setChecked(false);
-	ui->comboBox_lineColour->setEnabled(ui->checkBox_valuTrig->isChecked());
 	ui->spinBox_lineWidth->setEnabled(ui->checkBox_valuTrig->isChecked());
+	ui->comboBox_lineColour->setEnabled(ui->checkBox_valuTrig->isChecked());
 	ui->label_lineWidth->setEnabled(ui->checkBox_valuTrig->isChecked());
 	ui->label_lineColour->setEnabled(ui->checkBox_valuTrig->isChecked());
 
@@ -392,7 +391,7 @@ void CMvFindRoundParamWidget::initCMvFindRoundParamWidget()
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvFindRoundParamWidget::slotGetDetectorNameValue()
+void CMvColorArea::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -411,7 +410,7 @@ void CMvFindRoundParamWidget::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvFindRoundParamWidget::slotGetEnableDetectorValue(bool state)
+void CMvColorArea::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -419,7 +418,7 @@ void CMvFindRoundParamWidget::slotGetEnableDetectorValue(bool state)
 }
 
 //获取ROI来源
-void CMvFindRoundParamWidget::slotGetROISourcesValue(int index)
+void CMvColorArea::slotGetROISourcesValue(int index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取ROI来源选项" << ui->comboBox_imageSource->itemText(index);
@@ -427,18 +426,19 @@ void CMvFindRoundParamWidget::slotGetROISourcesValue(int index)
 }
 
 //获取自己创建选中信息
-void CMvFindRoundParamWidget::slotGetCreateYourselfValue(bool state)
+void CMvColorArea::slotGetCreateYourselfValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取自己创建选中信息" << ui->checkBox_roiCreat->isChecked();
 	}
 }
 
+
 /*===============================================================================================*\
 **======================================二级菜单槽函数===========================================**
 \*===============================================================================================*/
 ////初始化二级菜单
-void CMvFindRoundParamWidget::initMenu()
+void CMvColorArea::initMenu()
 {
 //	//初始化图片来源菜单
 //	m_ImageSourceMenu = SecondLevelMenu->initSecondLevelMenu(m_AllImageSourceMenuData, ui->tableWidget_input);
@@ -453,7 +453,7 @@ void CMvFindRoundParamWidget::initMenu()
 //	m_MaskSourceMenu = SecondLevelMenu->initSecondLevelMenu(m_AllMaskSourceMenuData, ui->tableWidget_input);
 }
 
-void CMvFindRoundParamWidget::initMenuByTest()
+void CMvColorArea::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pImageSourceMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_allImageSourceMenuData);
@@ -469,7 +469,7 @@ void CMvFindRoundParamWidget::initMenuByTest()
 }
 
 //根据点击位置选择弹框
-void CMvFindRoundParamWidget::slotClickPushButton(int row, int col)
+void CMvColorArea::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -511,7 +511,7 @@ void CMvFindRoundParamWidget::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvFindRoundParamWidget::soltMenuTriggered(QAction* action)
+void CMvColorArea::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -564,132 +564,139 @@ void CMvFindRoundParamWidget::soltMenuTriggered(QAction* action)
 /*===============================================================================================*\
 **======================================参数设置页面槽函数=======================================**
 \*===============================================================================================*/
-//获取边缘阈值
-void CMvFindRoundParamWidget::slotGetEdgeThresholdtValue(int index)
+//获取颜色空间 数值
+void CMvColorArea::slotGetColorSpaceValue(int index)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取边缘阈值" << ui->comboBox_thresholdType->itemText(index);
-
-		if (index == 1) {
-			ui->label_threshold->setEnabled(true);
-			ui->spinBox_threshold->setEnabled(true);
-		}
-		else if (index == 0) {
-			ui->label_threshold->setEnabled(false);
-			ui->spinBox_threshold->setEnabled(false);//如果是手动阈值，则显示边缘梯度阈值-数值
-		}
+		qDebug() << "获取颜色空间" << ui->comboBox_colorSpace->itemText(index);
 	}
 }
 
-//获取边缘梯度阈值 数值
-void CMvFindRoundParamWidget::slotGetEdgeGradientThresholdtValue(int Value)
+//点击颜色直方图
+void CMvColorArea::slotGetEdgeGradientThresholdtIsClicked()
 {
 	if (m_signalEnable) {
-		qDebug() << "获取边缘梯度阈值" << ui->spinBox_threshold->value() << "  " << Value;
+		qDebug() << "点击颜色直方图" ;
+		//pushButton_colorHistogram
 	}
 }
 
-//获取边缘极性检测方式 数值
-void CMvFindRoundParamWidget::slotGetCoordinateInputValue(int index)
+//获取显示选定图像选中信息
+void CMvColorArea::slotGetDisplaySelectedImagesIsChecked(bool State)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取边缘极性检测方式" << ui->comboBox_edgeCheckType->itemText(index);
+		qDebug() << "获取显示选定图像选中信息" << State << " " << ui->checkBox_DisplaySelectedImages->isChecked();
 	}
 }
 
-//获取扫描点数 数值
-void CMvFindRoundParamWidget::slotGetScanPointsValue(int Value)
+//获取面积上限
+void CMvColorArea::slotGetAreaMaxValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取扫描点数" << ui->spinBox_scanPointSum->value() << "  " << Value;
+		qDebug() << "获取面积上限" << value;
 	}
 }
 
-//获取抽样点数 数值
-void CMvFindRoundParamWidget::slotGetSamplingPointsValue(int Value)
+//获取面积下限
+void CMvColorArea::slotGetAreaMinValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取抽样点数" << ui->spinBox_samplingPointSum->value() << "  " << Value;
+		qDebug() << "获取面积下限" << value;
 	}
 }
 
-//获取扫描方向 数值
-void CMvFindRoundParamWidget::slotGetDirectionOfDetectionValue(int index)
+//点击面积显示信息
+void CMvColorArea::slotGetReaInformationIsClicked()
 {
 	if (m_signalEnable) {
-		qDebug() << "获取扫描方向" << ui->comboBox_scanDirection->itemText(index);
+		qDebug() << "点击面积显示信息";
+		//pushButton_areaInformation
 	}
 }
 
-//获取拟合范围 数值
-void CMvFindRoundParamWidget::slotGetScopeOfFitValue(int Value)
+//获取开启个数限定定选中信息
+void CMvColorArea::slotGetNumberIsChecked(bool State)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取拟合范围" << ui->spinBox_fitRange->value() << " " << Value;
-		//ui->label_10->setText(QStringLiteral("拟合范围: ") + ui->doubleSpinBox->text().sprintf("%g", ui->doubleSpinBox->text().toFloat()));
+		qDebug() << "获取开启个数限定定选中信息" << State << " " << ui->checkBox_number->isChecked();
+
+		ui->groupBox_number->setEnabled(State);
 	}
 }
 
-
-/*===============================================================================================*\
-**=======================================结果判断槽函数==========================================**
-\*===============================================================================================*/
-//获取拟合误差限制 数值
-void CMvFindRoundParamWidget::slotGetFittingErrorlimitsValue(int Value)
+//获取个数上限
+void CMvColorArea::slotGetNumberMaxValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取拟合最少点数" << ui->spinBox_fitBias->text() << ui->spinBox_fitBias->value() << " " << Value;
+		qDebug() << "获取个数上限" << value;
 	}
 }
 
-//获取半径下限 数值
-void CMvFindRoundParamWidget::slotGetMinRoundRadiusValue(int Value)
+//获取个数下限
+void CMvColorArea::slotGetNumberMinValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取半径下限" << ui->spinBox_minRoundRadius->text() << ui->spinBox_minRoundRadius->value() << " " << Value;
+		qDebug() << "获取个数下限" << value;
 	}
 }
 
-//获取半径上限 数值
-void CMvFindRoundParamWidget::slotGetMaxRoundRadiusValue(int Value)
+//获取开启总面积限定定选中信息
+void CMvColorArea::slotGetGrossAreaIsChecked(bool State)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取半径上限" << ui->spinBox_maxRoundRadius->text() << ui->spinBox_maxRoundRadius->value() << " " << Value;
+		qDebug() << "获取开启总面积限定定选中信息" << State << " " << ui->checkBox_grossArea->isChecked();
+
+		ui->groupBox_grossArea->setEnabled(State);
 	}
 }
 
-//获取开启凹凸性检测选中信息
-void CMvFindRoundParamWidget::slotGetConcaveConvexIsChecked(bool State)
+//获取总面积上限
+void CMvColorArea::slotGetGrossAreaMaxValue(int value)
 {
-	qDebug() << "获取开启凹凸性检测选中信息" << State << " " << ui->checkBox_concaveConvex->isChecked();
-	
-	ui->widget_concaveConvex->setEnabled(State);
+	if (m_signalEnable) {
+		qDebug() << "获取总面积上限" << value;
+	}
 }
 
-//获取最小深度 数值
-void CMvFindRoundParamWidget::slotGetMinimumDepthValue(double Value)
+//获取总面积下限
+void CMvColorArea::slotGetGrossAreaMinValue(int value)
 {
-	qDebug() << "获取最小深度" << Value << " " << ui->doubleSpinBox_minimumDepth->value();
+	if (m_signalEnable) {
+		qDebug() << "获取总面积下限" << value;
+	}
 }
 
-//获取最小抽样点数 数值
-void CMvFindRoundParamWidget::slotGetMinimumSamplingPointsValue(double Value)
+//获取开启轮廓总长限定选中信息
+void CMvColorArea::slotGetTotalOutlineLengthIsChecked(bool State)
 {
-	qDebug() << "获取最小抽样点数" << Value << " " << ui->doubleSpinBox_minimumSamplingPoints->value();
+	if (m_signalEnable) {
+		qDebug() << "获取开启轮廓总长限定选中信息" << State << " " << ui->checkBox_totalOutlineLength->isChecked();
+
+		ui->groupBox_TotalOutlineLength->setEnabled(State);
+	}
 }
 
-//点击显示凹凸点信息
-void CMvFindRoundParamWidget::slotGetUnqualifiedPiontIsClick()
+//获取轮廓总长上限 数值
+void CMvColorArea::slotGetTotalOutlineLengthMaxValue(int Value)
 {
-	qDebug() << "点击显示凹凸点信息" ;
+	if (m_signalEnable) {
+		qDebug() << "获取轮廓总长上限" << ui->spinBox_totalOutlineLengthMax->value() << " " << Value;;
+	}
 }
 
+//获取轮廓总长下限 数值
+void CMvColorArea::slotGetTotalOutlineLengthMinValue(int Value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取轮廓总长下限" << ui->spinBox_totalOutlineLengthMin->value() << " " << Value;
+	}
+}
 
 /*===============================================================================================*\
 **=======================================掩膜设置槽函数==========================================**
 \*===============================================================================================*/
 //获取检测区域的掩膜 数值
-void CMvFindRoundParamWidget::slotMaskOfDetectionAreaValue(int Index)
+void CMvColorArea::slotMaskOfDetectionAreaValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取检测区域的掩膜" << ui->comboBox_dEtectionMask->itemText(Index) << " " << Index;
@@ -704,7 +711,7 @@ void CMvFindRoundParamWidget::slotMaskOfDetectionAreaValue(int Index)
 }
 
 //获取编辑方式 数值
-void CMvFindRoundParamWidget::slotEditModeValue(int Index)
+void CMvColorArea::slotEditModeValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取编辑方式" << ui->comboBox_editMode->itemText(Index) << " " << Index;
@@ -732,7 +739,7 @@ void CMvFindRoundParamWidget::slotEditModeValue(int Index)
 }
 
 //获取画笔尺寸 数值
-void CMvFindRoundParamWidget::slotBrushSizeValue(int Value)
+void CMvColorArea::slotBrushSizeValue(int Value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取画笔尺寸" << ui->spinBox_lightTime->value() << " " << Value;
@@ -740,7 +747,7 @@ void CMvFindRoundParamWidget::slotBrushSizeValue(int Value)
 }
 
 //点击清空掩膜
-void CMvFindRoundParamWidget::slotEmptyMaskIsClick()
+void CMvColorArea::slotEmptyMaskIsClick()
 {
 	if (m_signalEnable) {
 		m_maskCount = 0;
@@ -750,7 +757,7 @@ void CMvFindRoundParamWidget::slotEmptyMaskIsClick()
 }
 
 //点击掩盖所有
-void CMvFindRoundParamWidget::slotCoverUpEverythingClick()
+void CMvColorArea::slotCoverUpEverythingClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "掩盖所有被点了";
@@ -758,7 +765,7 @@ void CMvFindRoundParamWidget::slotCoverUpEverythingClick()
 }
 
 //点击保存修改
-void CMvFindRoundParamWidget::slotSaveChangesClick()
+void CMvColorArea::slotSaveChangesClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "保存修改被点了";
@@ -770,7 +777,7 @@ void CMvFindRoundParamWidget::slotSaveChangesClick()
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取线条宽度 数值
-void CMvFindRoundParamWidget::slotGetLineWidthValue(int Value)
+void CMvColorArea::slotGetLineWidthValue(int Value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取线条宽度" << ui->spinBox_lineWidth->value() << " " << Value;
@@ -778,20 +785,20 @@ void CMvFindRoundParamWidget::slotGetLineWidthValue(int Value)
 }
 
 //获取启动绘制选中信息
-void CMvFindRoundParamWidget::slotGetStartUpDrawingValue(bool State)
+void CMvColorArea::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
 
-		ui->label_lineWidth->setEnabled(State);
 		ui->spinBox_lineWidth->setEnabled(State);
 		ui->comboBox_lineColour->setEnabled(State);
+		ui->label_lineWidth->setEnabled(State);
 		ui->label_lineColour->setEnabled(State);
 	}
 }
 
 //获取线条颜色 数值
-void CMvFindRoundParamWidget::slotGetLineColourValue(int Index)
+void CMvColorArea::slotGetLineColourValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取线条颜色" << ui->comboBox_lineColour->itemText(Index);
@@ -803,43 +810,43 @@ void CMvFindRoundParamWidget::slotGetLineColourValue(int Index)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvFindRoundParamWidget::slotAmplifyThePictureIsClick()
+void CMvColorArea::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvFindRoundParamWidget::slotShrinkThePictureIsClick()
+void CMvColorArea::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvFindRoundParamWidget::slotBestSizeOfPictureIsClick()
+void CMvColorArea::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvFindRoundParamWidget::slotLockROIIsClick()
+void CMvColorArea::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvFindRoundParamWidget::slotOnceIsClick()
+void CMvColorArea::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvFindRoundParamWidget::slotMakeSureIsClick()
+void CMvColorArea::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvFindRoundParamWidget::slotCancelIsClick()
+void CMvColorArea::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

@@ -1,41 +1,35 @@
-﻿#ifndef CMV_COLOR_CONVERSION_BLACK_AND_WHITE
-#define CMV_COLOR_CONVERSION_BLACK_AND_WHITE
+﻿#ifndef CMV_ALGITHM_PROCESSING
+#define CMV_ALGITHM_PROCESSING
 
 #include <QtWidgets/QWidget>
 #include "CMvSecondLevelMenu.h"
 
 namespace Ui {
-	class CMvColorConversionBlackAndWhite;
+	class CMvAlgorithmProcessing;
 }
 
-class CMvColorConversionBlackAndWhite : public QWidget
+class CMvAlgorithmProcessing : public QWidget
 {
 	Q_OBJECT
 public:
     
 	//单列
-	static CMvColorConversionBlackAndWhite * Instance();
+	static CMvAlgorithmProcessing * Instance();
 	
 	//释放内存
 	static void destroy();
 
 	//初始化数据
-	void initCMvColorConversionBlackAndWhite();
-
-	//初始化颜色空间
-	void initComboBoxOfColorSpace();
-
-	//初始化颜色通道
-	void initComboBoxOfColorChannel();
+	void initCMvAlgorithmProcessing();
 
 	void initMenuByTest();
 
 private slots:
-	//选择颜色空间
-	void slotChangeColorSpace(int index);
+	//选择模板大小
+	void slotChangeTemplateSize(int index);
 
-	//选择颜色通道
-	void slotChangeColorChannel(int index);
+	//选择算法处理选择
+	void slotChangeAlgorithmSelection(int index);
 
 	//根据点击位置选择弹框
 	void slotClickPushButton(int row, int col);
@@ -83,9 +77,9 @@ private slots:
 	void slotGetEnableDetectorValue(bool state);
 
 private:
-    Ui::CMvColorConversionBlackAndWhite * ui;
+    Ui::CMvAlgorithmProcessing * ui;
 
-	static CMvColorConversionBlackAndWhite * s_pColorConversionBlackAndWhite;
+	static CMvAlgorithmProcessing * s_pCMvAlgorithmProcessing;
 
 	// 记录当前点击的位置
 	int m_iRow;
@@ -99,8 +93,8 @@ private:
 
 	QVector<CMvSecondLevelMenu::cyAction*>  m_pColorImageMenuData;//彩色图像菜单数据
 
-	CMvColorConversionBlackAndWhite(QWidget *parent = Q_NULLPTR);
-	~CMvColorConversionBlackAndWhite();
+	CMvAlgorithmProcessing(QWidget *parent = Q_NULLPTR);
+	~CMvAlgorithmProcessing();
 };
 
 #endif

@@ -1,5 +1,5 @@
-#include "CMvColorImagesCut.h"
-#include "ui_CMvColorImagesCut.h"
+#include "CMvImagesCut.h"
+#include "ui_CMvImagesCut.h"
 #include <QTableWidgetItem>
 #include "CMvSecondLevelMenu.h"
 #include <QDebug>
@@ -20,11 +20,11 @@
 //
 //}
 
-CMvColorImagesCut * CMvColorImagesCut::s_pcolorImages = nullptr;
+CMvImagesCut * CMvImagesCut::s_pimagesCut = nullptr;
 
-CMvColorImagesCut::CMvColorImagesCut(QWidget *parent)
+CMvImagesCut::CMvImagesCut(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvColorImagesCut)
+	ui(new Ui::CMvImagesCut)
 {
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -43,7 +43,7 @@ CMvColorImagesCut::CMvColorImagesCut(QWidget *parent)
 
 	m_pSecondLevelMenu = new CMvSecondLevelMenu;
 	//初始化数据
-	initCMvColorImagesCut();
+	initCMvImagesCut();
 
 	////初始显示裁剪图片按钮
 	//initPushButton();
@@ -123,7 +123,7 @@ CMvColorImagesCut::CMvColorImagesCut(QWidget *parent)
 }
 
 //析构函数
-CMvColorImagesCut::~CMvColorImagesCut()
+CMvImagesCut::~CMvImagesCut()
 {
 	qDebug() << "析构函数";
 
@@ -157,28 +157,28 @@ CMvColorImagesCut::~CMvColorImagesCut()
 }
 
 //单实例
-CMvColorImagesCut * CMvColorImagesCut::Instance()
+CMvImagesCut * CMvImagesCut::Instance()
 {
-	if (s_pcolorImages == nullptr)
+	if (s_pimagesCut == nullptr)
 	{
-		s_pcolorImages = new CMvColorImagesCut;
+		s_pimagesCut = new CMvImagesCut;
 	}
-	return s_pcolorImages;
+	return s_pimagesCut;
 }
 
 //释放内存
-void CMvColorImagesCut::destroy()
+void CMvImagesCut::destroy()
 {
-	if (s_pcolorImages)
+	if (s_pimagesCut)
 	{
-		delete s_pcolorImages;
-		s_pcolorImages = nullptr;
+		delete s_pimagesCut;
+		s_pimagesCut = nullptr;
 	}
 }
 
 
 //初始化数据
-void CMvColorImagesCut::initCMvColorImagesCut()
+void CMvImagesCut::initCMvImagesCut()
 {
 	m_signalEnable = false;
 
@@ -213,7 +213,7 @@ void CMvColorImagesCut::initCMvColorImagesCut()
 
 
 ////初始化按钮
-//void CMvColorImagesCut::initPushButton()
+//void CMvImagesCut::initPushButton()
 //{
 //	m_pPushbutton_cuttingPicture = new QPushButton(this);
 //	m_pPushbutton_cuttingPicture->setText(tr("显示裁剪图像"));
@@ -223,7 +223,7 @@ void CMvColorImagesCut::initCMvColorImagesCut()
 //}
 
 //初始化二级菜单
-void CMvColorImagesCut::initMenuByTest()
+void CMvImagesCut::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pColorImagesMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_ColorImagesMenuData);
@@ -233,7 +233,7 @@ void CMvColorImagesCut::initMenuByTest()
 }
 
 //根据点击位置选择弹框
-void CMvColorImagesCut::slotClickPushButton(int row, int col)
+void CMvImagesCut::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -264,7 +264,7 @@ void CMvColorImagesCut::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvColorImagesCut::soltMenuTriggered(QAction* action)
+void CMvImagesCut::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -305,53 +305,54 @@ void CMvColorImagesCut::soltMenuTriggered(QAction* action)
 	m_iCol = -1;
 }
 
+
 /*===============================================================================================*\
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvColorImagesCut::slotAmplifyThePictureIsClick()
+void CMvImagesCut::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 	//pushButton_zoomIn
 }
 
 //点击 缩小
-void CMvColorImagesCut::slotShrinkThePictureIsClick()
+void CMvImagesCut::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 	//pushButton_zoomOut
 }
 
 //点击 最好尺寸
-void CMvColorImagesCut::slotBestSizeOfPictureIsClick()
+void CMvImagesCut::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 	//pushButton_zoomBest
 }
 
 //点击 锁定ROI
-void CMvColorImagesCut::slotLockROIIsClick()
+void CMvImagesCut::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 	//pushButton_lockRoiMove
 }
 
 //点击 单次
-void CMvColorImagesCut::slotOnceIsClick()
+void CMvImagesCut::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 	//pushButton_ones
 }
 
 //点击 确定
-void CMvColorImagesCut::slotMakeSureIsClick()
+void CMvImagesCut::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 	//pushButton_ensure
 }
 
 //点击 取消
-void CMvColorImagesCut::slotCancelIsClick()
+void CMvImagesCut::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 	//pbPrev_cancel
@@ -361,7 +362,7 @@ void CMvColorImagesCut::slotCancelIsClick()
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvColorImagesCut::slotGetDetectorNameValue()
+void CMvImagesCut::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -380,7 +381,7 @@ void CMvColorImagesCut::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvColorImagesCut::slotGetEnableDetectorValue(bool state)
+void CMvImagesCut::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -388,7 +389,7 @@ void CMvColorImagesCut::slotGetEnableDetectorValue(bool state)
 }
 
 //获取ROI来源
-void CMvColorImagesCut::slotGetROISourcesValue(int index)
+void CMvImagesCut::slotGetROISourcesValue(int index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取ROI来源选项" << ui->comboBox_imageSource->itemText(index);
@@ -396,7 +397,7 @@ void CMvColorImagesCut::slotGetROISourcesValue(int index)
 }
 
 //获取自己创建选中信息
-void CMvColorImagesCut::slotGetCreateYourselfValue(bool state)
+void CMvImagesCut::slotGetCreateYourselfValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取自己创建选中信息" << ui->checkBox_roiCreat->isChecked();
@@ -407,7 +408,7 @@ void CMvColorImagesCut::slotGetCreateYourselfValue(bool state)
 **=======================================掩膜设置槽函数==========================================**
 \*===============================================================================================*/
 //获取检测区域的掩膜 数值
-void CMvColorImagesCut::slotMaskOfDetectionAreaValue(int Index)
+void CMvImagesCut::slotMaskOfDetectionAreaValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取检测区域的掩膜" << ui->comboBox_dEtectionMask->itemText(Index) << " " << Index;
@@ -422,7 +423,7 @@ void CMvColorImagesCut::slotMaskOfDetectionAreaValue(int Index)
 }
 
 //获取编辑方式 数值
-void CMvColorImagesCut::slotEditModeValue(int Index)
+void CMvImagesCut::slotEditModeValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取编辑方式" << ui->comboBox_editMode->itemText(Index) << " " << Index;
@@ -450,7 +451,7 @@ void CMvColorImagesCut::slotEditModeValue(int Index)
 }
 
 //获取画笔尺寸 数值
-void CMvColorImagesCut::slotBrushSizeValue(int Value)
+void CMvImagesCut::slotBrushSizeValue(int Value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取画笔尺寸" << ui->spinBox_lightTime->value() << " " << Value;
@@ -458,7 +459,7 @@ void CMvColorImagesCut::slotBrushSizeValue(int Value)
 }
 
 //点击清空掩膜
-void CMvColorImagesCut::slotEmptyMaskIsClick()
+void CMvImagesCut::slotEmptyMaskIsClick()
 {
 	if (m_signalEnable) {
 		m_maskCount = 0;
@@ -468,7 +469,7 @@ void CMvColorImagesCut::slotEmptyMaskIsClick()
 }
 
 //点击掩盖所有
-void CMvColorImagesCut::slotCoverUpEverythingClick()
+void CMvImagesCut::slotCoverUpEverythingClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "掩盖所有被点了";
@@ -476,7 +477,7 @@ void CMvColorImagesCut::slotCoverUpEverythingClick()
 }
 
 //点击保存修改
-void CMvColorImagesCut::slotSaveChangesClick()
+void CMvImagesCut::slotSaveChangesClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "保存修改被点了";
@@ -488,7 +489,7 @@ void CMvColorImagesCut::slotSaveChangesClick()
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取启动绘制选中信息
-void CMvColorImagesCut::slotGetStartUpDrawingValue(bool State)
+void CMvImagesCut::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();

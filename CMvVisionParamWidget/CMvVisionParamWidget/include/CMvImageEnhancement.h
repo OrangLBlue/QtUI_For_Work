@@ -1,24 +1,24 @@
-#ifndef CMV_BLACK_AND_WHITE_CONVERSION_COLOR
-#define CMV_BLACK_AND_WHITE_CONVERSION_COLOR
+#ifndef CMV_IMAGE_ENGANCEMENT
+#define CMV_IMAGE_ENGANCEMENT
 
 #include <QtWidgets/QWidget>
 #include "CMvSecondLevelMenu.h"
 
 namespace Ui {
-	class CMvBlackAndWhiteConversionColor;
+	class CMvImageEnhancement;
 }
 
-class CMvBlackAndWhiteConversionColor : public QWidget
+class CMvImageEnhancement : public QWidget
 {
     Q_OBJECT
 
 public:
-	static CMvBlackAndWhiteConversionColor* Instance();
+	static CMvImageEnhancement* Instance();
 
 	static void destroy();
 
 	//初始化数据
-	void initCMvColorArea();
+	void initCMvImageEnhancement();
 
 	void initMenuByTest();
 
@@ -71,12 +71,12 @@ private slots:
 	void slotGetEnableDetectorValue(bool state);
 
 private:
-    Ui::CMvBlackAndWhiteConversionColor *ui;
+    Ui::CMvImageEnhancement *ui;
 
-	static CMvBlackAndWhiteConversionColor * s_pBlackAndWhiteConversionColor;
+	static CMvImageEnhancement * s_pCMvImageEnhancement;
 
-	CMvBlackAndWhiteConversionColor(QWidget *parent = Q_NULLPTR);
-	~CMvBlackAndWhiteConversionColor();
+	CMvImageEnhancement(QWidget *parent = Q_NULLPTR);
+	~CMvImageEnhancement();
 
 	bool m_signalEnable;
 

@@ -1,5 +1,5 @@
-#include "CMvBlackAndWhiteConversionColor.h"
-#include "ui_CMvBlackAndWhiteConversionColor.h"
+#include "CMvImageEnhancement.h"
+#include "ui_CMvImageEnhancement.h"
 #include <QStringList>
 #include <QTableWidgetItem>
 #include <QDebug>
@@ -8,11 +8,11 @@
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
 
-CMvBlackAndWhiteConversionColor * CMvBlackAndWhiteConversionColor::s_pBlackAndWhiteConversionColor = nullptr;
+CMvImageEnhancement * CMvImageEnhancement::s_pCMvImageEnhancement = nullptr;
 
-CMvBlackAndWhiteConversionColor::CMvBlackAndWhiteConversionColor(QWidget *parent)
+CMvImageEnhancement::CMvImageEnhancement(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvBlackAndWhiteConversionColor)
+	ui(new Ui::CMvImageEnhancement)
 {
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -27,7 +27,7 @@ CMvBlackAndWhiteConversionColor::CMvBlackAndWhiteConversionColor(QWidget *parent
 	ui->tableWidget_input->item(0, 1)->setText("某个检测器的输出");
 
 	//初始化数据
-	initCMvColorArea();
+	initCMvImageEnhancement();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -74,7 +74,7 @@ CMvBlackAndWhiteConversionColor::CMvBlackAndWhiteConversionColor(QWidget *parent
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
-CMvBlackAndWhiteConversionColor::~CMvBlackAndWhiteConversionColor()
+CMvImageEnhancement::~CMvImageEnhancement()
 {
 
 	qDebug() << "析构函数";
@@ -98,28 +98,29 @@ CMvBlackAndWhiteConversionColor::~CMvBlackAndWhiteConversionColor()
 	delete ui;
 }
 
-CMvBlackAndWhiteConversionColor* CMvBlackAndWhiteConversionColor::Instance()
+CMvImageEnhancement* CMvImageEnhancement::Instance()
 {
-	if (s_pBlackAndWhiteConversionColor == nullptr)
+	if (s_pCMvImageEnhancement == nullptr)
 	{
-		s_pBlackAndWhiteConversionColor = new CMvBlackAndWhiteConversionColor;
+		s_pCMvImageEnhancement = new CMvImageEnhancement;
 	}
-	return s_pBlackAndWhiteConversionColor;
+	return s_pCMvImageEnhancement;
 }
 
-void CMvBlackAndWhiteConversionColor::destroy()
+void CMvImageEnhancement::destroy()
 {
-	if (s_pBlackAndWhiteConversionColor)
+	if (s_pCMvImageEnhancement)
 	{
-		delete s_pBlackAndWhiteConversionColor;
-		s_pBlackAndWhiteConversionColor = nullptr;
+		delete s_pCMvImageEnhancement;
+		s_pCMvImageEnhancement = nullptr;
 	}
 }
 
 //初始化数据
-void CMvBlackAndWhiteConversionColor::initCMvColorArea()
+void CMvImageEnhancement::initCMvImageEnhancement()
 {
 	m_signalEnable = false;
+
 	//初始化所有二级菜单
 	initMenuByTest();
 
@@ -133,13 +134,13 @@ void CMvBlackAndWhiteConversionColor::initCMvColorArea()
 	m_signalEnable = true;
 }
 
-void CMvBlackAndWhiteConversionColor::initMenuByTest()
+void CMvImageEnhancement::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pBlackAndWhiteImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pBlackAndWhiteImageMenuData);
 }
 
-void CMvBlackAndWhiteConversionColor::slotClickPushButton(int row, int col)
+void CMvImageEnhancement::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -155,7 +156,7 @@ void CMvBlackAndWhiteConversionColor::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvBlackAndWhiteConversionColor::soltMenuTriggered(QAction* action)
+void CMvImageEnhancement::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -192,7 +193,7 @@ void CMvBlackAndWhiteConversionColor::soltMenuTriggered(QAction* action)
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvBlackAndWhiteConversionColor::slotGetDetectorNameValue()
+void CMvImageEnhancement::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -211,7 +212,7 @@ void CMvBlackAndWhiteConversionColor::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvBlackAndWhiteConversionColor::slotGetEnableDetectorValue(bool state)
+void CMvImageEnhancement::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -222,7 +223,7 @@ void CMvBlackAndWhiteConversionColor::slotGetEnableDetectorValue(bool state)
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取启动绘制选中信息
-void CMvBlackAndWhiteConversionColor::slotGetStartUpDrawingValue(bool State)
+void CMvImageEnhancement::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
@@ -233,43 +234,43 @@ void CMvBlackAndWhiteConversionColor::slotGetStartUpDrawingValue(bool State)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvBlackAndWhiteConversionColor::slotAmplifyThePictureIsClick()
+void CMvImageEnhancement::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvBlackAndWhiteConversionColor::slotShrinkThePictureIsClick()
+void CMvImageEnhancement::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvBlackAndWhiteConversionColor::slotBestSizeOfPictureIsClick()
+void CMvImageEnhancement::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvBlackAndWhiteConversionColor::slotLockROIIsClick()
+void CMvImageEnhancement::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvBlackAndWhiteConversionColor::slotOnceIsClick()
+void CMvImageEnhancement::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvBlackAndWhiteConversionColor::slotMakeSureIsClick()
+void CMvImageEnhancement::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvBlackAndWhiteConversionColor::slotCancelIsClick()
+void CMvImageEnhancement::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

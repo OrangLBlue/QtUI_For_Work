@@ -1,5 +1,5 @@
-﻿#include "CMvColorConversionBlackAndWhite.h"
-#include "ui_CMvColorConversionBlackAndWhite.h"
+﻿#include "CMvKNNColorSelection.h"
+#include "ui_CMvKNNColorSelection.h"
 #include <QStringList>
 #include <QTableWidgetItem>
 #include <QDebug>
@@ -7,7 +7,6 @@
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
-
 
 ////屏蔽QComboBox控件的鼠标滚动监听
 //void QComboBox::wheelEvent(QWheelEvent *e)
@@ -21,11 +20,11 @@
 //
 //}
 
-CMvColorConversionBlackAndWhite * CMvColorConversionBlackAndWhite::s_pColorConversionBlackAndWhite = nullptr;
+CMvKNNColorSelection * CMvKNNColorSelection::s_pKNNColorSelection = nullptr;
 
-CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent)
+CMvKNNColorSelection::CMvKNNColorSelection(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvColorConversionBlackAndWhite)
+	ui(new Ui::CMvKNNColorSelection)
 { 
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -40,9 +39,8 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	m_pSecondLevelMenu = new CMvSecondLevelMenu;
 
 	m_signalEnable = true;
-
-	//初始化数据
-	initCMvColorConversionBlackAndWhite();
+	//初始化数据 
+	initCMvKNNColorSelection();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -50,12 +48,12 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	//根据彩色图像菜单动作选择，设置单元格显示内容
 	connect(m_pColorImageMenu, SIGNAL(triggered(QAction*)), this, SLOT(soltMenuTriggered(QAction*)));
 
-	//选择颜色空间
-	connect(ui->comboBox_colorSpace, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeColorSpace(int)));
+	//获取当前模板序号 数值
+	connect(ui->comboBox_TemplateSerialNumber, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetTemplateSerialNumberValue(int)));
 
-	//选择颜色通道
-	connect(ui->comboBox_colorChannel, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeColorChannel(int)));
-
+	//点击训练颜色模板
+	connect(ui->pushButton_TrainingInColorTemplates, SIGNAL(clicked()), this, SLOT(slotGetTrainingInColorTemplatesIsClick()));
+	
 	//获取检测器名称
 	connect(ui->plainTextEdit_funcName, SIGNAL(textChanged()), this, SLOT(slotGetDetectorNameValue()));
 
@@ -86,7 +84,6 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	//点击 取消
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
 
-
 	//获取启动绘制选中信息
 	connect(ui->checkBox_valuTrig, SIGNAL(clicked(bool)), this, SLOT(slotGetStartUpDrawingValue(bool)));
 
@@ -94,7 +91,7 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
-CMvColorConversionBlackAndWhite::~CMvColorConversionBlackAndWhite()
+CMvKNNColorSelection::~CMvKNNColorSelection()
 {
 	qDebug() << "析构函数";
 
@@ -103,16 +100,6 @@ CMvColorConversionBlackAndWhite::~CMvColorConversionBlackAndWhite()
 		delete m_pSecondLevelMenu;
 		m_pSecondLevelMenu = nullptr;
 	}
-
-	//if (m_pColorImageMenu)
-	//{
-	//	for (int index = 0; index < m_pColorImageMenu->actions().size(); index++)
-	//	{
-	//		delete m_pColorImageMenu->actions()[0]->menu();
-	//	}
-	//	delete m_pColorImageMenu;
-	//	m_pColorImageMenu = nullptr;
-	//}
 
 	if (m_pColorImageMenuData.size() != 0)
 	{
@@ -129,149 +116,72 @@ CMvColorConversionBlackAndWhite::~CMvColorConversionBlackAndWhite()
 
 
 //单例
-CMvColorConversionBlackAndWhite * CMvColorConversionBlackAndWhite::Instance()
+CMvKNNColorSelection * CMvKNNColorSelection::Instance()
 {
-	if (s_pColorConversionBlackAndWhite == nullptr)
+	if (s_pKNNColorSelection == nullptr)
 	{
-		s_pColorConversionBlackAndWhite = new CMvColorConversionBlackAndWhite;
+		s_pKNNColorSelection = new CMvKNNColorSelection;
 	}
-	return s_pColorConversionBlackAndWhite;
+	return s_pKNNColorSelection;
 
 }
 
 //释放内存
-void CMvColorConversionBlackAndWhite::destroy()
+void CMvKNNColorSelection::destroy()
 {
-	if (s_pColorConversionBlackAndWhite)
+	if (s_pKNNColorSelection)
 	{
-		delete s_pColorConversionBlackAndWhite;
-		s_pColorConversionBlackAndWhite = nullptr;
+		delete s_pKNNColorSelection;
+		s_pKNNColorSelection = nullptr;
 	}
 }
 
-//初始化数据
-void CMvColorConversionBlackAndWhite::initCMvColorConversionBlackAndWhite()
+//初始化数据 
+void CMvKNNColorSelection::initCMvKNNColorSelection()
 {
 	m_signalEnable = false;
-
-	//初始化颜色空间
-	initComboBoxOfColorSpace();
-
-	//初始化颜色通道
-	initComboBoxOfColorChannel();
 
 	//初始化所有二级菜单
 	initMenuByTest();
 
 	//设置检测器名称
 	ui->plainTextEdit_funcName->setPlainText("");
+
+	//设置启用检测器
 	ui->checkBox_enableFunc->setChecked(true);
 
-	//设置颜色空间
-	ui->comboBox_colorSpace->setCurrentIndex(0);
-
-	//设置颜色通道
-	ui->comboBox_colorChannel->setCurrentIndex(0);
-
-	//设置绘图
-	ui->checkBox_valuTrig->setChecked(false);
+	//设置当前模板序号
+	ui->comboBox_TemplateSerialNumber->setCurrentIndex(0);
+	
+	//设置启用绘制
+	ui->checkBox_valuTrig->setChecked(true);
 
 	m_signalEnable = true;
-
 }
 
 
-//初始化颜色空间
-void CMvColorConversionBlackAndWhite::initComboBoxOfColorSpace()
+
+//获取当前模板序号 数值
+void CMvKNNColorSelection::slotGetTemplateSerialNumberValue(int index)
 {
-	//ui->comboBox_colorSpace = new QComboBox(this);
-	ui->comboBox_colorSpace->setObjectName(QStringLiteral("颜色空间"));
-
-	ui->comboBox_colorSpace->clear();
-	QStringList fonts;
-	fonts << "RGB" << "HSV" << "LAB";
-	ui->comboBox_colorSpace->addItems(fonts);
-
-	//ui->tableWidget_input->setCellWidget(0, 1, ui->comboBox_colorSpace);
-}
-
-//初始化颜色通道
-void CMvColorConversionBlackAndWhite::initComboBoxOfColorChannel()
-{
-	//ui->comboBox_colorChannel = new QComboBox(this);
-	ui->comboBox_colorChannel->setObjectName(QStringLiteral("颜色通道"));
-
-	ui->comboBox_colorChannel->clear();
-	QStringList fonts;
-	if (ui->comboBox_colorSpace == nullptr)
-	{
-		initComboBoxOfColorSpace();
+	if (m_signalEnable) {
+		qDebug() << "获取边缘极性检测方式" << ui->comboBox_TemplateSerialNumber->itemText(index);
 	}
-	switch (ui->comboBox_colorSpace->currentIndex())
-	{
-	case 0:
-		fonts << tr("灰度") << tr("红色") << tr("绿色") << tr("蓝色") << tr("黄色") << tr("青色") << tr("品红");
-		break;
-
-	case 1:
-		fonts << tr("色调") << tr("饱和度") << tr("亮度");
-		break;
-
-	case 2:
-		fonts << tr("亮度") << "A" << "B";
-		break;
-
-	default:
-		break;
-	}
-	
-	ui->comboBox_colorChannel->addItems(fonts);
-
-	//ui->tableWidget_input->setCellWidget(0, 2, ui->comboBox_colorChannel);
 }
 
-//选择颜色空间
-void CMvColorConversionBlackAndWhite::slotChangeColorSpace(int index)
+//点击训练颜色模板
+void CMvKNNColorSelection::slotGetTrainingInColorTemplatesIsClick()
 {
-	qDebug() << "选择颜色空间" << ui->comboBox_colorSpace->itemText(index) << " " << index;
-
-	ui->comboBox_colorChannel->blockSignals(true);
-	ui->comboBox_colorChannel->clear();
-	ui->comboBox_colorChannel->blockSignals(false);
-	QStringList fonts;
-	switch (index)
-	{
-	case 0:
-		fonts << tr("灰度") << tr("红色") << tr("绿色") << tr("蓝色") << tr("黄色") << tr("青色") << tr("品红");
-		break;
-
-	case 1:
-		fonts << tr("色调") << tr("饱和度") << tr("亮度");
-		break;
-
-	case 2:
-		fonts << tr("亮度") << "A" << "B";
-		break;
-
-	default:
-		break;
-	}
-	ui->comboBox_colorChannel->addItems(fonts);
+	qDebug() << "点击训练颜色模板";
 }
 
-//选择颜色通道
-void CMvColorConversionBlackAndWhite::slotChangeColorChannel(int index)
+//初始化图片来源菜单
+void CMvKNNColorSelection::initMenuByTest()
 {
-	qDebug() << "选择颜色通道" << ui->comboBox_colorChannel->itemText(index) << " " << index;
-}
-
-void CMvColorConversionBlackAndWhite::initMenuByTest()
-{
-	//初始化图片来源菜单
 	m_pColorImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pColorImageMenuData);
 }
 
-void CMvColorConversionBlackAndWhite::slotClickPushButton(int row, int col)
+void CMvKNNColorSelection::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -287,7 +197,7 @@ void CMvColorConversionBlackAndWhite::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvColorConversionBlackAndWhite::soltMenuTriggered(QAction* action)
+void CMvKNNColorSelection::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -299,7 +209,7 @@ void CMvColorConversionBlackAndWhite::soltMenuTriggered(QAction* action)
 	if (m_iCol == 1 && m_iRow == 0)
 	{
 		allMenuData = m_pColorImageMenuData ;
-		ui->tableWidget_input->item(m_iRow, m_iCol)->setBackground(Qt::yellow);
+		ui->tableWidget_input->item(m_iRow, m_iCol)->setBackground(Qt::transparent);
 	}
 		
 	for (auto it = allMenuData.cbegin(); it != allMenuData.cend(); ++it)
@@ -325,7 +235,7 @@ void CMvColorConversionBlackAndWhite::soltMenuTriggered(QAction* action)
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvColorConversionBlackAndWhite::slotGetDetectorNameValue()
+void CMvKNNColorSelection::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -344,7 +254,7 @@ void CMvColorConversionBlackAndWhite::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvColorConversionBlackAndWhite::slotGetEnableDetectorValue(bool state)
+void CMvKNNColorSelection::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -355,7 +265,7 @@ void CMvColorConversionBlackAndWhite::slotGetEnableDetectorValue(bool state)
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取启动绘制选中信息
-void CMvColorConversionBlackAndWhite::slotGetStartUpDrawingValue(bool State)
+void CMvKNNColorSelection::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
@@ -366,43 +276,43 @@ void CMvColorConversionBlackAndWhite::slotGetStartUpDrawingValue(bool State)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvColorConversionBlackAndWhite::slotAmplifyThePictureIsClick()
+void CMvKNNColorSelection::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvColorConversionBlackAndWhite::slotShrinkThePictureIsClick()
+void CMvKNNColorSelection::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvColorConversionBlackAndWhite::slotBestSizeOfPictureIsClick()
+void CMvKNNColorSelection::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvColorConversionBlackAndWhite::slotLockROIIsClick()
+void CMvKNNColorSelection::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvColorConversionBlackAndWhite::slotOnceIsClick()
+void CMvKNNColorSelection::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvColorConversionBlackAndWhite::slotMakeSureIsClick()
+void CMvKNNColorSelection::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvColorConversionBlackAndWhite::slotCancelIsClick()
+void CMvKNNColorSelection::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

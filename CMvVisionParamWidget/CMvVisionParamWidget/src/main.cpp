@@ -1,21 +1,16 @@
 ﻿#include <QFile>
 #include <QApplication>
 
-#include "CMvFindRoundParamWidget.h"
-#include "CMvFindLineParamWidget.h"
-#include "CMvColorImagesCut.h"
-#include "CMvBlackAndWhiteConversionColor.h"
-#include "CMvColorConversionBlackAndWhite.h"
-#include "CMvFourArithmeticOperation.h"
-#include "CMvBlobRapidDetection.h"
+
+#include "CMvTestWidget.h"
 
 #ifndef NDEBUG
-#include "vld.h"
+//#include "vld.h"
 #endif
 
 int main(int argc, char *argv[])
 {
-	int widgetType = 6;
+	//int widgetType = 6;
 	QWidget *pTestWidget = nullptr;
     QApplication a(argc, argv);
 
@@ -31,51 +26,8 @@ int main(int argc, char *argv[])
 		file.close();
 	}//if (file.open(QFile::ReadOnly))
 #endif
+	pTestWidget = CMvTestWidget::Instance();
 
-	switch (widgetType)
-	{
-	case 0 ://find line
-	{
-		pTestWidget = CMvFindLineParamWidget::Instance();
-		////pTestWidget->setWindowTitle("查找直线");
-	}break;
-	case 1://find round
-	{
-		pTestWidget = CMvFindRoundParamWidget::Instance();
-		//pTestWidget->setWindowTitle("查找圆");
-	}break;
-	case 2:
-	{
-		pTestWidget = CMvColorImagesCut::Instance();
-		//pTestWidget->setWindowTitle("裁剪图片");
-	}break;
-	case 3:
-	{
-		pTestWidget = CMvColorConversionBlackAndWhite::Instance();
-		//pTestWidget->setWindowTitle("彩色转黑白");
-	}break;
-	case 4:
-	{
-		pTestWidget = CMvBlackAndWhiteConversionColor::Instance();
-		//pTestWidget->setWindowTitle("黑白转彩色");
-	}break;
-	case 5:
-	{
-		pTestWidget = CMvFourArithmeticOperation::Instance();
-		//pTestWidget->setWindowTitle("四则运算");
-	}break;
-	case 6:
-	{
-		pTestWidget = CMvBlobRapidDetection::Instance();
-		//pTestWidget->setWindowTitle("Blob快速检测");
-	}break;
-	default:
-		break;
-	}//switch (widgetType)
-
-	if (pTestWidget)
-	{
-		pTestWidget->show();
-	}//if (pTestWidget)
+	pTestWidget->show();
     return a.exec();
 }

@@ -1,5 +1,5 @@
-#ifndef CMV_COLOR_IMAGES
-#define CMV_COLOR_IMAGES
+#ifndef CMV_IMAGES_CUT
+#define CMV_IMAGES_CUT
 
 
 #include <QtWidgets/QWidget>
@@ -7,10 +7,10 @@
 #include "CMvSecondLevelMenu.h"
 
 namespace Ui {
-	class CMvColorImagesCut;
+	class CMvImagesCut;
 }
 
-class CMvColorImagesCut : public QWidget
+class CMvImagesCut : public QWidget
 {
     Q_OBJECT
 
@@ -19,13 +19,13 @@ public:
 	//void initPushButton();
 
 	//单实例
-	static CMvColorImagesCut * Instance();
+	static CMvImagesCut * Instance();
 
 	//释放内存
 	static void destroy();
 
 	//初始化数据
-	void initCMvColorImagesCut();
+	void initCMvImagesCut();
 
 	void initMenuByTest();
 
@@ -105,13 +105,13 @@ private slots:
 	void slotGetStartUpDrawingValue(bool State);
 
 private:
-    Ui::CMvColorImagesCut * ui;
+    Ui::CMvImagesCut * ui;
 	
-	static CMvColorImagesCut*  s_pcolorImages;
+	static CMvImagesCut*  s_pimagesCut;
 
-	CMvColorImagesCut(QWidget *parent = Q_NULLPTR);
+	CMvImagesCut(QWidget *parent = Q_NULLPTR);
 	//析构函数
-	~CMvColorImagesCut();
+	~CMvImagesCut();
 
 	bool m_signalEnable;
 

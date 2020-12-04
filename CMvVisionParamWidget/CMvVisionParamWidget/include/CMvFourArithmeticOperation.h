@@ -26,6 +26,9 @@ public:
 	//初始化菜单
 	void initMenuByTest();
 
+	//初始化数据 
+	void initCMvFourArithmeticOperation();
+
 private slots:
 
 	//根据点击位置选择弹框

@@ -1,5 +1,5 @@
-﻿#ifndef CMV_FIND_ROUND_PARAM
-#define CMV_FIND_ROUND_PARAM 
+﻿#ifndef CMV_COLOR_SELECTION
+#define CMV_COLOR_SELECTION 
 
 #include "CMvSecondLevelMenu.h"
 #include <QWidget>
@@ -10,16 +10,16 @@
 #include <QMutex>
 
 namespace Ui {
-	class CMvFindRoundParamWidget;
+	class CMvColorSelection;
 }
 
-class CMvFindRoundParamWidget : public QWidget
+class CMvColorSelection : public QWidget
 {
     Q_OBJECT
 
 public:
 	//单例化
-	static CMvFindRoundParamWidget* Instance();
+	static CMvColorSelection* Instance();
 	//释放内存
 	static void destroy();
 
@@ -27,8 +27,9 @@ public:
 	void initMenu();
 	void initMenuByTest();
 
+
 	//初始化数据
-	void initCMvFindRoundParamWidget();
+	void initCMvColorSelection();
 	//void testInit();
 
 private slots:
@@ -41,12 +42,6 @@ private slots:
 	//获取启用检测器选中信息
 	void slotGetEnableDetectorValue(bool state);
 
-	//获取ROI来源
-	void slotGetROISourcesValue(int index);
-
-	//获取自己创建选中信息
-	void slotGetCreateYourselfValue(bool state);
-
 
 	/*===============================================================================================*\
 	**=================================二级菜单相关槽函数声明========================================**
@@ -57,86 +52,33 @@ private slots:
 	//根据点击位置选择弹框
 	void slotClickPushButton(int, int);
 
-
 	/*===============================================================================================*\
 	**=======================================结果判断槽函数==========================================**
 	\*===============================================================================================*/
-	//获取边缘阈值 数值
-	void slotGetEdgeThresholdtValue(int index);
+	//获取颜色空间
+	void slotGetColorSpaceValue(int index);
 
-	//获取边缘梯度阈值 数值
-	void slotGetEdgeGradientThresholdtValue(int Value);
-
-	//获取边缘极性 数值
-	void slotGetCoordinateInputValue(int index);
-
-	//获取扫描点数
-	void slotGetScanPointsValue(int Value);
-
-	//获取抽样点数 数值
-	void slotGetSamplingPointsValue(int Value);
-
-	//获取检测方向 数值
-	void slotGetDirectionOfDetectionValue(int index);
-
-	//获取拟合范围 数值
-	void slotGetScopeOfFitValue(int Value);
-
-	//获取拟合误差限制 数值
-	void slotGetFittingErrorlimitsValue(int Value);
-
-	//获取半径下限 数值
-	void slotGetMinRoundRadiusValue(int Value);
-
-	//获取半径上限 数值
-	void slotGetMaxRoundRadiusValue(int Value);
-
-	//获取开启凹凸性检测选中信息
-	void slotGetConcaveConvexIsChecked(bool State);
-
-	//获取最小深度 数值
-	void slotGetMinimumDepthValue(double Value);
-
-	//获取最小抽样点数 数值
-	void slotGetMinimumSamplingPointsValue(double Value);
-
-	//点击显示凹凸点信息
+	//点击显示颜色直方图
 	void slotGetUnqualifiedPiontIsClick();
 
+	//获取启用杂点剔除选中信息
+	void slotGetMiscellaneousEliminationIsChecked(bool State);
 
-	/*===============================================================================================*\
-	**=======================================掩膜设置槽函数==========================================**
-	\*===============================================================================================*/
-	//检测区域的掩膜 数值
-	void slotMaskOfDetectionAreaValue(int Index);
+	//获取面积上限 数值
+	void slotGetMaxAreaValue(double Value);
 
-	//获取编辑方式 数值
-	void slotEditModeValue(int Index);
+	//获取面积下限 数值
+	void slotGetMinAreaValue(double Value);
 
-	//获取画笔尺寸 数值
-	void slotBrushSizeValue(int Value);
-
-	//点击清空掩膜
-	void slotEmptyMaskIsClick();
-
-	//点击掩盖所有
-	void slotCoverUpEverythingClick();
-
-	//点击保存修改
-	void slotSaveChangesClick();
+	//获取背景图像类型 数值
+	void slotGetBackgroundTypeValue(int index);
 
 
 	/*===============================================================================================*\
 	**=======================================结果绘制页面槽函数======================================**
 	\*===============================================================================================*/
-	//获取线条宽度 数值
-	void slotGetLineWidthValue(int Value);
-
 	//获取启动绘制选中信息
 	void slotGetStartUpDrawingValue(bool State);
-
-	//获取线条颜色 数值
-	void slotGetLineColourValue(int Index);
 
 
 	/*===============================================================================================*\
@@ -164,16 +106,14 @@ private slots:
 	void slotCancelIsClick();
 	
 private:
-	Ui::CMvFindRoundParamWidget *ui;
+	Ui::CMvColorSelection *ui;
 
-	static CMvFindRoundParamWidget* s_pFindRoundParamWidget;
+	static CMvColorSelection* s_pColorSelection;
 
-	CMvFindRoundParamWidget(QWidget *parent = Q_NULLPTR);
-	~CMvFindRoundParamWidget();
+	CMvColorSelection(QWidget *parent = Q_NULLPTR);
+	~CMvColorSelection();
 
 	bool m_signalEnable;
-
-	int m_maskCount;//记录掩膜数量
 	
 	/*===============================================================================================*\
 	**===============================二级菜单相关成员变量定义========================================**
@@ -185,14 +125,9 @@ private:
 	CMvSecondLevelMenu *m_pSecondLevelMenu;//定义类
 
 	QMenu* m_pImageSourceMenu;//图片来源菜单
-	QMenu* m_pROISourceMenu;//ROI来源菜单
-	QMenu* m_pROIPositionUpdatingMenu;//ROI位置修正菜单
-	QMenu* m_pMaskSourceMenu;//掩膜来源菜单
 
 	QVector<CMvSecondLevelMenu::cyAction*>  m_allImageSourceMenuData;//图片来源菜单数据
-	QVector<CMvSecondLevelMenu::cyAction*>  m_allROISourceMenuData;////ROI来源菜单数据
-	QVector<CMvSecondLevelMenu::cyAction*>  m_allROIPositionUpdatingMenuData;//ROI位置修正菜单数据
-	QVector<CMvSecondLevelMenu::cyAction*>  m_allMaskSourceMenuData;//掩膜来源菜单数据
+
 };
 
 #endif // _DEBUG

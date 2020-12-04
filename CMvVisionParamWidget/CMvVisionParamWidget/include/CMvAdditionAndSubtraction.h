@@ -1,41 +1,34 @@
-﻿#ifndef CMV_COLOR_CONVERSION_BLACK_AND_WHITE
-#define CMV_COLOR_CONVERSION_BLACK_AND_WHITE
+﻿#ifndef CMV_ADDITION_AND_SUBTRACTION
+#define CMV_ADDITION_AND_SUBTRACTION
 
 #include <QtWidgets/QWidget>
 #include "CMvSecondLevelMenu.h"
 
 namespace Ui {
-	class CMvColorConversionBlackAndWhite;
+	class CMvAdditionAndSubtraction;
 }
 
-class CMvColorConversionBlackAndWhite : public QWidget
+class CMvAdditionAndSubtraction : public QWidget
 {
 	Q_OBJECT
 public:
     
 	//单列
-	static CMvColorConversionBlackAndWhite * Instance();
+	static CMvAdditionAndSubtraction * Instance();
 	
 	//释放内存
 	static void destroy();
 
-	//初始化数据
-	void initCMvColorConversionBlackAndWhite();
+	//初始化数据 
+	void initCMvAdditionAndSubtraction();
 
-	//初始化颜色空间
-	void initComboBoxOfColorSpace();
-
-	//初始化颜色通道
-	void initComboBoxOfColorChannel();
-
+	//初始化二级菜单
 	void initMenuByTest();
 
 private slots:
-	//选择颜色空间
-	void slotChangeColorSpace(int index);
 
-	//选择颜色通道
-	void slotChangeColorChannel(int index);
+	//获取当前算法选择 数值
+	void slotGetAlgorithmSelectionValue(int index);
 
 	//根据点击位置选择弹框
 	void slotClickPushButton(int row, int col);
@@ -83,9 +76,9 @@ private slots:
 	void slotGetEnableDetectorValue(bool state);
 
 private:
-    Ui::CMvColorConversionBlackAndWhite * ui;
+    Ui::CMvAdditionAndSubtraction * ui;
 
-	static CMvColorConversionBlackAndWhite * s_pColorConversionBlackAndWhite;
+	static CMvAdditionAndSubtraction * s_pCMvAdditionAndSubtraction;
 
 	// 记录当前点击的位置
 	int m_iRow;
@@ -93,14 +86,18 @@ private:
 
 	bool m_signalEnable;
 
+	int m_AlgorithmSelectionIndex;
+
 	CMvSecondLevelMenu *m_pSecondLevelMenu;//定义类
 
-	QMenu* m_pColorImageMenu;//彩色图像菜单
+	QMenu* m_pMakeImageMenu;//被处理图像菜单
+	QMenu* m_pPendingImageMenu;//待处理图像菜单
 
-	QVector<CMvSecondLevelMenu::cyAction*>  m_pColorImageMenuData;//彩色图像菜单数据
+	QVector<CMvSecondLevelMenu::cyAction*>  m_pMakeImageMenuData;//被处理图像菜单数据
+	QVector<CMvSecondLevelMenu::cyAction*>  m_pPendingImageMenuData;//待处理图像菜单数据
 
-	CMvColorConversionBlackAndWhite(QWidget *parent = Q_NULLPTR);
-	~CMvColorConversionBlackAndWhite();
+	CMvAdditionAndSubtraction(QWidget *parent = Q_NULLPTR);
+	~CMvAdditionAndSubtraction();
 };
 
 #endif

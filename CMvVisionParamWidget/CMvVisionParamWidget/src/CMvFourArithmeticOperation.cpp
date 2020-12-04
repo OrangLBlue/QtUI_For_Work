@@ -17,14 +17,15 @@ CMvFourArithmeticOperation::CMvFourArithmeticOperation(QWidget *parent)
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
 	setWindowModality(Qt::WindowModal);
+
 	ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//设置单元格 等宽
 	ui->tableWidget_input->setItem(0, 0, new QTableWidgetItem);
 	ui->tableWidget_input->item(0, 0)->setBackground(Qt::red);
-	ui->tableWidget_input->item(0, 0)->setText("未连接");
+	ui->tableWidget_input->item(0, 0)->setText("某个检测器的输出");
 
 	ui->tableWidget_input->setItem(0, 2, new QTableWidgetItem);
 	ui->tableWidget_input->item(0, 2)->setBackground(Qt::red);
-	ui->tableWidget_input->item(0, 2)->setText("未连接");
+	ui->tableWidget_input->item(0, 2)->setText("某个检测器的输出");
 
 	m_pSecondLevelMenu = new CMvSecondLevelMenu;
 
@@ -33,9 +34,8 @@ CMvFourArithmeticOperation::CMvFourArithmeticOperation(QWidget *parent)
 	m_iCol = -1;
 	m_iRow = -1;
 
-	initcomboBoxOfOperationChange();
-
-	initMenuByTest();
+	//初始化数据 
+	initCMvFourArithmeticOperation();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -46,11 +46,11 @@ CMvFourArithmeticOperation::CMvFourArithmeticOperation(QWidget *parent)
 	//根据输入数值二菜单动作选择，设置单元格显示内容
 	connect(m_pvalue2Menu, SIGNAL(triggered(QAction*)), this, SLOT(slotMenuTriggered(QAction*)));
 
-	
-//选择四则运算
+	//选择四则运算
 	connect(m_comboBox_operationChange, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeOperation(int)));
+	
 	//设置关闭窗体时释放资源
-	setAttribute(Qt::WA_DeleteOnClose);
+	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
 //析构函数
@@ -105,6 +105,26 @@ void CMvFourArithmeticOperation::destroy()
 	}
 }
 
+//初始化数据 
+void CMvFourArithmeticOperation::initCMvFourArithmeticOperation()
+{
+	m_signalEnable = false;
+
+	//初始化四则运算选择框
+	initcomboBoxOfOperationChange();
+
+	//初始化二级菜单
+	initMenuByTest();
+
+	//设置运算法则
+	 m_comboBox_operationChange->setCurrentIndex(0);
+
+	 m_signalEnable = true;
+}
+
+
+
+
 //初始化四则运算选择框
 void CMvFourArithmeticOperation::initcomboBoxOfOperationChange()
 {
@@ -113,13 +133,14 @@ void CMvFourArithmeticOperation::initcomboBoxOfOperationChange()
 
 	m_comboBox_operationChange->clear();
 	QStringList fonts;
-	fonts << tr("未选中算法") << "+" << "-" << "*" << "/";
+	fonts << "                     +" << "                     -" << "                     *" << "                     /";
 	m_comboBox_operationChange->addItems(fonts);
+	//m_comboBox_operationChange->setProperty(36);
 
 	ui->tableWidget_input->setCellWidget(0, 1, m_comboBox_operationChange);
 }
 
-
+//初始化初始化二级菜单
 void CMvFourArithmeticOperation::initMenuByTest()
 {
 	//初始化数值一菜单
