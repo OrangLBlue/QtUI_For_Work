@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CMvColorSelection</class>
- <widget class="QWidget" name="CMvColorSelection">
+ <class>CMvCannyEdgeExtracting</class>
+ <widget class="QWidget" name="CMvCannyEdgeExtracting">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>颜色选定</string>
+   <string>Canny边缘提取</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="leftMargin">
@@ -346,237 +346,58 @@
         <attribute name="title">
          <string>参数设置</string>
         </attribute>
-        <widget class="QLabel" name="label_tcolorHistogram">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_minThreshold">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <double>1000.000000000000000</double>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_maxThreshold">
          <property name="geometry">
           <rect>
            <x>130</x>
-           <y>20</y>
+           <y>30</y>
            <width>111</width>
            <height>31</height>
           </rect>
          </property>
          <property name="text">
-          <string>颜色直方图：</string>
+          <string>高阈值：</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_colorSpace">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>颜色空间：</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_colorSpace">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>101</width>
-           <height>31</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>RBG</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>HSV</string>
-          </property>
-         </item>
-        </widget>
-        <widget class="QComboBox" name="comboBox_backgroundType">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>300</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>101</width>
-           <height>31</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>黑色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>白色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>灰色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>红色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>绿色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>蓝色背景</string>
-          </property>
-         </item>
-        </widget>
-        <widget class="QLabel" name="label_titleJudged">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>120</y>
-           <width>381</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 120));
-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="text">
-          <string>  结果判定</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="checkBox_miscellaneousElimination">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>180</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>启用杂点剔除</string>
-         </property>
-        </widget>
-        <widget class="QWidget" name="widget_miscellaneousElimination" native="true">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>190</y>
-           <width>231</width>
-           <height>81</height>
-          </rect>
-         </property>
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_maxArea">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>40</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="maximum">
-           <double>50000000.000000000000000</double>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_maxArea">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>10</y>
-            <width>111</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>面积上限：</string>
-          </property>
-         </widget>
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_minArea">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>40</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="maximum">
-           <double>50000000.000000000000000</double>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_minArea">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>10</y>
-            <width>111</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>面积下限：</string>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QPushButton" name="pushButton_colorHistogram">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_maxThreshold">
          <property name="geometry">
           <rect>
            <x>130</x>
-           <y>50</y>
+           <y>60</y>
            <width>101</width>
            <height>31</height>
           </rect>
          </property>
-         <property name="text">
-          <string>显示颜色直方图</string>
+         <property name="maximum">
+          <double>1000.000000000000000</double>
          </property>
         </widget>
-        <widget class="QLabel" name="label_backgroundType">
+        <widget class="QLabel" name="label_minThreshold">
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>270</y>
-           <width>101</width>
+           <y>30</y>
+           <width>111</width>
            <height>31</height>
           </rect>
          </property>
          <property name="text">
-          <string>背景图像类型：</string>
+          <string>低阈值：</string>
          </property>
         </widget>
-        <zorder>widget_miscellaneousElimination</zorder>
-        <zorder>label_tcolorHistogram</zorder>
-        <zorder>label_colorSpace</zorder>
-        <zorder>comboBox_colorSpace</zorder>
-        <zorder>comboBox_backgroundType</zorder>
-        <zorder>label_titleJudged</zorder>
-        <zorder>checkBox_miscellaneousElimination</zorder>
-        <zorder>pushButton_colorHistogram</zorder>
-        <zorder>label_backgroundType</zorder>
        </widget>
        <widget class="QWidget" name="tab_4">
         <attribute name="title">

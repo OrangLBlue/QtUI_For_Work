@@ -132,6 +132,31 @@
           <string>乘除法处理</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>手动二值化</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>自适应二值化</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>去噪二值化</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Canny边缘提取</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>图像缺陷</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>

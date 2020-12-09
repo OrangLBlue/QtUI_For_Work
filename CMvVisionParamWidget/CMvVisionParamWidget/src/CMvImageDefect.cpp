@@ -1,33 +1,32 @@
-﻿#include "CMvBlobRapidDetection.h"
-#include "ui_CMvBlobRapidDetection.h"
+﻿#include "CMvImageDefect.h"
+#include "ui_CMvImageDefect.h"
 #include <QCheckBox>
 #include <QDebug>
-#include <QList>
-#include <time.h>
 #include <QTableWidgetItem>
 
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
 
-//屏蔽QComboBox控件的鼠标滚动监听
-void QComboBox::wheelEvent(QWheelEvent *e)
-{
 
-}
+////屏蔽QComboBox控件的鼠标滚动监听
+//void QComboBox::wheelEvent(QWheelEvent *e)
+//{
+//
+//}
+//
+////屏蔽SpinBox控件的鼠标滚动监听
+//void QAbstractSpinBox::wheelEvent(QWheelEvent *e)
+//{
+//
+//}
+//
 
-//屏蔽SpinBox控件的鼠标滚动监听
-void QAbstractSpinBox::wheelEvent(QWheelEvent *e)
-{
+CMvImageDefect* CMvImageDefect::s_pCMvImageDefect = nullptr;
 
-}
-
-
-CMvBlobRapidDetection* CMvBlobRapidDetection::s_pBlobRapidDetection = nullptr;
-
-CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
+CMvImageDefect::CMvImageDefect(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvBlobRapidDetection)
+	ui(new Ui::CMvImageDefect)
 {
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -44,12 +43,9 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 	**====================================输入设置相关函数及信号与槽的链接===========================**
 	**=================================二级菜单相关函数及信号与槽的链接==============================**
 	\*===============================================================================================*/
-	
-	//初始化参数
-	initBlobRapidDetection();
 
-	//初始化所有二级菜单
-	initMenuByTest();
+	//初始化数据
+	initCMvImageDefect();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -82,6 +78,18 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 	/*===============================================================================================*\
 	**====================================参数设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
+	//点击编辑模板
+	connect(ui->pushButton_editTemplate, SIGNAL(clicked()), this, SLOT(slotGetEditTemplateIsClick()));
+
+	//点击显示差异图像
+	connect(ui->pushButton_ImageDifferences, SIGNAL(clicked()), this, SLOT(slotGetImageDifferencesIsClick()));
+
+	//点击显示缺陷信息
+	connect(ui->pushButton_defectiveInformation, SIGNAL(clicked()), this, SLOT(slotGetDefectiveInformationIsClick()));
+
+	//获取缺陷类型 数值
+	connect(ui->comboBox_defectType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetDefectTypeValue(int)));
+
 	//获取灰度上限
 	connect(ui->spinBox_grayLevelMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrayLevelMaxValue(int)));
 
@@ -93,18 +101,6 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 
 	//获取面积下限
 	connect(ui->doubleSpinBox_areaMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetAreaMinValue(double)));
-
-	//获取中心x上限
-	connect(ui->spinBox_centerXMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterXMaxValue(int)));
-
-	//获取中心x下限
-	connect(ui->spinBox_centerXMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterXMinValue(int)));
-
-	//获取中心y上限
-	connect(ui->spinBox_centerYMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterYMaxValue(int)));
-
-	//获取中心y下限
-	connect(ui->spinBox_centerYMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterYMinValue(int)));
 
 	//获取最小矩形宽度上限
 	connect(ui->doubleSpinBox_rectangleMaxWidth, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMaxWidthValue(double)));
@@ -118,37 +114,14 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 	//获取最小矩形高度下限
 	connect(ui->doubleSpinBox_rectangleMinHight, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMinHightValue(double)));
 
-	//获取个数上限
-	connect(ui->spinBox_numberMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetNumberMaxValue(int)));
-
-	//获取个数下限
-	connect(ui->spinBox_numberMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetNumberMinValue(int)));
-
-	//获取总面积上限
-	connect(ui->spinBox_grossAreaMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrossAreaMaxValue(int)));
-
-	//获取总面积下限
-	connect(ui->spinBox_grossAreaMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrossAreaMinValue(int)));
-
-	//connect(ui->pushButton_unqualifiedPiont, SIGNAL(clicked()), this, SLOT(slotGetUnqualifiedPiontIsClick()));
-
 	//开启面积筛选
 	connect(ui->checkBox_area, SIGNAL(clicked(bool)), this, SLOT(slotGetAreaMinIsChecked(bool)));
 
-	//开启中心x筛选
-	connect(ui->checkBox_centerX, SIGNAL(clicked(bool)), this, SLOT(slotGetCenterXMaxIsChecked(bool)));
-	
-	//开启中心y筛选
-	connect(ui->checkBox_centerY, SIGNAL(clicked(bool)), this, SLOT(slotGetCenterYMaxIsChecked(bool)));
-
 	//开启矩形宽度筛选
-	connect(ui->checkBox_rectangleWidth, SIGNAL(clicked(bool)), this, SLOT(slotGetRectangleMaxWidthIsChecked(bool)));	
+	connect(ui->checkBox_rectangleWidth, SIGNAL(clicked(bool)), this, SLOT(slotGetRectangleMaxWidthIsChecked(bool)));
 
 	//开启矩形高度筛选
 	connect(ui->checkBox_rectangleHight, SIGNAL(clicked(bool)), this, SLOT(slotGetRectangleMaxHightIsChecked(bool)));
-	
-
-
 	/*===============================================================================================*\
 	**====================================掩膜设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
@@ -209,13 +182,11 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
 
 	//设置关闭窗体时释放资源
-	//setAttribute(Qt::WA_QuitOnClose);
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
-
 //析构函数
-CMvBlobRapidDetection::~CMvBlobRapidDetection()
+CMvImageDefect::~CMvImageDefect()
 {
 	qDebug() << "析构函数";
 
@@ -225,6 +196,47 @@ CMvBlobRapidDetection::~CMvBlobRapidDetection()
 		m_pSecondLevelMenu = nullptr;
 	}
 
+	if (m_pImageSourceMenu)
+	{
+		for (int index = 0; index < m_pImageSourceMenu->actions().size(); index++)
+		{
+			delete m_pImageSourceMenu->actions()[0]->menu();
+		}
+		delete m_pImageSourceMenu;
+		m_pImageSourceMenu = nullptr;
+	}
+
+	if (m_pROISourceMenu)
+	{
+		int roiMenuSize = m_pROISourceMenu->actions().size();
+		for (int index = 0; index < roiMenuSize; ++index)
+		{
+			qDebug()<< m_pROISourceMenu->actions()[0]->menu()->title();
+			delete m_pROISourceMenu->actions()[0]->menu();
+		}
+		delete m_pROISourceMenu;
+		m_pROISourceMenu = nullptr;
+	}
+
+	if (m_pROIPositionUpdatingMenu)
+	{
+		for (int index = 0; index < m_pROIPositionUpdatingMenu->actions().size(); index++)
+		{
+			delete m_pROIPositionUpdatingMenu->actions()[0]->menu();
+		}
+		delete m_pROIPositionUpdatingMenu;
+		m_pROIPositionUpdatingMenu = nullptr;
+	}
+
+	if (m_pMaskSourceMenu)
+	{
+		for (int index = 0; index < m_pMaskSourceMenu->actions().size(); index++)
+		{
+			delete m_pMaskSourceMenu->actions()[0]->menu();
+		}
+		delete m_pMaskSourceMenu;
+		m_pMaskSourceMenu = nullptr;
+	}
 
 	if (m_allImageSourceMenuData.size() != 0)
 	{
@@ -271,34 +283,43 @@ CMvBlobRapidDetection::~CMvBlobRapidDetection()
 
 
 //单例化
-CMvBlobRapidDetection* CMvBlobRapidDetection::Instance()
+CMvImageDefect* CMvImageDefect::Instance()
 {
-	if (s_pBlobRapidDetection == nullptr) {
-		s_pBlobRapidDetection = new CMvBlobRapidDetection;
+	if (s_pCMvImageDefect == nullptr) {
+		s_pCMvImageDefect = new CMvImageDefect;
 	}
-	return s_pBlobRapidDetection;
+	return s_pCMvImageDefect;
 }
 
 
 //释放内存
-void CMvBlobRapidDetection::destroy()
+void CMvImageDefect::destroy()
 {
-	if (s_pBlobRapidDetection)
+	if (s_pCMvImageDefect)
 	{
-		delete s_pBlobRapidDetection;
-		s_pBlobRapidDetection = nullptr;
-	}//if (c_pUniqueShowMessage)
+		delete s_pCMvImageDefect;
+		s_pCMvImageDefect = nullptr;
+	}//if (s_pCMvImageDefect)
 }
 
-//初始化界面
-void CMvBlobRapidDetection::initBlobRapidDetection()
+//初始化数据
+void CMvImageDefect::initCMvImageDefect()
 {
 	m_signalEnable = false;
+
+	//初始化所有二级菜单
+	initMenuByTest();
+
 	//设置检测器名称
 	ui->plainTextEdit_funcName->setPlainText("");
+	ui->checkBox_enableFunc->setChecked(true);
 
 	//设置ROI来源
 	ui->comboBox_imageSource->setCurrentIndex(0);
+	ui->checkBox_roiCreat->setChecked(true);
+
+	//设置缺陷类型
+	ui->comboBox_defectType->setCurrentIndex(0);
 
 	//设置灰度上限
 	ui->spinBox_grayLevelMax->setValue(0);
@@ -307,22 +328,10 @@ void CMvBlobRapidDetection::initBlobRapidDetection()
 	ui->spinBox_grayLevelMin->setValue(0);
 
 	//设置面积上限
-	ui-> doubleSpinBox_areaMax->setValue(0);
+	ui->doubleSpinBox_areaMax->setValue(0);
 
 	//设置面积下限
 	ui->doubleSpinBox_areaMin->setValue(0);
-
-	//设置中心x上限
-	ui->spinBox_centerXMax->setValue(0);
-
-	//设置中心x下限
-	ui->spinBox_centerXMin->setValue(0);
-
-	//设置中心y上限
-	ui->spinBox_centerYMax->setValue(0);
-
-	//设置中心y下限
-	ui->spinBox_centerYMin->setValue(0);
 
 	//设置最小矩形宽度上限
 	ui->doubleSpinBox_rectangleMaxWidth->setValue(0);
@@ -336,29 +345,9 @@ void CMvBlobRapidDetection::initBlobRapidDetection()
 	//设置最小矩形高度下限
 	ui->doubleSpinBox_rectangleMinHight->setValue(0);
 
-	//设置个数上限
-	ui->spinBox_numberMax->setValue(0);
-
-	//设置个数下限
-	ui->spinBox_numberMin->setValue(0);
-
-	//设置总面积上限
-	ui->spinBox_grossAreaMax->setValue(0);
-
-	//设置总面积下限
-	ui->spinBox_grossAreaMin->setValue(0);
-
 	//设置面积筛选中
 	ui->checkBox_area->setChecked(false);
 	ui->groupBox_area->setEnabled(false);
-
-	//设置中心x选中
-	ui->checkBox_centerX->setChecked(false);
-	ui->groupBox_centerX->setEnabled(false);
-
-	//设置中心y选中
-	ui->checkBox_centerY->setChecked(false);
-	ui->groupBox_centerY->setEnabled(false);
 
 	//设置斜矩形宽度筛选选中
 	ui->checkBox_rectangleWidth->setChecked(false);
@@ -368,16 +357,14 @@ void CMvBlobRapidDetection::initBlobRapidDetection()
 	ui->checkBox_rectangleHight->setChecked(false);
 	ui->groupBox_rectangleHight->setEnabled(false);
 
-
 	//设置掩膜
 	ui->comboBox_dEtectionMask->setCurrentIndex(0);
 	ui->comboBox_editMode->setCurrentIndex(0);
 	ui->spinBox_lightTime->setValue(5);
 
-	if (ui->comboBox_dEtectionMask->currentIndex() == 0) {
+	if (ui->comboBox_dEtectionMask->currentIndex() == 0){
 		ui->widget_Mask->setEnabled(false);
-	}
-	else {
+	}else{
 		ui->widget_Mask->setEnabled(false);
 	}
 
@@ -388,14 +375,14 @@ void CMvBlobRapidDetection::initBlobRapidDetection()
 	ui->label_lineWidth->setEnabled(ui->checkBox_valuTrig->isChecked());
 	ui->label_lineColour->setEnabled(ui->checkBox_valuTrig->isChecked());
 
-	m_signalEnable = true;	
+	m_signalEnable = true;
 }
 
 /*===============================================================================================*\
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvBlobRapidDetection::slotGetDetectorNameValue()
+void CMvImageDefect::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -414,7 +401,7 @@ void CMvBlobRapidDetection::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvBlobRapidDetection::slotGetEnableDetectorValue(bool state)
+void CMvImageDefect::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -422,7 +409,7 @@ void CMvBlobRapidDetection::slotGetEnableDetectorValue(bool state)
 }
 
 //获取ROI来源
-void CMvBlobRapidDetection::slotGetROISourcesValue(int index)
+void CMvImageDefect::slotGetROISourcesValue(int index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取ROI来源选项" << ui->comboBox_imageSource->itemText(index);
@@ -430,19 +417,18 @@ void CMvBlobRapidDetection::slotGetROISourcesValue(int index)
 }
 
 //获取自己创建选中信息
-void CMvBlobRapidDetection::slotGetCreateYourselfValue(bool state)
+void CMvImageDefect::slotGetCreateYourselfValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取自己创建选中信息" << ui->checkBox_roiCreat->isChecked();
 	}
 }
 
-
 /*===============================================================================================*\
 **======================================二级菜单槽函数===========================================**
 \*===============================================================================================*/
 ////初始化二级菜单
-void CMvBlobRapidDetection::initMenu()
+void CMvImageDefect::initMenu()
 {
 //	//初始化图片来源菜单
 //	m_ImageSourceMenu = SecondLevelMenu->initSecondLevelMenu(m_AllImageSourceMenuData, ui->tableWidget_input);
@@ -457,7 +443,7 @@ void CMvBlobRapidDetection::initMenu()
 //	m_MaskSourceMenu = SecondLevelMenu->initSecondLevelMenu(m_AllMaskSourceMenuData, ui->tableWidget_input);
 }
 
-void CMvBlobRapidDetection::initMenuByTest()
+void CMvImageDefect::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pImageSourceMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_allImageSourceMenuData);
@@ -473,31 +459,37 @@ void CMvBlobRapidDetection::initMenuByTest()
 }
 
 //根据点击位置选择弹框
-void CMvBlobRapidDetection::slotClickPushButton(int row, int col)
+void CMvImageDefect::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
 	if (col == 1)
 	{
-		switch(row)
+		switch (row)
 		{
 		case 0:
 			m_pImageSourceMenu->move(cursor().pos());
 			m_pImageSourceMenu->show();
 
+			qDebug() << "image source menu " << m_pImageSourceMenu->isEmpty();
+
 			break;
+
 		case 1:
 			m_pROISourceMenu->move(cursor().pos());
 			m_pROISourceMenu->show();
 			break;
+
 		case 2:
 			m_pROIPositionUpdatingMenu->move(cursor().pos());
 			m_pROIPositionUpdatingMenu->show();
 			break;
+
 		case 3:
 			m_pMaskSourceMenu->move(cursor().pos());
 			m_pMaskSourceMenu->show();
 			break;
+
 		default:
 			break;
 		}
@@ -509,7 +501,7 @@ void CMvBlobRapidDetection::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvBlobRapidDetection::soltMenuTriggered(QAction* action)
+void CMvImageDefect::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -558,11 +550,38 @@ void CMvBlobRapidDetection::soltMenuTriggered(QAction* action)
 	m_iCol = -1;
 }
 
+
 /*===============================================================================================*\
 **======================================参数设置页面槽函数=======================================**
 \*===============================================================================================*/
+//点击编辑模板
+void CMvImageDefect::slotGetEditTemplateIsClick()
+{
+	qDebug() << "点击编辑模板";
+}
+
+//点击显示差异图像
+void CMvImageDefect::slotGetImageDifferencesIsClick()
+{
+	qDebug() << "点击显示差异图像";
+}
+
+//点击显示缺陷信息
+void CMvImageDefect::slotGetDefectiveInformationIsClick()
+{
+	qDebug() << "点击显示缺陷信息";
+}
+
+//获取缺陷类型 数值
+void CMvImageDefect::slotGetDefectTypeValue(int index)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取缺陷类型" << ui->comboBox_defectType->itemText(index);
+	}
+}
+
 //获取灰度上限
-void CMvBlobRapidDetection::slotGetGrayLevelMaxValue(int value) 
+void CMvImageDefect::slotGetGrayLevelMaxValue(int value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取灰度上限" << value;
@@ -570,7 +589,7 @@ void CMvBlobRapidDetection::slotGetGrayLevelMaxValue(int value)
 }
 
 //获取灰度下限
-void CMvBlobRapidDetection::slotGetGrayLevelMinValue(int value)
+void CMvImageDefect::slotGetGrayLevelMinValue(int value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取灰度下限" << value;
@@ -578,7 +597,7 @@ void CMvBlobRapidDetection::slotGetGrayLevelMinValue(int value)
 }
 
 //获取面积上限
-void CMvBlobRapidDetection::slotGetAreaMaxValue(double value)
+void CMvImageDefect::slotGetAreaMaxValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取面积上限" << value;
@@ -586,47 +605,15 @@ void CMvBlobRapidDetection::slotGetAreaMaxValue(double value)
 }
 
 //获取面积下限
-void CMvBlobRapidDetection::slotGetAreaMinValue(double value)
+void CMvImageDefect::slotGetAreaMinValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取面积下限" << value;
 	}
 }
 
-//获取中心x上限
-void CMvBlobRapidDetection::slotGetCenterXMaxValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取中心x上限" << value;
-	}
-}
-
-//获取中心x下限
-void CMvBlobRapidDetection::slotGetCenterXMinValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取中心x下限" << value;
-	}
-}
-
-//获取中心y上限
-void CMvBlobRapidDetection::slotGetCenterYMaxValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取中心y上限" << value;
-	}
-}
-
-//获取中心y下限
-void CMvBlobRapidDetection::slotGetCenterYMinValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取中心y下限" << value;
-	}
-}
-
 //获取最小矩形宽度上限
-void CMvBlobRapidDetection::slotGetRectangleMaxWidthValue(double value)
+void CMvImageDefect::slotGetRectangleMaxWidthValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取最小矩形宽度上限" << value;
@@ -634,7 +621,7 @@ void CMvBlobRapidDetection::slotGetRectangleMaxWidthValue(double value)
 }
 
 //获取最小矩形宽度下限
-void CMvBlobRapidDetection::slotGetRectangleMinWidthValue(double value)
+void CMvImageDefect::slotGetRectangleMinWidthValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取最小矩形宽度下限" << value;
@@ -642,7 +629,7 @@ void CMvBlobRapidDetection::slotGetRectangleMinWidthValue(double value)
 }
 
 //获取最小矩形高度上限
-void CMvBlobRapidDetection::slotGetRectangleMaxHightValue(double value)
+void CMvImageDefect::slotGetRectangleMaxHightValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取最小矩形高度上限" << value;
@@ -650,47 +637,15 @@ void CMvBlobRapidDetection::slotGetRectangleMaxHightValue(double value)
 }
 
 //获取最小矩形高度下限
-void CMvBlobRapidDetection::slotGetRectangleMinHightValue(double value)
+void CMvImageDefect::slotGetRectangleMinHightValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取最小矩形高度下限" << value;
 	}
 }
 
-//获取个数上限
-void CMvBlobRapidDetection::slotGetNumberMaxValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取个数上限" << value;
-	}
-}
-
-//获取个数下限
-void CMvBlobRapidDetection::slotGetNumberMinValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取个数下限" << value;
-	}
-}
-
-//获取总面积上限
-void CMvBlobRapidDetection::slotGetGrossAreaMaxValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取总面积上限" << value;
-	}
-}
-
-//获取总面积下限
-void CMvBlobRapidDetection::slotGetGrossAreaMinValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取总面积下限" << value;
-	}
-}
-
 //开启面积筛选
-void CMvBlobRapidDetection::slotGetAreaMinIsChecked(bool state)
+void CMvImageDefect::slotGetAreaMinIsChecked(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "开启面积筛选" << state;
@@ -698,25 +653,9 @@ void CMvBlobRapidDetection::slotGetAreaMinIsChecked(bool state)
 	}
 }
 
-//开启中心x筛选
-void CMvBlobRapidDetection::slotGetCenterXMaxIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启中心x筛选" << state;
-		ui->groupBox_centerX->setEnabled(state);
-	}
-}
-//开启中心y筛选
-void CMvBlobRapidDetection::slotGetCenterYMaxIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启中心y筛选" << state;
-		ui->groupBox_centerY->setEnabled(state);
-	}
-}
 
 //开启矩形宽度筛选
-void CMvBlobRapidDetection::slotGetRectangleMaxWidthIsChecked(bool state)
+void CMvImageDefect::slotGetRectangleMaxWidthIsChecked(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "开启矩形宽度筛选" << state;
@@ -725,7 +664,7 @@ void CMvBlobRapidDetection::slotGetRectangleMaxWidthIsChecked(bool state)
 }
 
 //开启矩形高度筛选
-void CMvBlobRapidDetection::slotGetRectangleMaxHightIsChecked(bool state)
+void CMvImageDefect::slotGetRectangleMaxHightIsChecked(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "开启矩形高度筛选" << state;
@@ -737,8 +676,7 @@ void CMvBlobRapidDetection::slotGetRectangleMaxHightIsChecked(bool state)
 **=======================================掩膜设置槽函数==========================================**
 \*===============================================================================================*/
 //获取检测区域的掩膜 数值
-
-void CMvBlobRapidDetection::slotMaskOfDetectionAreaValue(int Index)
+void CMvImageDefect::slotMaskOfDetectionAreaValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取检测区域的掩膜" << ui->comboBox_dEtectionMask->itemText(Index) << " " << Index;
@@ -753,7 +691,7 @@ void CMvBlobRapidDetection::slotMaskOfDetectionAreaValue(int Index)
 }
 
 //获取编辑方式 数值
-void CMvBlobRapidDetection::slotEditModeValue(int Index)
+void CMvImageDefect::slotEditModeValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取编辑方式" << ui->comboBox_editMode->itemText(Index) << " " << Index;
@@ -781,7 +719,7 @@ void CMvBlobRapidDetection::slotEditModeValue(int Index)
 }
 
 //获取画笔尺寸 数值
-void CMvBlobRapidDetection::slotBrushSizeValue(int Value)
+void CMvImageDefect::slotBrushSizeValue(int Value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取画笔尺寸" << ui->spinBox_lightTime->value() << " " << Value;
@@ -789,7 +727,7 @@ void CMvBlobRapidDetection::slotBrushSizeValue(int Value)
 }
 
 //点击清空掩膜
-void CMvBlobRapidDetection::slotEmptyMaskIsClick()
+void CMvImageDefect::slotEmptyMaskIsClick()
 {
 	if (m_signalEnable) {
 		m_maskCount = 0;
@@ -799,7 +737,7 @@ void CMvBlobRapidDetection::slotEmptyMaskIsClick()
 }
 
 //点击掩盖所有
-void CMvBlobRapidDetection::slotCoverUpEverythingClick()
+void CMvImageDefect::slotCoverUpEverythingClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "掩盖所有被点了";
@@ -807,7 +745,7 @@ void CMvBlobRapidDetection::slotCoverUpEverythingClick()
 }
 
 //点击保存修改
-void CMvBlobRapidDetection::slotSaveChangesClick()
+void CMvImageDefect::slotSaveChangesClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "保存修改被点了";
@@ -819,7 +757,7 @@ void CMvBlobRapidDetection::slotSaveChangesClick()
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取线条宽度 数值
-void CMvBlobRapidDetection::slotGetLineWidthValue(int Value)
+void CMvImageDefect::slotGetLineWidthValue(int Value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取线条宽度" << ui->spinBox_lineWidth->value() << " " << Value;
@@ -827,20 +765,20 @@ void CMvBlobRapidDetection::slotGetLineWidthValue(int Value)
 }
 
 //获取启动绘制选中信息
-void CMvBlobRapidDetection::slotGetStartUpDrawingValue(bool State)
+void CMvImageDefect::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
 
-		ui->comboBox_lineColour->setEnabled(State);
-		ui->spinBox_lineWidth->setEnabled(State);
 		ui->label_lineWidth->setEnabled(State);
+		ui->spinBox_lineWidth->setEnabled(State);
+		ui->comboBox_lineColour->setEnabled(State);
 		ui->label_lineColour->setEnabled(State);
 	}
 }
 
 //获取线条颜色 数值
-void CMvBlobRapidDetection::slotGetLineColourValue(int Index)
+void CMvImageDefect::slotGetLineColourValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取线条颜色" << ui->comboBox_lineColour->itemText(Index);
@@ -852,43 +790,43 @@ void CMvBlobRapidDetection::slotGetLineColourValue(int Index)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvBlobRapidDetection::slotAmplifyThePictureIsClick()
+void CMvImageDefect::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvBlobRapidDetection::slotShrinkThePictureIsClick()
+void CMvImageDefect::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvBlobRapidDetection::slotBestSizeOfPictureIsClick()
+void CMvImageDefect::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvBlobRapidDetection::slotLockROIIsClick()
+void CMvImageDefect::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvBlobRapidDetection::slotOnceIsClick()
+void CMvImageDefect::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvBlobRapidDetection::slotMakeSureIsClick()
+void CMvImageDefect::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvBlobRapidDetection::slotCancelIsClick()
+void CMvImageDefect::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

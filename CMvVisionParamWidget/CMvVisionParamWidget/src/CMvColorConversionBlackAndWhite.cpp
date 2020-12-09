@@ -31,7 +31,7 @@ CMvColorConversionBlackAndWhite::CMvColorConversionBlackAndWhite(QWidget *parent
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
 	setWindowModality(Qt::WindowModal);
 
-	ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//设置单元格 等宽
+	//ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//设置单元格 等宽
 
 	ui->tableWidget_input->setItem(0, 1, new QTableWidgetItem);
 	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
@@ -233,36 +233,40 @@ void CMvColorConversionBlackAndWhite::initComboBoxOfColorChannel()
 //选择颜色空间
 void CMvColorConversionBlackAndWhite::slotChangeColorSpace(int index)
 {
-	qDebug() << "选择颜色空间" << ui->comboBox_colorSpace->itemText(index) << " " << index;
+	if (m_signalEnable) {
+		qDebug() << "选择颜色空间" << ui->comboBox_colorSpace->itemText(index) << " " << index;
 
-	ui->comboBox_colorChannel->blockSignals(true);
-	ui->comboBox_colorChannel->clear();
-	ui->comboBox_colorChannel->blockSignals(false);
-	QStringList fonts;
-	switch (index)
-	{
-	case 0:
-		fonts << tr("灰度") << tr("红色") << tr("绿色") << tr("蓝色") << tr("黄色") << tr("青色") << tr("品红");
-		break;
+		ui->comboBox_colorChannel->blockSignals(true);
+		ui->comboBox_colorChannel->clear();
+		ui->comboBox_colorChannel->blockSignals(false);
+		QStringList fonts;
+		switch (index)
+		{
+		case 0:
+			fonts << tr("灰度") << tr("红色") << tr("绿色") << tr("蓝色") << tr("黄色") << tr("青色") << tr("品红");
+			break;
 
-	case 1:
-		fonts << tr("色调") << tr("饱和度") << tr("亮度");
-		break;
+		case 1:
+			fonts << tr("色调") << tr("饱和度") << tr("亮度");
+			break;
 
-	case 2:
-		fonts << tr("亮度") << "A" << "B";
-		break;
+		case 2:
+			fonts << tr("亮度") << "A" << "B";
+			break;
 
-	default:
-		break;
+		default:
+			break;
+		}
+		ui->comboBox_colorChannel->addItems(fonts);
 	}
-	ui->comboBox_colorChannel->addItems(fonts);
 }
 
 //选择颜色通道
 void CMvColorConversionBlackAndWhite::slotChangeColorChannel(int index)
 {
-	qDebug() << "选择颜色通道" << ui->comboBox_colorChannel->itemText(index) << " " << index;
+	if (m_signalEnable) {
+		qDebug() << "选择颜色通道" << ui->comboBox_colorChannel->itemText(index) << " " << index;
+	}
 }
 
 void CMvColorConversionBlackAndWhite::initMenuByTest()

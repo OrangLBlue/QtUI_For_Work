@@ -1,5 +1,5 @@
-﻿#include "CMvColorSelection.h"
-#include "ui_CMvColorSelection.h"
+﻿#include "CMvCannyEdgeExtracting.h"
+#include "ui_CMvCannyEdgeExtracting.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QTableWidgetItem>
@@ -22,11 +22,11 @@
 //}
 //
 
-CMvColorSelection* CMvColorSelection::s_pColorSelection = nullptr;
+CMvCannyEdgeExtracting* CMvCannyEdgeExtracting::s_pCMvCannyEdgeExtracting = nullptr;
 
-CMvColorSelection::CMvColorSelection(QWidget *parent)
+CMvCannyEdgeExtracting::CMvCannyEdgeExtracting(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvColorSelection)
+	ui(new Ui::CMvCannyEdgeExtracting)
 {
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -34,6 +34,9 @@ CMvColorSelection::CMvColorSelection(QWidget *parent)
 
 	m_signalEnable = true;
 	m_pSecondLevelMenu = new CMvSecondLevelMenu;
+
+	//设置单元格 等宽
+	//ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 	ui->tableWidget_input->setItem(0, 1, new QTableWidgetItem);
 	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
@@ -44,7 +47,7 @@ CMvColorSelection::CMvColorSelection(QWidget *parent)
 	\*===============================================================================================*/
 
 	//初始化数据
-	initCMvColorSelection();
+	initCMvCannyEdgeExtracting();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -62,24 +65,11 @@ CMvColorSelection::CMvColorSelection(QWidget *parent)
 	/*===============================================================================================*\
 	**====================================参数设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
-	//获取颜色空间
-	connect(ui->comboBox_colorSpace, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetColorSpaceValue(int)));
-
-	//点击显示颜色直方图
-	connect(ui->pushButton_colorHistogram, SIGNAL(clicked()), this, SLOT(slotGetUnqualifiedPiontIsClick()));
-
-	//获取启用杂点剔除选中信息
-	connect(ui->checkBox_miscellaneousElimination, SIGNAL(clicked(bool)), this, SLOT(slotGetMiscellaneousEliminationIsChecked(bool)));
-
 	//获取面积上限 数值
-	connect(ui->doubleSpinBox_maxArea, SIGNAL(valueChanged(double)), this, SLOT(slotGetMaxAreaValue(double)));
+	connect(ui->doubleSpinBox_maxThreshold, SIGNAL(valueChanged(double)), this, SLOT(slotGetMaxThresholdValue(double)));
 
 	//获取面积下限 数值
-	connect(ui->doubleSpinBox_minArea, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinAreaValue(double)));
-
-	//获取背景图像类型 数值
-	connect(ui->comboBox_backgroundType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetBackgroundTypeValue(int)));
-
+	connect(ui->doubleSpinBox_minThreshold, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinThresholdValue(double)));
 	/*===============================================================================================*\
 	**====================================结果绘制信号与槽的链接=====================================**
 	\*===============================================================================================*/
@@ -116,7 +106,7 @@ CMvColorSelection::CMvColorSelection(QWidget *parent)
 
 
 //析构函数
-CMvColorSelection::~CMvColorSelection()
+CMvCannyEdgeExtracting::~CMvCannyEdgeExtracting()
 {
 	qDebug() << "析构函数";
 
@@ -145,27 +135,27 @@ CMvColorSelection::~CMvColorSelection()
 
 
 //单例化
-CMvColorSelection* CMvColorSelection::Instance()
+CMvCannyEdgeExtracting* CMvCannyEdgeExtracting::Instance()
 {
-	if (s_pColorSelection == nullptr) {
-		s_pColorSelection = new CMvColorSelection;
+	if (s_pCMvCannyEdgeExtracting == nullptr) {
+		s_pCMvCannyEdgeExtracting = new CMvCannyEdgeExtracting;
 	}
-	return s_pColorSelection;
+	return s_pCMvCannyEdgeExtracting;
 }
 
 
 //释放内存
-void CMvColorSelection::destroy()
+void CMvCannyEdgeExtracting::destroy()
 {
-	if (s_pColorSelection)
+	if (s_pCMvCannyEdgeExtracting)
 	{
-		delete s_pColorSelection;
-		s_pColorSelection = nullptr;
-	}//if (s_pColorSelection)
+		delete s_pCMvCannyEdgeExtracting;
+		s_pCMvCannyEdgeExtracting = nullptr;
+	}//if (s_pCMvCannyEdgeExtracting)
 }
 
 //初始化数据
-void CMvColorSelection::initCMvColorSelection()
+void CMvCannyEdgeExtracting::initCMvCannyEdgeExtracting()
 {
 	m_signalEnable = false;
 
@@ -176,21 +166,11 @@ void CMvColorSelection::initCMvColorSelection()
 	ui->plainTextEdit_funcName->setPlainText("");
 	ui->checkBox_enableFunc->setChecked(true);
 
-	//设置颜色空间
-	ui->comboBox_colorSpace->setCurrentIndex(0);
-
-	//设置启用杂点剔除
-	ui->checkBox_miscellaneousElimination->setChecked(false);
-	ui->widget_miscellaneousElimination->setEnabled(ui->checkBox_miscellaneousElimination->isChecked());
-
-	//设置面积上限
-	ui->doubleSpinBox_maxArea->setValue(5);
+	//设置高阈值
+	ui->doubleSpinBox_maxThreshold->setValue(5);
 
 	//设置面积下限
-	ui->doubleSpinBox_minArea->setValue(5);
-
-	//设置背景图像类型
-	ui->comboBox_backgroundType->setCurrentIndex(0);
+	ui->doubleSpinBox_minThreshold->setValue(5);
 
 	//设置绘图
 	ui->checkBox_valuTrig->setChecked(false);
@@ -198,12 +178,11 @@ void CMvColorSelection::initCMvColorSelection()
 	m_signalEnable = true;
 }
 
-
 /*===============================================================================================*\
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvColorSelection::slotGetDetectorNameValue()
+void CMvCannyEdgeExtracting::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -222,7 +201,7 @@ void CMvColorSelection::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvColorSelection::slotGetEnableDetectorValue(bool state)
+void CMvCannyEdgeExtracting::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -233,19 +212,19 @@ void CMvColorSelection::slotGetEnableDetectorValue(bool state)
 **======================================二级菜单槽函数===========================================**
 \*===============================================================================================*/
 ////初始化二级菜单
-void CMvColorSelection::initMenu()
+void CMvCannyEdgeExtracting::initMenu()
 {
 
 }
 
-void CMvColorSelection::initMenuByTest()
+void CMvCannyEdgeExtracting::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pImageSourceMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_allImageSourceMenuData);
 }
 
 //根据点击位置选择弹框
-void CMvColorSelection::slotClickPushButton(int row, int col)
+void CMvCannyEdgeExtracting::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -261,7 +240,7 @@ void CMvColorSelection::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvColorSelection::soltMenuTriggered(QAction* action)
+void CMvCannyEdgeExtracting::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -296,51 +275,19 @@ void CMvColorSelection::soltMenuTriggered(QAction* action)
 /*===============================================================================================*\
 **======================================参数设置页面槽函数=======================================**
 \*===============================================================================================*/
-//获取颜色空间
-void CMvColorSelection::slotGetColorSpaceValue(int index)
+//获取高阈值 数值
+void CMvCannyEdgeExtracting::slotGetMaxThresholdValue(double Value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取颜色空间" << ui->comboBox_colorSpace->itemText(index);
+		qDebug() << "获取高阈值" << ui->doubleSpinBox_maxThreshold->value() << "  " << Value;
 	}
 }
 
-//点击显示颜色直方图
-void CMvColorSelection::slotGetUnqualifiedPiontIsClick()
-{
-	qDebug() << "点击显示颜色直方图";
-}
-
-
-//获取启用杂点剔除选中信息
-void CMvColorSelection::slotGetMiscellaneousEliminationIsChecked(bool State)
-{
-	qDebug() << "获取开启凹凸性检测选中信息" << State << " " << ui->checkBox_miscellaneousElimination->isChecked();
-
-	ui->widget_miscellaneousElimination->setEnabled(State);
-}
-
-
-//获取面积上限 数值
-void CMvColorSelection::slotGetMaxAreaValue(double Value)
+//获取低阈值 数值
+void CMvCannyEdgeExtracting::slotGetMinThresholdValue(double Value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取面积上限" << ui->doubleSpinBox_maxArea->value() << "  " << Value;
-	}
-}
-
-//获取面积下限 数值
-void CMvColorSelection::slotGetMinAreaValue(double Value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取面积下限" << ui->doubleSpinBox_minArea->value() << "  " << Value;
-	}
-}
-
-//获取背景图像类型 数值
-void CMvColorSelection::slotGetBackgroundTypeValue(int index)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取背景图像类型" << ui->comboBox_backgroundType->itemText(index);
+		qDebug() << "获取低阈值" << ui->doubleSpinBox_minThreshold->value() << "  " << Value;
 	}
 }
 
@@ -349,7 +296,7 @@ void CMvColorSelection::slotGetBackgroundTypeValue(int index)
 \*===============================================================================================*/
 
 //获取启动绘制选中信息
-void CMvColorSelection::slotGetStartUpDrawingValue(bool State)
+void CMvCannyEdgeExtracting::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
@@ -360,43 +307,43 @@ void CMvColorSelection::slotGetStartUpDrawingValue(bool State)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvColorSelection::slotAmplifyThePictureIsClick()
+void CMvCannyEdgeExtracting::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvColorSelection::slotShrinkThePictureIsClick()
+void CMvCannyEdgeExtracting::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvColorSelection::slotBestSizeOfPictureIsClick()
+void CMvCannyEdgeExtracting::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvColorSelection::slotLockROIIsClick()
+void CMvCannyEdgeExtracting::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvColorSelection::slotOnceIsClick()
+void CMvCannyEdgeExtracting::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvColorSelection::slotMakeSureIsClick()
+void CMvCannyEdgeExtracting::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvColorSelection::slotCancelIsClick()
+void CMvCannyEdgeExtracting::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

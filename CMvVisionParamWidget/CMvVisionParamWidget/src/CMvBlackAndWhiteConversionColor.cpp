@@ -20,7 +20,7 @@ CMvBlackAndWhiteConversionColor::CMvBlackAndWhiteConversionColor(QWidget *parent
 
 	m_signalEnable = true;
 	m_pSecondLevelMenu = new CMvSecondLevelMenu;
-	ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//设置单元格 等宽
+	//ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//设置单元格 等宽
 
 	ui->tableWidget_input->setItem(0, 1, new QTableWidgetItem);
 	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);

@@ -2,12 +2,7 @@
 #define CMV_COLOR_SELECTION 
 
 #include "CMvSecondLevelMenu.h"
-#include <QWidget>
-#include <QVector>
-#include <QString>
 #include <QMenu>
-#include <QAction>
-#include <QMutex>
 
 namespace Ui {
 	class CMvColorSelection;
@@ -42,7 +37,6 @@ private slots:
 	//获取启用检测器选中信息
 	void slotGetEnableDetectorValue(bool state);
 
-
 	/*===============================================================================================*\
 	**=================================二级菜单相关槽函数声明========================================**
 	\*===============================================================================================*/
@@ -72,7 +66,6 @@ private slots:
 
 	//获取背景图像类型 数值
 	void slotGetBackgroundTypeValue(int index);
-
 
 	/*===============================================================================================*\
 	**=======================================结果绘制页面槽函数======================================**

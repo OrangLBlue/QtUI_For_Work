@@ -33,7 +33,7 @@ CMvImagesCut::CMvImagesCut(QWidget *parent)
 	m_iRow = -1;
 	m_iCol = -1;
 	//设置单元格 等宽
-	ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	//ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 	ui->tableWidget_input->setItem(0, 1, new QTableWidgetItem);
 	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);

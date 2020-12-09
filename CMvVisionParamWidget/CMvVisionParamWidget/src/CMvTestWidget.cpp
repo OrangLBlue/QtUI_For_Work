@@ -17,6 +17,11 @@
 #include "CMvAdditionAndSubtraction.h"
 #include "CMvImageEnhancement.h"
 #include "CMvMultiplicationAndDivision.h"
+#include "CMvManualBinary.h"
+#include "CMvAdaptiveBinarization.h"
+#include "CMvDenoiseBinarization.h"
+#include "CMvCannyEdgeExtracting.h"
+#include "CMvImageDefect.h"
 
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
@@ -97,6 +102,21 @@ CMvTestWidget::~CMvTestWidget()
 	//乘除法处理
 	CMvMultiplicationAndDivision::destroy();
 
+	//手动二值化
+	CMvManualBinary::destroy();
+
+	//自适应二值化
+	CMvAdaptiveBinarization::destroy();
+
+	//去噪二值化
+	CMvDenoiseBinarization::destroy();
+
+	//Canny边缘提取
+	CMvCannyEdgeExtracting::destroy();
+
+	//图像缺陷
+	CMvImageDefect::destroy();
+	
 	m_pTestWidget = nullptr;
 	delete ui;
 }
@@ -220,6 +240,31 @@ void CMvTestWidget::slotOpenWindow()
 			//乘除法处理
 			CMvMultiplicationAndDivision::destroy();
 		}break;
+		case 16:
+		{
+			//手动二值化
+			CMvManualBinary::destroy();
+		}break;
+		case 17:
+		{
+			//自适应二值化
+			CMvAdaptiveBinarization::destroy();
+		}break;
+		case 18:
+		{
+			//去噪二值化
+			CMvDenoiseBinarization::destroy();
+		}break;
+		case 19:
+		{
+			//Canny边缘提取
+			CMvCannyEdgeExtracting::destroy();
+		}break;
+		case 20:
+		{
+			//图像缺陷
+			CMvImageDefect::destroy();
+		}break;
 		default:
 			break;
 		}//switch (widgetType)
@@ -313,6 +358,33 @@ void CMvTestWidget::slotOpenWindow()
 		m_pTestWidget = CMvMultiplicationAndDivision::Instance();
 
 	}break;
+	case 16:
+	{
+		//手动二值化
+		m_pTestWidget = CMvManualBinary::Instance();
+	}break;
+	case 17:
+	{
+		//自适应二值化
+		m_pTestWidget = CMvAdaptiveBinarization::Instance();
+	}break;
+	case 18:
+	{
+		//去噪二值化
+		m_pTestWidget = CMvDenoiseBinarization::Instance();
+	}break;
+	case 19:
+	{
+		//Canny边缘提取
+		m_pTestWidget = CMvCannyEdgeExtracting::Instance();
+	}break;
+	case 20:
+	{
+		//图像缺陷
+		m_pTestWidget = CMvImageDefect::Instance();
+	}break;
+
+
 	default:
 		break;
 	}//switch (widgetType)

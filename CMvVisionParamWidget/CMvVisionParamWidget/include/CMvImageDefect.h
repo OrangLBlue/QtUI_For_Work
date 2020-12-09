@@ -1,21 +1,20 @@
-﻿#ifndef CMV_FIND_ROUND_PARAM
-#define CMV_FIND_ROUND_PARAM 
+﻿#ifndef CMV_IMAGE_DEFECT
+#define CMV_IMAGE_DEFECT 
 
 #include "CMvSecondLevelMenu.h"
 #include <QMenu>
-#include <QWidget>
 
 namespace Ui {
-	class CMvFindRoundParamWidget;
+	class CMvImageDefect;
 }
 
-class CMvFindRoundParamWidget : public QWidget
+class CMvImageDefect : public QWidget
 {
     Q_OBJECT
 
 public:
 	//单例化
-	static CMvFindRoundParamWidget* Instance();
+	static CMvImageDefect* Instance();
 	//释放内存
 	static void destroy();
 
@@ -24,7 +23,7 @@ public:
 	void initMenuByTest();
 
 	//初始化数据
-	void initCMvFindRoundParamWidget();
+	void initCMvImageDefect();
 	//void testInit();
 
 private slots:
@@ -53,51 +52,53 @@ private slots:
 	//根据点击位置选择弹框
 	void slotClickPushButton(int, int);
 
-
 	/*===============================================================================================*\
 	**=======================================结果判断槽函数==========================================**
 	\*===============================================================================================*/
-	//获取边缘阈值 数值
-	void slotGetEdgeThresholdtValue(int index);
+	//点击编辑模板
+	void slotGetEditTemplateIsClick();
 
-	//获取边缘梯度阈值 数值
-	void slotGetEdgeGradientThresholdtValue(int Value);
+	//点击显示差异图像
+	void slotGetImageDifferencesIsClick();
 
-	//获取边缘极性 数值
-	void slotGetCoordinateInputValue(int index);
+	//点击显示缺陷信息
+	void slotGetDefectiveInformationIsClick();
 
-	//获取扫描点数
-	void slotGetScanPointsValue(int Value);
+	//获取缺陷类型 数值
+	void slotGetDefectTypeValue(int index);
 
-	//获取抽样点数 数值
-	void slotGetSamplingPointsValue(int Value);
+	//获取灰度上限
+	void slotGetGrayLevelMaxValue(int value);
 
-	//获取检测方向 数值
-	void slotGetDirectionOfDetectionValue(int index);
+	//获取灰度下限
+	void slotGetGrayLevelMinValue(int value);
 
-	//获取拟合范围 数值
-	void slotGetScopeOfFitValue(int Value);
+	//获取面积上限
+	void slotGetAreaMaxValue(double value);
 
-	//获取拟合误差限制 数值
-	void slotGetFittingErrorlimitsValue(int Value);
+	//获取面积下限
+	void slotGetAreaMinValue(double value);
 
-	//获取半径下限 数值
-	void slotGetMinRoundRadiusValue(int Value);
+	//获取最小矩形宽度上限
+	void slotGetRectangleMaxWidthValue(double value);
 
-	//获取半径上限 数值
-	void slotGetMaxRoundRadiusValue(int Value);
+	//获取最小矩形宽度下限
+	void slotGetRectangleMinWidthValue(double value);
 
-	//获取开启凹凸性检测选中信息
-	void slotGetConcaveConvexIsChecked(bool State);
+	//获取最小矩形高度上限
+	void slotGetRectangleMaxHightValue(double value);
 
-	//获取最小深度 数值
-	void slotGetMinimumDepthValue(double Value);
+	//获取最小矩形高度下限
+	void slotGetRectangleMinHightValue(double value);
 
-	//获取最小抽样点数 数值
-	void slotGetMinimumSamplingPointsValue(double Value);
+	//开启面积筛选
+	void slotGetAreaMinIsChecked(bool state);
 
-	//点击显示凹凸点信息
-	void slotGetUnqualifiedPiontIsClick();
+	//开启矩形宽度筛选
+	void slotGetRectangleMaxWidthIsChecked(bool state);
+
+	//开启矩形高度筛选
+	void slotGetRectangleMaxHightIsChecked(bool state);
 
 
 	/*===============================================================================================*\
@@ -121,7 +122,6 @@ private slots:
 	//点击保存修改
 	void slotSaveChangesClick();
 
-
 	/*===============================================================================================*\
 	**=======================================结果绘制页面槽函数======================================**
 	\*===============================================================================================*/
@@ -133,7 +133,6 @@ private slots:
 
 	//获取线条颜色 数值
 	void slotGetLineColourValue(int Index);
-
 
 	/*===============================================================================================*\
 	**======================================功能栏槽函数=============================================**
@@ -160,12 +159,12 @@ private slots:
 	void slotCancelIsClick();
 	
 private:
-	Ui::CMvFindRoundParamWidget *ui;
+	Ui::CMvImageDefect *ui;
 
-	static CMvFindRoundParamWidget* s_pFindRoundParamWidget;
+	static CMvImageDefect* s_pCMvImageDefect;
 
-	CMvFindRoundParamWidget(QWidget *parent = Q_NULLPTR);
-	~CMvFindRoundParamWidget();
+	CMvImageDefect(QWidget *parent = Q_NULLPTR);
+	~CMvImageDefect();
 
 	bool m_signalEnable;
 

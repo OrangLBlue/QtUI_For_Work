@@ -31,7 +31,7 @@ CMvImageRotation::CMvImageRotation(QWidget *parent)
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
 	setWindowModality(Qt::WindowModal);
 
-	ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//设置单元格 等宽
+	//ui->tableWidget_input->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//设置单元格 等宽
 
 	ui->tableWidget_input->setItem(0, 1, new QTableWidgetItem);
 	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
@@ -176,13 +176,17 @@ void CMvImageRotation::initCMvImageRotation()
 //获取旋转角度
 void CMvImageRotation::slotGetRsotationAngleValue(double value)
 {
-	qDebug() << "获取旋转角度" << ui->doubleSpinBox_rsotationAngle->value() << " " << value;
+	if (m_signalEnable) {
+		qDebug() << "获取旋转角度" << ui->doubleSpinBox_rsotationAngle->value() << " " << value;
+	}
 }
 
 //选择背景类型
 void CMvImageRotation::slotChangeBackgroundType(int index)
 {
-	qDebug() << "选择背景类型" << ui->comboBox_backgroundType->itemText(index) << " " << index;
+	if (m_signalEnable) {
+		qDebug() << "选择背景类型" << ui->comboBox_backgroundType->itemText(index) << " " << index;
+	}
 }
 
 //初始化图片来源菜单

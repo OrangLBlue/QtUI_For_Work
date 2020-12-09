@@ -1,5 +1,5 @@
-﻿#include "CMvAdditionAndSubtraction.h"
-#include "ui_CMvAdditionAndSubtraction.h"
+﻿#include "CMvAdaptiveBinarization.h"
+#include "ui_CMvAdaptiveBinarization.h"
 #include <QStringList>
 #include <QTableWidgetItem>
 #include <QDebug>
@@ -7,6 +7,7 @@
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
+
 
 ////屏蔽QComboBox控件的鼠标滚动监听
 //void QComboBox::wheelEvent(QWheelEvent *e)
@@ -20,11 +21,11 @@
 //
 //}
 
-CMvAdditionAndSubtraction * CMvAdditionAndSubtraction::s_pCMvAdditionAndSubtraction = nullptr;
+CMvAdaptiveBinarization * CMvAdaptiveBinarization::s_pCMvAdaptiveBinarization = nullptr;
 
-CMvAdditionAndSubtraction::CMvAdditionAndSubtraction(QWidget *parent)
+CMvAdaptiveBinarization::CMvAdaptiveBinarization(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvAdditionAndSubtraction)
+	ui(new Ui::CMvAdaptiveBinarization)
 { 
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -36,29 +37,27 @@ CMvAdditionAndSubtraction::CMvAdditionAndSubtraction(QWidget *parent)
 	ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
 	ui->tableWidget_input->item(0, 1)->setText("某个检测器的输出");
 
-	ui->tableWidget_input->setItem(1, 1, new QTableWidgetItem);
-	ui->tableWidget_input->item(1, 1)->setBackground(Qt::red);
-	ui->tableWidget_input->item(1, 1)->setText("某个检测器的输出");
-
 	m_pSecondLevelMenu = new CMvSecondLevelMenu;
 
-	m_AlgorithmSelectionIndex = 0;//初始化算法选择为index 0
-
 	m_signalEnable = true;
-	//初始化数据 
-	initCMvAdditionAndSubtraction();
+
+	//初始化数据
+	initCMvAdaptiveBinarization();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
 
-	//根据被处理菜单动作选择，设置单元格显示内容
-	connect(m_pMakeImageMenu, SIGNAL(triggered(QAction*)), this, SLOT(soltMenuTriggered(QAction*)));
+	//根据彩色图像菜单动作选择，设置单元格显示内容
+	connect(m_pColorImageMenu, SIGNAL(triggered(QAction*)), this, SLOT(soltMenuTriggered(QAction*)));
 
-	//根据待处理菜单动作选择，设置单元格显示内容
-	connect(m_pPendingImageMenu, SIGNAL(triggered(QAction*)), this, SLOT(soltMenuTriggered(QAction*)));
+	//选择自适应类型
+	connect(ui->comboBox_adaptiveType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeAdaptiveType(int)));
 
-	//获取算法选择 数值
-	connect(ui->comboBox_algorithmSelection, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetAlgorithmSelectionValue(int)));
+	//选择自适应尺寸
+	connect(ui->comboBox_adaptiveDimensions, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeAdaptiveDimensions(int)));
+
+	//选择结果图像处理
+	connect(ui->comboBox_resultLmageProcessing, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeResultLmageProcessing(int)));
 
 	//获取检测器名称
 	connect(ui->plainTextEdit_funcName, SIGNAL(textChanged()), this, SLOT(slotGetDetectorNameValue()));
@@ -98,7 +97,7 @@ CMvAdditionAndSubtraction::CMvAdditionAndSubtraction(QWidget *parent)
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
-CMvAdditionAndSubtraction::~CMvAdditionAndSubtraction()
+CMvAdaptiveBinarization::~CMvAdaptiveBinarization()
 {
 	qDebug() << "析构函数";
 
@@ -108,52 +107,53 @@ CMvAdditionAndSubtraction::~CMvAdditionAndSubtraction()
 		m_pSecondLevelMenu = nullptr;
 	}
 
-	if (m_pMakeImageMenuData.size() != 0)
-	{
-		for (int index = 0; index < m_pMakeImageMenuData.size(); index++)
-		{
-			delete m_pMakeImageMenuData[index]->pAction;
-			delete m_pMakeImageMenuData[index];
-		}
-		m_pMakeImageMenuData.clear();
-	}
+	//if (m_pColorImageMenu)
+	//{
+	//	for (int index = 0; index < m_pColorImageMenu->actions().size(); index++)
+	//	{
+	//		delete m_pColorImageMenu->actions()[0]->menu();
+	//	}
+	//	delete m_pColorImageMenu;
+	//	m_pColorImageMenu = nullptr;
+	//}
 
-	if (m_pPendingImageMenuData.size() != 0)
+	if (m_pColorImageMenuData.size() != 0)
 	{
-		for (int index = 0; index < m_pPendingImageMenuData.size(); index++)
+		for (int index = 0; index < m_pColorImageMenuData.size(); index++)
 		{
-			delete m_pPendingImageMenuData[index]->pAction;
-			delete m_pPendingImageMenuData[index];
+			delete m_pColorImageMenuData[index]->pAction;
+			delete m_pColorImageMenuData[index];
 		}
-		m_pPendingImageMenuData.clear();
+		m_pColorImageMenuData.clear();
 	}
 
 	delete ui;
 }
 
+
 //单例
-CMvAdditionAndSubtraction * CMvAdditionAndSubtraction::Instance()
+CMvAdaptiveBinarization * CMvAdaptiveBinarization::Instance()
 {
-	if (s_pCMvAdditionAndSubtraction == nullptr)
+	if (s_pCMvAdaptiveBinarization == nullptr)
 	{
-		s_pCMvAdditionAndSubtraction = new CMvAdditionAndSubtraction;
+		s_pCMvAdaptiveBinarization = new CMvAdaptiveBinarization;
 	}
-	return s_pCMvAdditionAndSubtraction;
+	return s_pCMvAdaptiveBinarization;
 
 }
 
 //释放内存
-void CMvAdditionAndSubtraction::destroy()
+void CMvAdaptiveBinarization::destroy()
 {
-	if (s_pCMvAdditionAndSubtraction)
+	if (s_pCMvAdaptiveBinarization)
 	{
-		delete s_pCMvAdditionAndSubtraction;
-		s_pCMvAdditionAndSubtraction = nullptr;
+		delete s_pCMvAdaptiveBinarization;
+		s_pCMvAdaptiveBinarization = nullptr;
 	}
 }
 
-//初始化数据 
-void CMvAdditionAndSubtraction::initCMvAdditionAndSubtraction()
+//初始化数据
+void CMvAdaptiveBinarization::initCMvAdaptiveBinarization()
 {
 	m_signalEnable = false;
 
@@ -162,86 +162,64 @@ void CMvAdditionAndSubtraction::initCMvAdditionAndSubtraction()
 
 	//设置检测器名称
 	ui->plainTextEdit_funcName->setPlainText("");
-
-	//设置启用检测器
 	ui->checkBox_enableFunc->setChecked(true);
-	
-	//设置处理算法选择
-	ui->comboBox_algorithmSelection->setCurrentIndex(0);//设置位加法
 
-	m_AlgorithmSelectionIndex = ui->comboBox_algorithmSelection->currentIndex();//记录当前选择的算法
+	//选择自适应类型
+	ui->comboBox_adaptiveType->setCurrentIndex(0);
 
-	//设置算法选择
-	if (m_AlgorithmSelectionIndex == 0)
-	{
-		ui->tableWidget_input->item(0, 0)->setText("被加图像");
-		ui->tableWidget_input->item(1, 0)->setText("待加图像");
-	
-	} 
-	else if (m_AlgorithmSelectionIndex == 1)
-	{
-		ui->tableWidget_input->item(0, 0)->setText("被减图像");
-		ui->tableWidget_input->item(1, 0)->setText("待减图像");
+	//设置自适应尺寸
+	ui->comboBox_adaptiveDimensions->setCurrentIndex(0);
 
-	}
-	
-	//设置启用绘制
-	ui->checkBox_valuTrig->setChecked(true);
+	//设置结果图像处理
+	ui->comboBox_resultLmageProcessing->setCurrentIndex(0);
 
-
+	//设置绘图
+	ui->checkBox_valuTrig->setChecked(false);
 
 	m_signalEnable = true;
+
 }
 
-//获取算法选择 数值
-void CMvAdditionAndSubtraction::slotGetAlgorithmSelectionValue(int index)
+//选择自适应类型
+void CMvAdaptiveBinarization::slotChangeAdaptiveType(int index)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取算法选择" << ui->comboBox_algorithmSelection->itemText(index) << index;
+		qDebug() << "选择自适应类型" << ui->comboBox_adaptiveType->itemText(index) << " " << index;
+	}
 
-		m_AlgorithmSelectionIndex = index;//记录当前选择的算法
+}
 
-		if (m_AlgorithmSelectionIndex == 0)
-		{
-			ui->tableWidget_input->item(0, 0)->setText("被加图像");
-			ui->tableWidget_input->item(1, 0)->setText("待加图像");
-			//ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
-			//ui->tableWidget_input->item(0, 1)->setText("某个检测器的输出");
-			//ui->tableWidget_input->item(1, 1)->setBackground(Qt::red);
-			//ui->tableWidget_input->item(1, 1)->setText("某个检测器的输出");
-		}
-		else if (m_AlgorithmSelectionIndex == 1)
-		{
-			ui->tableWidget_input->item(0, 0)->setText("被减图像");
-			ui->tableWidget_input->item(1, 0)->setText("待减图像");
-			//ui->tableWidget_input->item(0, 1)->setBackground(Qt::red);
-			//ui->tableWidget_input->item(0, 1)->setText("某个检测器的输出");
-			//ui->tableWidget_input->item(1, 1)->setBackground(Qt::red);
-			//ui->tableWidget_input->item(1, 1)->setText("某个检测器的输出");
-		}
+//选择自适应尺寸
+void CMvAdaptiveBinarization::slotChangeAdaptiveDimensions(int index)
+{
+	if (m_signalEnable) {
+		qDebug() << "选择自适应尺寸" << ui->comboBox_adaptiveDimensions->itemText(index) << " " << index;
 	}
 }
 
-//初始化图片来源菜单
-void CMvAdditionAndSubtraction::initMenuByTest()
+//选择结果图像处理
+void CMvAdaptiveBinarization::slotChangeResultLmageProcessing(int index)
 {
-	m_pMakeImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pMakeImageMenuData);
-	m_pPendingImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pPendingImageMenuData);
+	if (m_signalEnable) {
+		qDebug() << "选择结果图像处理" << ui->comboBox_resultLmageProcessing->itemText(index) << " " << index;
+	}
 }
 
-void CMvAdditionAndSubtraction::slotClickPushButton(int row, int col)
+
+void CMvAdaptiveBinarization::initMenuByTest()
+{
+	//初始化图片来源菜单
+	m_pColorImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pColorImageMenuData);
+}
+
+void CMvAdaptiveBinarization::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
 	if (col == 1 && row == 0)
 	{
-		m_pMakeImageMenu->move(cursor().pos());
-		m_pMakeImageMenu->show();
-	}
-	if (col == 1 && row == 1)
-	{
-		m_pPendingImageMenu->move(cursor().pos());
-		m_pPendingImageMenu->show();
+		m_pColorImageMenu->move(cursor().pos());
+		m_pColorImageMenu->show();
 	}
 
 	//记录点击的行列数据
@@ -250,7 +228,7 @@ void CMvAdditionAndSubtraction::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvAdditionAndSubtraction::soltMenuTriggered(QAction* action)
+void CMvAdaptiveBinarization::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -261,15 +239,10 @@ void CMvAdditionAndSubtraction::soltMenuTriggered(QAction* action)
 
 	if (m_iCol == 1 && m_iRow == 0)
 	{
-		allMenuData = m_pMakeImageMenuData;
-		ui->tableWidget_input->item(m_iRow, m_iCol)->setBackground(Qt::transparent);
+		allMenuData = m_pColorImageMenuData ;
+		ui->tableWidget_input->item(m_iRow, m_iCol)->setBackground(Qt::yellow);
 	}
-	if (m_iCol == 1 && m_iRow == 1)
-	{
-		allMenuData = m_pPendingImageMenuData;
-		ui->tableWidget_input->item(m_iRow, m_iCol)->setBackground(Qt::transparent);
-	}
-
+		
 	for (auto it = allMenuData.cbegin(); it != allMenuData.cend(); ++it)
 	{
 		if ((*it)->pAction == action)
@@ -280,7 +253,7 @@ void CMvAdditionAndSubtraction::soltMenuTriggered(QAction* action)
 		}//if ((*it)->pAction.get() == action)
 	}//for (auto it = allMenuData.cbegin(); it != allMenuData.cend(); ++it)
 
-	
+	ui->tableWidget_input->item(m_iRow, m_iCol)->setBackground(Qt::transparent);
 	 //设置显示内容为选中内容
 	pTableItem->setText(showInfoText);
 
@@ -293,7 +266,7 @@ void CMvAdditionAndSubtraction::soltMenuTriggered(QAction* action)
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvAdditionAndSubtraction::slotGetDetectorNameValue()
+void CMvAdaptiveBinarization::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -312,7 +285,7 @@ void CMvAdditionAndSubtraction::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvAdditionAndSubtraction::slotGetEnableDetectorValue(bool state)
+void CMvAdaptiveBinarization::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -323,7 +296,7 @@ void CMvAdditionAndSubtraction::slotGetEnableDetectorValue(bool state)
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取启动绘制选中信息
-void CMvAdditionAndSubtraction::slotGetStartUpDrawingValue(bool State)
+void CMvAdaptiveBinarization::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
@@ -334,43 +307,43 @@ void CMvAdditionAndSubtraction::slotGetStartUpDrawingValue(bool State)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvAdditionAndSubtraction::slotAmplifyThePictureIsClick()
+void CMvAdaptiveBinarization::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvAdditionAndSubtraction::slotShrinkThePictureIsClick()
+void CMvAdaptiveBinarization::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvAdditionAndSubtraction::slotBestSizeOfPictureIsClick()
+void CMvAdaptiveBinarization::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvAdditionAndSubtraction::slotLockROIIsClick()
+void CMvAdaptiveBinarization::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvAdditionAndSubtraction::slotOnceIsClick()
+void CMvAdaptiveBinarization::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvAdditionAndSubtraction::slotMakeSureIsClick()
+void CMvAdaptiveBinarization::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvAdditionAndSubtraction::slotCancelIsClick()
+void CMvAdaptiveBinarization::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }
