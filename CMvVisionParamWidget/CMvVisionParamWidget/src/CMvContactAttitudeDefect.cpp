@@ -1,5 +1,5 @@
-﻿#include "CMvImageDefect.h"
-#include "ui_CMvImageDefect.h"
+﻿#include "CMvContactAttitudeDefect.h"
+#include "ui_CMvContactAttitudeDefect.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QTableWidgetItem>
@@ -7,8 +7,7 @@
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
 #endif //_MSC_VER
-
-
+//
 ////屏蔽QComboBox控件的鼠标滚动监听
 //void QComboBox::wheelEvent(QWheelEvent *e)
 //{
@@ -20,13 +19,13 @@
 //{
 //
 //}
-//
 
-CMvImageDefect* CMvImageDefect::s_pCMvImageDefect = nullptr;
 
-CMvImageDefect::CMvImageDefect(QWidget *parent)
+CMvContactAttitudeDefect* CMvContactAttitudeDefect::s_pCMvContactAttitudeDefect = nullptr;
+
+CMvContactAttitudeDefect::CMvContactAttitudeDefect(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvImageDefect)
+	ui(new Ui::CMvContactAttitudeDefect)
 {
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -43,9 +42,12 @@ CMvImageDefect::CMvImageDefect(QWidget *parent)
 	**====================================输入设置相关函数及信号与槽的链接===========================**
 	**=================================二级菜单相关函数及信号与槽的链接==============================**
 	\*===============================================================================================*/
+	
+	//初始化参数
+	initCMvContactAttitudeDefect();
 
-	//初始化数据
-	initCMvImageDefect();
+	//初始化所有二级菜单
+	initMenuByTest();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -78,50 +80,84 @@ CMvImageDefect::CMvImageDefect(QWidget *parent)
 	/*===============================================================================================*\
 	**====================================参数设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
-	//点击编辑模板
-	connect(ui->pushButton_editTemplate, SIGNAL(clicked()), this, SLOT(slotGetEditTemplateIsClick()));
+	//选择二值化类型
+	connect(ui->comboBox_binaryDetection, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeBinaryDetection(int)));
 
-	//点击显示差异图像
-	connect(ui->pushButton_ImageDifferences, SIGNAL(clicked()), this, SLOT(slotGetImageDifferencesIsClick()));
+	//获取灰度阈值
+	connect(ui->spinBox_grayLevel, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrayLevelValue(int)));
 
-	//点击显示缺陷信息
-	connect(ui->pushButton_defectiveInformation, SIGNAL(clicked()), this, SLOT(slotGetDefectiveInformationIsClick()));
+	//开启开启灰尘检测
+	connect(ui->checkBox_dust, SIGNAL(clicked(bool)), this, SLOT(slotGetDustIsChecked(bool)));
 
-	//获取缺陷类型 数值
-	connect(ui->comboBox_defectType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetDefectTypeValue(int)));
-
-	//获取灰度上限
+	//获取载片灰度上限
 	connect(ui->spinBox_grayLevelMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrayLevelMaxValue(int)));
 
-	//获取灰度下限
+	//获取载片灰度下限
 	connect(ui->spinBox_grayLevelMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrayLevelMinValue(int)));
 
-	//获取面积上限
+	//获取灰尘梯度上限
+	connect(ui->spinBox_dustMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetDustMaxValue(int)));
+
+	//获取灰尘梯度下限
+	connect(ui->spinBox_dustMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetDustMinValue(int)));
+
+	//获取查找范围
+	connect(ui->spinBox_seekScope, SIGNAL(valueChanged(int)), this, SLOT(slotGetSeekScopeValue(int)));
+
+	//获取灰尘最少点数
+	connect(ui->spinBox_MinimumPointsNumber, SIGNAL(valueChanged(int)), this, SLOT(slotGetMinimumPointsNumberValue(int)));
+
+	//开启杂点剔除参数
+	connect(ui->checkBox_miscellaneous, SIGNAL(clicked(bool)), this, SLOT(slotGetMiscellaneousIsChecked(bool)));
+
+	//获取杂点面积上限
 	connect(ui->doubleSpinBox_areaMax, SIGNAL(valueChanged(double)), this, SLOT(slotGetAreaMaxValue(double)));
 
-	//获取面积下限
+	//获取杂点面积下限
 	connect(ui->doubleSpinBox_areaMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetAreaMinValue(double)));
 
-	//获取最小矩形宽度上限
-	connect(ui->doubleSpinBox_rectangleMaxWidth, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMaxWidthValue(double)));
+	//点击显示杂点信息
+	connect(ui->pushButton_miscellaneousInformation, SIGNAL(clicked()), this, SLOT(slotGetMiscellaneousInformationIsClicked()));
 
-	//获取最小矩形宽度下限
-	connect(ui->doubleSpinBox_rectangleMinWidth, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMinWidthValue(double)));
+	//开启触点面积限定
+	connect(ui->checkBox_contactArea, SIGNAL(clicked(bool)), this, SLOT(slotGetContactAreaIsChecked(bool)));
 
-	//获取最小矩形高度上限
-	connect(ui->doubleSpinBox_rectangleMaxHight, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMaxHightValue(double)));
+	//获取触点面积上限
+	connect(ui->doubleSpinBox_contactAreaMax, SIGNAL(valueChanged(double)), this, SLOT(slotGetContactAreaMaxValue(double)));
 
-	//获取最小矩形高度下限
-	connect(ui->doubleSpinBox_rectangleMinHight, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMinHightValue(double)));
+	//获取触点面积下限
+	connect(ui->doubleSpinBox_contactAreaMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetContactAreaMinValue(double)));
 
-	//开启面积筛选
-	connect(ui->checkBox_area, SIGNAL(clicked(bool)), this, SLOT(slotGetAreaMinIsChecked(bool)));
+	//获取触点宽度上限
+	connect(ui->doubleSpinBox_widthMax, SIGNAL(valueChanged(double)), this, SLOT(slotGetWidthMaxValue(double)));
 
-	//开启矩形宽度筛选
-	connect(ui->checkBox_rectangleWidth, SIGNAL(clicked(bool)), this, SLOT(slotGetRectangleMaxWidthIsChecked(bool)));
+	//获取触点宽度下限
+	connect(ui->doubleSpinBox_widthMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetWidthMinValue(double)));
 
-	//开启矩形高度筛选
-	connect(ui->checkBox_rectangleHight, SIGNAL(clicked(bool)), this, SLOT(slotGetRectangleMaxHightIsChecked(bool)));
+	//获取触点高度上限
+	connect(ui->doubleSpinBox_hightMax, SIGNAL(valueChanged(double)), this, SLOT(slotGetHightMaxValue(double)));
+
+	//获取触点高度下限
+	connect(ui->doubleSpinBox_hightMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetHightMinValue(double)));
+
+	//点击显示面积信息
+	connect(ui->pushButton_areaInformation, SIGNAL(clicked()), this, SLOT(slotGetAreaInformationIsClicked()));
+
+	//获取偏移距离阈值
+	connect(ui->doubleSpinBox_offsetDistance, SIGNAL(valueChanged(double)), this, SLOT(slotGetOffsetDistanceValue(double)));
+
+	//获取缺失距离阈值
+	connect(ui->doubleSpinBox_missingDistance, SIGNAL(valueChanged(double)), this, SLOT(slotGetMissingDistanceValue(double)));
+
+	//获取偏移角度阈值
+	connect(ui->doubleSpinBox_offsetAngle, SIGNAL(valueChanged(double)), this, SLOT(slotGetOffsetAngleValue(double)));
+
+	//获取特征范围
+	connect(ui->doubleSpinBox_characteristic, SIGNAL(valueChanged(double)), this, SLOT(slotGetCharacteristicValue(double)));
+
+	//点击学习一次
+	connect(ui->pushButton_study, SIGNAL(clicked()), this, SLOT(slotGetStudyIsClicked()));
+
 	/*===============================================================================================*\
 	**====================================掩膜设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
@@ -156,7 +192,8 @@ CMvImageDefect::CMvImageDefect(QWidget *parent)
 	//获取线条颜色
 	connect(ui->comboBox_lineColour, SIGNAL(activated(int)), this, SLOT(slotGetLineColourValue(int)));
 
-
+	//绘制边缘轮廓
+	connect(ui->checkBox_drawEdges, SIGNAL(clicked(bool)), this, SLOT(slotGetDrawEdgesValue(bool)));
 	/*===============================================================================================*\
 	**====================================功能栏信号与槽的链接=======================================**
 	\*===============================================================================================*/
@@ -182,11 +219,13 @@ CMvImageDefect::CMvImageDefect(QWidget *parent)
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
 
 	//设置关闭窗体时释放资源
+	//setAttribute(Qt::WA_QuitOnClose);
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
+
 //析构函数
-CMvImageDefect::~CMvImageDefect()
+CMvContactAttitudeDefect::~CMvContactAttitudeDefect()
 {
 	qDebug() << "析构函数";
 
@@ -196,47 +235,6 @@ CMvImageDefect::~CMvImageDefect()
 		m_pSecondLevelMenu = nullptr;
 	}
 
-	if (m_pImageSourceMenu)
-	{
-		for (int index = 0; index < m_pImageSourceMenu->actions().size(); index++)
-		{
-			delete m_pImageSourceMenu->actions()[0]->menu();
-		}
-		delete m_pImageSourceMenu;
-		m_pImageSourceMenu = nullptr;
-	}
-
-	if (m_pROISourceMenu)
-	{
-		int roiMenuSize = m_pROISourceMenu->actions().size();
-		for (int index = 0; index < roiMenuSize; ++index)
-		{
-			qDebug()<< m_pROISourceMenu->actions()[0]->menu()->title();
-			delete m_pROISourceMenu->actions()[0]->menu();
-		}
-		delete m_pROISourceMenu;
-		m_pROISourceMenu = nullptr;
-	}
-
-	if (m_pROIPositionUpdatingMenu)
-	{
-		for (int index = 0; index < m_pROIPositionUpdatingMenu->actions().size(); index++)
-		{
-			delete m_pROIPositionUpdatingMenu->actions()[0]->menu();
-		}
-		delete m_pROIPositionUpdatingMenu;
-		m_pROIPositionUpdatingMenu = nullptr;
-	}
-
-	if (m_pMaskSourceMenu)
-	{
-		for (int index = 0; index < m_pMaskSourceMenu->actions().size(); index++)
-		{
-			delete m_pMaskSourceMenu->actions()[0]->menu();
-		}
-		delete m_pMaskSourceMenu;
-		m_pMaskSourceMenu = nullptr;
-	}
 
 	if (m_allImageSourceMenuData.size() != 0)
 	{
@@ -281,90 +279,128 @@ CMvImageDefect::~CMvImageDefect()
 	delete ui;
 }
 
-
 //单例化
-CMvImageDefect* CMvImageDefect::Instance()
+CMvContactAttitudeDefect* CMvContactAttitudeDefect::Instance()
 {
-	if (s_pCMvImageDefect == nullptr) {
-		s_pCMvImageDefect = new CMvImageDefect;
+	if (s_pCMvContactAttitudeDefect == nullptr) {
+		s_pCMvContactAttitudeDefect = new CMvContactAttitudeDefect;
 	}
-	return s_pCMvImageDefect;
+	return s_pCMvContactAttitudeDefect;
 }
 
 
 //释放内存
-void CMvImageDefect::destroy()
+void CMvContactAttitudeDefect::destroy()
 {
-	if (s_pCMvImageDefect)
+	if (s_pCMvContactAttitudeDefect)
 	{
-		delete s_pCMvImageDefect;
-		s_pCMvImageDefect = nullptr;
-	}//if (s_pCMvImageDefect)
+		delete s_pCMvContactAttitudeDefect;
+		s_pCMvContactAttitudeDefect = nullptr;
+	}//if (s_pCMvContactAttitudeDefect)
 }
 
-//初始化数据
-void CMvImageDefect::initCMvImageDefect()
+//初始化界面
+void CMvContactAttitudeDefect::initCMvContactAttitudeDefect()
 {
 	m_signalEnable = false;
-
-	//初始化所有二级菜单
-	initMenuByTest();
-
 	//设置检测器名称
 	ui->plainTextEdit_funcName->setPlainText("");
-	ui->checkBox_enableFunc->setChecked(true);
 
 	//设置ROI来源
 	ui->comboBox_imageSource->setCurrentIndex(0);
-	ui->checkBox_roiCreat->setChecked(true);
 
-	//设置缺陷类型
-	ui->comboBox_defectType->setCurrentIndex(0);
+	//选择二值化类型
+	ui->comboBox_binaryDetection->setCurrentIndex(2);
 
-	//设置灰度上限
+	if (ui->comboBox_binaryDetection->currentIndex() < 2) {
+		ui->label_grayLevel->setEnabled(true);
+		ui->spinBox_grayLevel->setEnabled(true);
+	}
+	else {
+		ui->label_grayLevel->setEnabled(false);
+		ui->spinBox_grayLevel->setEnabled(false);
+	}
+
+	//获取灰度阈值
+	ui->spinBox_grayLevel->setValue(5);
+
+
+	//开启开启灰尘检测
+	ui->checkBox_dust->setChecked(false);
+	ui->groupBox_dust->setEnabled(ui->checkBox_dust->isChecked());
+
+	//获取载片灰度上限
 	ui->spinBox_grayLevelMax->setValue(0);
 
-	//设置灰度下限
+	//获取载片灰度下限
 	ui->spinBox_grayLevelMin->setValue(0);
 
-	//设置面积上限
+	//获取灰尘梯度上限
+	ui->spinBox_dustMax->setValue(0);
+
+	//获取灰尘梯度下限
+	ui->spinBox_dustMin->setValue(0);
+
+	//获取查找范围
+	ui->spinBox_seekScope->setValue(0);
+
+	//获取灰尘最少点数
+	ui->spinBox_MinimumPointsNumber->setValue(0);
+
+	//开启杂点剔除参数
+	ui->checkBox_miscellaneous->setChecked(false);
+	ui->groupBox_miscellaneous->setEnabled(ui->checkBox_miscellaneous->isChecked());
+
+	//获取杂点面积上限
 	ui->doubleSpinBox_areaMax->setValue(0);
 
-	//设置面积下限
+	//获取杂点面积下限
 	ui->doubleSpinBox_areaMin->setValue(0);
 
-	//设置最小矩形宽度上限
-	ui->doubleSpinBox_rectangleMaxWidth->setValue(0);
+	//开启触点面积限定
+	ui->checkBox_contactArea->setChecked(false);
+	ui->groupBox_contactArea->setEnabled(ui->checkBox_contactArea->isChecked());
 
-	//设置最小矩形宽度下限
-	ui->doubleSpinBox_rectangleMinWidth->setValue(0);
+	//获取触点面积上限
+	ui->doubleSpinBox_contactAreaMax->setValue(0);
 
-	//设置最小矩形高度上限
-	ui->doubleSpinBox_rectangleMaxHight->setValue(0);
+	//获取触点面积下限
+	ui->doubleSpinBox_contactAreaMin->setValue(0);
 
-	//设置最小矩形高度下限
-	ui->doubleSpinBox_rectangleMinHight->setValue(0);
+	//获取触点宽度上限
+	ui->doubleSpinBox_widthMax->setValue(0);
 
-	//设置面积筛选中
-	ui->checkBox_area->setChecked(false);
-	ui->groupBox_area->setEnabled(ui->checkBox_area->isChecked());
+	//获取触点宽度下限
+	ui->doubleSpinBox_widthMin->setValue(0);
 
-	//设置斜矩形宽度筛选选中
-	ui->checkBox_rectangleWidth->setChecked(false);
-	ui->groupBox_rectangleWidth->setEnabled(ui->checkBox_rectangleWidth->isChecked());
+	//获取触点高度上限
+	ui->doubleSpinBox_hightMax->setValue(0);
 
-	//设置斜矩形高度筛选选中
-	ui->checkBox_rectangleHight->setChecked(false);
-	ui->groupBox_rectangleHight->setEnabled(ui->checkBox_rectangleHight->isChecked());
+	//获取触点高度下限
+	ui->doubleSpinBox_hightMin->setValue(0);
+
+	//获取偏移距离阈值
+	ui->doubleSpinBox_offsetDistance->setValue(0);
+	
+	//获取缺失距离阈值
+	ui->doubleSpinBox_missingDistance->setValue(0);
+
+	//获取偏移角度阈值
+	ui->doubleSpinBox_offsetAngle->setValue(0);
+
+	//获取特征范围
+	ui->doubleSpinBox_characteristic->setValue(0);
+
 
 	//设置掩膜
 	ui->comboBox_dEtectionMask->setCurrentIndex(0);
 	ui->comboBox_editMode->setCurrentIndex(0);
 	ui->spinBox_lightTime->setValue(5);
 
-	if (ui->comboBox_dEtectionMask->currentIndex() == 0){
+	if (ui->comboBox_dEtectionMask->currentIndex() == 0) {
 		ui->widget_Mask->setEnabled(false);
-	}else{
+	}
+	else {
 		ui->widget_Mask->setEnabled(false);
 	}
 
@@ -375,14 +411,15 @@ void CMvImageDefect::initCMvImageDefect()
 	ui->label_lineWidth->setEnabled(ui->checkBox_valuTrig->isChecked());
 	ui->label_lineColour->setEnabled(ui->checkBox_valuTrig->isChecked());
 
-	m_signalEnable = true;
+	ui->checkBox_drawEdges->setChecked(false);
+	m_signalEnable = true;	
 }
 
 /*===============================================================================================*\
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvImageDefect::slotGetDetectorNameValue()
+void CMvContactAttitudeDefect::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -401,7 +438,7 @@ void CMvImageDefect::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvImageDefect::slotGetEnableDetectorValue(bool state)
+void CMvContactAttitudeDefect::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -409,7 +446,7 @@ void CMvImageDefect::slotGetEnableDetectorValue(bool state)
 }
 
 //获取ROI来源
-void CMvImageDefect::slotGetROISourcesValue(int index)
+void CMvContactAttitudeDefect::slotGetROISourcesValue(int index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取ROI来源选项" << ui->comboBox_imageSource->itemText(index);
@@ -417,18 +454,19 @@ void CMvImageDefect::slotGetROISourcesValue(int index)
 }
 
 //获取自己创建选中信息
-void CMvImageDefect::slotGetCreateYourselfValue(bool state)
+void CMvContactAttitudeDefect::slotGetCreateYourselfValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取自己创建选中信息" << ui->checkBox_roiCreat->isChecked();
 	}
 }
 
+
 /*===============================================================================================*\
 **======================================二级菜单槽函数===========================================**
 \*===============================================================================================*/
 ////初始化二级菜单
-void CMvImageDefect::initMenu()
+void CMvContactAttitudeDefect::initMenu()
 {
 //	//初始化图片来源菜单
 //	m_ImageSourceMenu = SecondLevelMenu->initSecondLevelMenu(m_AllImageSourceMenuData, ui->tableWidget_input);
@@ -443,7 +481,7 @@ void CMvImageDefect::initMenu()
 //	m_MaskSourceMenu = SecondLevelMenu->initSecondLevelMenu(m_AllMaskSourceMenuData, ui->tableWidget_input);
 }
 
-void CMvImageDefect::initMenuByTest()
+void CMvContactAttitudeDefect::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pImageSourceMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_allImageSourceMenuData);
@@ -459,37 +497,31 @@ void CMvImageDefect::initMenuByTest()
 }
 
 //根据点击位置选择弹框
-void CMvImageDefect::slotClickPushButton(int row, int col)
+void CMvContactAttitudeDefect::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
 	if (col == 1)
 	{
-		switch (row)
+		switch(row)
 		{
 		case 0:
 			m_pImageSourceMenu->move(cursor().pos());
 			m_pImageSourceMenu->show();
 
-			qDebug() << "image source menu " << m_pImageSourceMenu->isEmpty();
-
 			break;
-
 		case 1:
 			m_pROISourceMenu->move(cursor().pos());
 			m_pROISourceMenu->show();
 			break;
-
 		case 2:
 			m_pROIPositionUpdatingMenu->move(cursor().pos());
 			m_pROIPositionUpdatingMenu->show();
 			break;
-
 		case 3:
 			m_pMaskSourceMenu->move(cursor().pos());
 			m_pMaskSourceMenu->show();
 			break;
-
 		default:
 			break;
 		}
@@ -501,7 +533,7 @@ void CMvImageDefect::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvImageDefect::soltMenuTriggered(QAction* action)
+void CMvContactAttitudeDefect::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -550,133 +582,237 @@ void CMvImageDefect::soltMenuTriggered(QAction* action)
 	m_iCol = -1;
 }
 
-
 /*===============================================================================================*\
 **======================================参数设置页面槽函数=======================================**
 \*===============================================================================================*/
-//点击编辑模板
-void CMvImageDefect::slotGetEditTemplateIsClick()
-{
-	qDebug() << "点击编辑模板";
-}
-
-//点击显示差异图像
-void CMvImageDefect::slotGetImageDifferencesIsClick()
-{
-	qDebug() << "点击显示差异图像";
-}
-
-//点击显示缺陷信息
-void CMvImageDefect::slotGetDefectiveInformationIsClick()
-{
-	qDebug() << "点击显示缺陷信息";
-}
-
-//获取缺陷类型 数值
-void CMvImageDefect::slotGetDefectTypeValue(int index)
+//选择二值化类型
+void CMvContactAttitudeDefect::slotChangeBinaryDetection(int index)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取缺陷类型" << ui->comboBox_defectType->itemText(index);
+		qDebug() << "选择二值化类型" << ui->comboBox_binaryDetection->itemText(index) << " " << index;
+		if (index < 2) {
+			ui->label_grayLevel->setEnabled(true);
+			ui->spinBox_grayLevel->setEnabled(true);
+		}
+		else {
+			ui->label_grayLevel->setEnabled(false);
+			ui->spinBox_grayLevel->setEnabled(false);
+		}
 	}
 }
 
-//获取灰度上限
-void CMvImageDefect::slotGetGrayLevelMaxValue(int value)
+//获取灰度阈值
+void CMvContactAttitudeDefect::slotGetGrayLevelValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取灰度上限" << value;
+		qDebug() << "获取灰度阈值" << value;
 	}
 }
 
-//获取灰度下限
-void CMvImageDefect::slotGetGrayLevelMinValue(int value)
+//开启开启灰尘检测
+void CMvContactAttitudeDefect::slotGetDustIsChecked(bool state)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取灰度下限" << value;
+		qDebug() << "开启开启灰尘检测" << state;
+		ui->groupBox_dust->setEnabled(state);
 	}
 }
 
-//获取面积上限
-void CMvImageDefect::slotGetAreaMaxValue(double value)
+//获取载片灰度上限
+void CMvContactAttitudeDefect::slotGetGrayLevelMaxValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取面积上限" << value;
+		qDebug() << "获取载片灰度上限" << value;
 	}
 }
 
-//获取面积下限
-void CMvImageDefect::slotGetAreaMinValue(double value)
+//获取载片灰度下限
+void CMvContactAttitudeDefect::slotGetGrayLevelMinValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取面积下限" << value;
+		qDebug() << "获取载片灰度下限" << value;
 	}
 }
 
-//获取最小矩形宽度上限
-void CMvImageDefect::slotGetRectangleMaxWidthValue(double value)
+//获取灰尘梯度上限
+void CMvContactAttitudeDefect::slotGetDustMaxValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取最小矩形宽度上限" << value;
+		qDebug() << "获取灰尘梯度上限" << value;
 	}
 }
 
-//获取最小矩形宽度下限
-void CMvImageDefect::slotGetRectangleMinWidthValue(double value)
+//获取灰尘梯度下限
+void CMvContactAttitudeDefect::slotGetDustMinValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取最小矩形宽度下限" << value;
+		qDebug() << "获取灰尘梯度下限" << value;
 	}
 }
 
-//获取最小矩形高度上限
-void CMvImageDefect::slotGetRectangleMaxHightValue(double value)
+//获取查找范围
+void CMvContactAttitudeDefect::slotGetSeekScopeValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取最小矩形高度上限" << value;
+		qDebug() << "获取查找范围" << value; 
 	}
 }
 
-//获取最小矩形高度下限
-void CMvImageDefect::slotGetRectangleMinHightValue(double value)
+//获取灰尘最少点数
+void CMvContactAttitudeDefect::slotGetMinimumPointsNumberValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取最小矩形高度下限" << value;
-	}
-}
-
-//开启面积筛选
-void CMvImageDefect::slotGetAreaMinIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启面积筛选" << state;
-		ui->groupBox_area->setEnabled(state);
+		qDebug() << "获取灰尘最少点数" << value;
 	}
 }
 
 
-//开启矩形宽度筛选
-void CMvImageDefect::slotGetRectangleMaxWidthIsChecked(bool state)
+//开启杂点剔除参数
+void CMvContactAttitudeDefect::slotGetMiscellaneousIsChecked(bool state)
 {
 	if (m_signalEnable) {
-		qDebug() << "开启矩形宽度筛选" << state;
-		ui->groupBox_rectangleWidth->setEnabled(state);
+		qDebug() << "开启杂点剔除参数" << state;
+		ui->groupBox_miscellaneous->setEnabled(state);
 	}
 }
 
-//开启矩形高度筛选
-void CMvImageDefect::slotGetRectangleMaxHightIsChecked(bool state)
+//获取杂点面积上限
+void CMvContactAttitudeDefect::slotGetAreaMaxValue(double value)
 {
 	if (m_signalEnable) {
-		qDebug() << "开启矩形高度筛选" << state;
-		ui->groupBox_rectangleHight->setEnabled(state);
+		qDebug() << "获取杂点面积上限" << value;
 	}
 }
+
+//获取杂点面积下限
+void CMvContactAttitudeDefect::slotGetAreaMinValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取杂点面积下限" << value;
+	}
+}
+
+//点击显示杂点信息
+void CMvContactAttitudeDefect::slotGetMiscellaneousInformationIsClicked()
+{
+	if (m_signalEnable) {
+		qDebug() << "点击显示杂点信息";
+	}
+}
+
+//开启触点面积限定
+void CMvContactAttitudeDefect::slotGetContactAreaIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启触点面积限定" << state;
+		ui->groupBox_contactArea->setEnabled(state);
+	}
+}
+
+//获取触点面积上限
+void CMvContactAttitudeDefect::slotGetContactAreaMaxValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取触点面积上限" << value;
+	}
+}
+
+//获取触点面积下限
+void CMvContactAttitudeDefect::slotGetContactAreaMinValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取触点面积下限" << value;
+	}
+}
+
+//获取触点宽度上限
+void CMvContactAttitudeDefect::slotGetWidthMaxValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取触点宽度上限" << value;
+	}
+}
+
+//获取触点宽度下限
+void CMvContactAttitudeDefect::slotGetWidthMinValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取触点宽度下限" << value;
+	}
+}
+
+//获取触点高度上限
+void CMvContactAttitudeDefect::slotGetHightMaxValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取触点高度上限" << value;
+	}
+}
+
+//获取触点高度下限
+void CMvContactAttitudeDefect::slotGetHightMinValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取触点高度下限" << value;
+	}
+}
+
+//点击显示面积信息
+void CMvContactAttitudeDefect::slotGetAreaInformationIsClicked()
+{
+	if (m_signalEnable) {
+		qDebug() << "点击显示面积信息";
+	}
+}
+
+//获取偏移距离阈值
+void CMvContactAttitudeDefect::slotGetOffsetDistanceValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取偏移距离阈值" << value;
+	}
+}
+
+//获取缺失距离阈值
+void CMvContactAttitudeDefect::slotGetMissingDistanceValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取缺失距离阈值" << value;
+	}
+}
+
+//获取偏移角度阈值
+void CMvContactAttitudeDefect::slotGetOffsetAngleValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取偏移角度阈值" << value;
+	}
+}
+
+//获取特征范围
+void CMvContactAttitudeDefect::slotGetCharacteristicValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取特征范围" << value;
+	}
+}
+
+//点击学习一次
+void CMvContactAttitudeDefect::slotGetStudyIsClicked()
+{
+	if (m_signalEnable) {
+		qDebug() << "点击学习一次";
+	}
+}
+
+
 
 /*===============================================================================================*\
 **=======================================掩膜设置槽函数==========================================**
 \*===============================================================================================*/
 //获取检测区域的掩膜 数值
-void CMvImageDefect::slotMaskOfDetectionAreaValue(int Index)
+
+void CMvContactAttitudeDefect::slotMaskOfDetectionAreaValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取检测区域的掩膜" << ui->comboBox_dEtectionMask->itemText(Index) << " " << Index;
@@ -691,7 +827,7 @@ void CMvImageDefect::slotMaskOfDetectionAreaValue(int Index)
 }
 
 //获取编辑方式 数值
-void CMvImageDefect::slotEditModeValue(int Index)
+void CMvContactAttitudeDefect::slotEditModeValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取编辑方式" << ui->comboBox_editMode->itemText(Index) << " " << Index;
@@ -719,7 +855,7 @@ void CMvImageDefect::slotEditModeValue(int Index)
 }
 
 //获取画笔尺寸 数值
-void CMvImageDefect::slotBrushSizeValue(int Value)
+void CMvContactAttitudeDefect::slotBrushSizeValue(int Value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取画笔尺寸" << ui->spinBox_lightTime->value() << " " << Value;
@@ -727,7 +863,7 @@ void CMvImageDefect::slotBrushSizeValue(int Value)
 }
 
 //点击清空掩膜
-void CMvImageDefect::slotEmptyMaskIsClick()
+void CMvContactAttitudeDefect::slotEmptyMaskIsClick()
 {
 	if (m_signalEnable) {
 		m_maskCount = 0;
@@ -737,7 +873,7 @@ void CMvImageDefect::slotEmptyMaskIsClick()
 }
 
 //点击掩盖所有
-void CMvImageDefect::slotCoverUpEverythingClick()
+void CMvContactAttitudeDefect::slotCoverUpEverythingClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "掩盖所有被点了";
@@ -745,7 +881,7 @@ void CMvImageDefect::slotCoverUpEverythingClick()
 }
 
 //点击保存修改
-void CMvImageDefect::slotSaveChangesClick()
+void CMvContactAttitudeDefect::slotSaveChangesClick()
 {
 	if (m_signalEnable) {
 		qDebug() << "保存修改被点了";
@@ -757,7 +893,7 @@ void CMvImageDefect::slotSaveChangesClick()
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取线条宽度 数值
-void CMvImageDefect::slotGetLineWidthValue(int Value)
+void CMvContactAttitudeDefect::slotGetLineWidthValue(int Value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取线条宽度" << ui->spinBox_lineWidth->value() << " " << Value;
@@ -765,68 +901,75 @@ void CMvImageDefect::slotGetLineWidthValue(int Value)
 }
 
 //获取启动绘制选中信息
-void CMvImageDefect::slotGetStartUpDrawingValue(bool State)
+void CMvContactAttitudeDefect::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
 
-		ui->label_lineWidth->setEnabled(State);
-		ui->spinBox_lineWidth->setEnabled(State);
 		ui->comboBox_lineColour->setEnabled(State);
+		ui->spinBox_lineWidth->setEnabled(State);
+		ui->label_lineWidth->setEnabled(State);
 		ui->label_lineColour->setEnabled(State);
 	}
 }
 
 //获取线条颜色 数值
-void CMvImageDefect::slotGetLineColourValue(int Index)
+void CMvContactAttitudeDefect::slotGetLineColourValue(int Index)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取线条颜色" << ui->comboBox_lineColour->itemText(Index);
 	}
 }
 
+//绘制边缘轮廓
+void CMvContactAttitudeDefect::slotGetDrawEdgesValue(bool State)
+{
+	if (m_signalEnable) {
+		qDebug() << "绘制边缘轮廓" << ui->checkBox_drawEdges->isChecked();
+	}
+}
 
 /*===============================================================================================*\
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvImageDefect::slotAmplifyThePictureIsClick()
+void CMvContactAttitudeDefect::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvImageDefect::slotShrinkThePictureIsClick()
+void CMvContactAttitudeDefect::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvImageDefect::slotBestSizeOfPictureIsClick()
+void CMvContactAttitudeDefect::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvImageDefect::slotLockROIIsClick()
+void CMvContactAttitudeDefect::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvImageDefect::slotOnceIsClick()
+void CMvContactAttitudeDefect::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvImageDefect::slotMakeSureIsClick()
+void CMvContactAttitudeDefect::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvImageDefect::slotCancelIsClick()
+void CMvContactAttitudeDefect::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

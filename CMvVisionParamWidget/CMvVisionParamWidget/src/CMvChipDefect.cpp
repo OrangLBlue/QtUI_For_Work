@@ -1,5 +1,5 @@
-﻿#include "CMvDenoiseBinarization.h"
-#include "ui_CMvDenoiseBinarization.h"
+﻿#include "CMvChipDefect.h"
+#include "ui_CMvChipDefect.h"
 #include <QStringList>
 #include <QTableWidgetItem>
 #include <QDebug>
@@ -20,11 +20,11 @@
 //
 //}
 
-CMvDenoiseBinarization * CMvDenoiseBinarization::s_pCMvDenoiseBinarization = nullptr;
+CMvChipDefect * CMvChipDefect::s_pCMvChipDefect = nullptr;
 
-CMvDenoiseBinarization::CMvDenoiseBinarization(QWidget *parent)
+CMvChipDefect::CMvChipDefect(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvDenoiseBinarization)
+	ui(new Ui::CMvChipDefect)
 { 
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -41,7 +41,7 @@ CMvDenoiseBinarization::CMvDenoiseBinarization(QWidget *parent)
 	m_signalEnable = true;
 
 	//初始化数据
-	initCMvDenoiseBinarization();
+	initCMvChipDefect();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -49,27 +49,61 @@ CMvDenoiseBinarization::CMvDenoiseBinarization(QWidget *parent)
 	//根据彩色图像菜单动作选择，设置单元格显示内容
 	connect(m_pColorImageMenu, SIGNAL(triggered(QAction*)), this, SLOT(soltMenuTriggered(QAction*)));
 
-	//选择二值化类型
-	connect(ui->comboBox_binaryDetection, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeBinaryDetection(int)));
-
-	//获取灰度阈值
-	connect(ui->spinBox_grayLevel, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrayLevelValue(int)));
-
-	//获取面积上限
-	connect(ui->spinBox_areaMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetAreaMaxValue(int)));
-
-	//获取面积下限
-	connect(ui->spinBox_areaMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetAreaMinValue(int)));
-
-	//开启面积筛选
-	connect(ui->checkBox_detectionMode, SIGNAL(clicked(bool)), this, SLOT(slotGetAreaIsChecked(bool)));
-
 	//获取检测器名称
 	connect(ui->plainTextEdit_funcName, SIGNAL(textChanged()), this, SLOT(slotGetDetectorNameValue()));
 
 	//获取启用检测器选中信息
 	connect(ui->checkBox_enableFunc, SIGNAL(clicked(bool)), this, SLOT(slotGetEnableDetectorValue(bool)));
 
+	
+	//选择二值化类型
+	connect(ui->comboBox_binaryDetection, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeBinaryDetection(int)));
+
+	//获取晶片灰度阈值
+	connect(ui->spinBox_grayLevel, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrayLevelValue(int)));
+
+	//获取晶片宽度上限
+	connect(ui->spinBox_rectangleMaxWidth, SIGNAL(valueChanged(int)), this, SLOT(slotGetRectangleMaxWidthValue(int)));
+
+	//获取晶片宽度下限
+	connect(ui->spinBox_rectangleMinWidth, SIGNAL(valueChanged(int)), this, SLOT(slotGetRectangleMinWidthValue(int)));
+
+	//获取晶片高度上限
+	connect(ui->spinBox_rectangleMaxHight, SIGNAL(valueChanged(int)), this, SLOT(slotGetRectangleMaxHightValue(int)));
+
+	//获取晶片高度下限
+	connect(ui->spinBox_rectangleMinHight, SIGNAL(valueChanged(int)), this, SLOT(slotGetRectangleMinHightValue(int)));
+
+	//开启检测外凸缺陷
+	connect(ui->checkBox_evagination, SIGNAL(clicked(bool)), this, SLOT(slotGetEvaginationIsChecked(bool)));
+
+	//开启检测内陷缺陷
+	connect(ui->checkBox_invagination, SIGNAL(clicked(bool)), this, SLOT(slotGetInvaginationIsChecked(bool)));
+
+	//开启检测切角缺陷
+	connect(ui->checkBox_cornerCut, SIGNAL(clicked(bool)), this, SLOT(slotGetCornerCutIsChecked(bool)));
+
+	//获取外凸最小长度
+	connect(ui->spinBox_minimumLengthConvex, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinimumLengthConvexValue(double)));
+
+	//获取外凸边缘不平整度
+	connect(ui->spinBox_edgeUnevenEvagination, SIGNAL(valueChanged(double)), this, SLOT(slotGetEdgeUnevenEvaginationValue(double)));
+
+	//获取内陷最小深度
+	connect(ui->spinBox_minimumDepthSubsidence, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinimumDepthSubsidenceValue(double)));
+
+	//获取内陷边缘不平整度
+	connect(ui->spinBox_edgeUnevenInvagination, SIGNAL(valueChanged(double)), this, SLOT(slotGetEdgeUnevenInvaginationValue(double)));
+
+	//获取与顶点最小距离
+	connect(ui->spinBox_minimumRange, SIGNAL(valueChanged(int)), this, SLOT(slotGetMinimumRangeValue(int)));
+
+	//获取与顶点最大距离
+	connect(ui->spinBox_maximumRange, SIGNAL(valueChanged(int)), this, SLOT(slotGetMaximumRangeValue(int)));	
+
+	//开启检测空洞缺陷
+	connect(ui->checkBox_cavity, SIGNAL(clicked(bool)), this, SLOT(slotGetCavityIsChecked(bool)));
+	
 	/*===============================================================================================*\
 	**====================================功能栏信号与槽的链接=======================================**
 	\*===============================================================================================*/
@@ -94,7 +128,6 @@ CMvDenoiseBinarization::CMvDenoiseBinarization(QWidget *parent)
 	//点击 取消
 	connect(ui->pbPrev_cancel, SIGNAL(clicked()), this, SLOT(slotCancelIsClick()));
 
-
 	//获取启动绘制选中信息
 	connect(ui->checkBox_valuTrig, SIGNAL(clicked(bool)), this, SLOT(slotGetStartUpDrawingValue(bool)));
 
@@ -102,7 +135,7 @@ CMvDenoiseBinarization::CMvDenoiseBinarization(QWidget *parent)
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
-CMvDenoiseBinarization::~CMvDenoiseBinarization()
+CMvChipDefect::~CMvChipDefect()
 {
 	qDebug() << "析构函数";
 
@@ -136,28 +169,28 @@ CMvDenoiseBinarization::~CMvDenoiseBinarization()
 }
 
 //单例
-CMvDenoiseBinarization * CMvDenoiseBinarization::Instance()
+CMvChipDefect * CMvChipDefect::Instance()
 {
-	if (s_pCMvDenoiseBinarization == nullptr)
+	if (s_pCMvChipDefect == nullptr)
 	{
-		s_pCMvDenoiseBinarization = new CMvDenoiseBinarization;
+		s_pCMvChipDefect = new CMvChipDefect;
 	}
-	return s_pCMvDenoiseBinarization;
+	return s_pCMvChipDefect;
 
 }
 
 //释放内存
-void CMvDenoiseBinarization::destroy()
+void CMvChipDefect::destroy()
 {
-	if (s_pCMvDenoiseBinarization)
+	if (s_pCMvChipDefect)
 	{
-		delete s_pCMvDenoiseBinarization;
-		s_pCMvDenoiseBinarization = nullptr;
+		delete s_pCMvChipDefect;
+		s_pCMvChipDefect = nullptr;
 	}
 }
 
 //初始化数据
-void CMvDenoiseBinarization::initCMvDenoiseBinarization()
+void CMvChipDefect::initCMvChipDefect()
 {
 	m_signalEnable = false;
 
@@ -180,21 +213,66 @@ void CMvDenoiseBinarization::initCMvDenoiseBinarization()
 		ui->spinBox_grayLevel->setEnabled(false);
 	}
 
-	//获取灰度阈值
+
+	//选择二值化类型
+	ui->comboBox_binaryDetection->setCurrentIndex(2);
+
+	if (ui->comboBox_binaryDetection->currentIndex() < 2) {
+		ui->label_grayLevel->setEnabled(true);
+		ui->spinBox_grayLevel->setEnabled(true);
+	}
+	else {
+		ui->label_grayLevel->setEnabled(false);
+		ui->spinBox_grayLevel->setEnabled(false);
+	}
+
+	//获取晶片灰度阈值
 	ui->spinBox_grayLevel->setValue(5);
 
-	//设置手动阈值选中
-	ui->checkBox_detectionMode->setChecked(false);
+	//获取晶片宽度上限
+	ui->spinBox_rectangleMaxWidth->setValue(5);
 
-	ui->groupBox_area->setEnabled(ui->checkBox_detectionMode->isChecked());
-	
+	//获取晶片宽度下限
+	ui->spinBox_rectangleMinWidth->setValue(5);
 
-	//获取面积上限
-	ui->spinBox_areaMax->setValue(5);
+	//获取晶片高度上限
+	ui->spinBox_rectangleMaxHight->setValue(5);
 
-	//获取面积下限
-	ui->spinBox_areaMin->setValue(5);
+	//获取晶片高度下限
+	ui->spinBox_rectangleMinHight->setValue(5);
 
+	//开启检测外凸缺陷
+	ui->checkBox_evagination->setChecked(false);
+	ui->groupBox_evagination->setEnabled(ui->checkBox_evagination->isChecked());
+
+	//开启检测内陷缺陷
+	ui->checkBox_invagination->setChecked(false);
+	ui->groupBox_invagination->setEnabled(ui->checkBox_invagination->isChecked());
+
+	//开启检测切角缺陷
+	ui->checkBox_cornerCut->setChecked(false);
+	ui->groupBox_cornerCut->setEnabled(ui->checkBox_cornerCut->isChecked());
+
+	//获取外凸最小长度
+	ui->spinBox_minimumLengthConvex->setValue(5);
+
+	//获取外凸边缘不平整度
+	ui->spinBox_edgeUnevenEvagination->setValue(5);
+
+	//获取内陷最小深度
+	ui->spinBox_minimumDepthSubsidence->setValue(5);
+
+	//获取内陷边缘不平整度
+	ui->spinBox_edgeUnevenInvagination->setValue(5);
+
+	//获取与顶点最小距离
+	ui->spinBox_minimumRange->setValue(5);
+
+	//获取与顶点最大距离
+	ui->spinBox_maximumRange->setValue(5);
+
+	//开启检测空洞缺陷
+	ui->checkBox_cavity->setChecked(false);
 
 	//设置绘图
 	ui->checkBox_valuTrig->setChecked(false);
@@ -204,7 +282,7 @@ void CMvDenoiseBinarization::initCMvDenoiseBinarization()
 }
 
 //选择二值化类型
-void CMvDenoiseBinarization::slotChangeBinaryDetection(int index)
+void CMvChipDefect::slotChangeBinaryDetection(int index)
 {
 	if (m_signalEnable) {
 		qDebug() << "选择二值化类型" << ui->comboBox_binaryDetection->itemText(index) << " " << index;
@@ -212,54 +290,145 @@ void CMvDenoiseBinarization::slotChangeBinaryDetection(int index)
 			ui->label_grayLevel->setEnabled(true);
 			ui->spinBox_grayLevel->setEnabled(true);
 		}
-		else{
+		else {
 			ui->label_grayLevel->setEnabled(false);
 			ui->spinBox_grayLevel->setEnabled(false);
 		}
 	}
 }
 
-//获取灰度阈值
-void CMvDenoiseBinarization::slotGetGrayLevelValue(int value)
+//获取晶片灰度阈值
+void CMvChipDefect::slotGetGrayLevelValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取灰度阈值" << value;
+		qDebug() << "获取晶片灰度阈值" << value;
 	}
 }
 
-//获取面积上限
-void CMvDenoiseBinarization::slotGetAreaMaxValue(int value)
+//获取晶片宽度上限
+void CMvChipDefect::slotGetRectangleMaxWidthValue(int value)
 {
 	if (m_signalEnable) {
-		qDebug() << "获取面积上限" << ui->spinBox_areaMax->value() << value;
+		qDebug() << "获取晶片宽度上限" << value;
+	}
+}
+
+//获取晶片宽度下限
+void CMvChipDefect::slotGetRectangleMinWidthValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取晶片宽度下限" << value;
+	}
+}
+
+//获取晶片高度上限
+void CMvChipDefect::slotGetRectangleMaxHightValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取晶片高度上限" << value;
+	}
+}
+
+//获取晶片高度下限
+void CMvChipDefect::slotGetRectangleMinHightValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取晶片高度下限" << value;
+	}
+}
+
+//开启检测外凸缺陷
+void CMvChipDefect::slotGetEvaginationIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启检测外凸缺陷" << state;
+		ui->groupBox_evagination->setEnabled(state);
+	}
+}
+
+//开启检测内陷缺陷
+void CMvChipDefect::slotGetInvaginationIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启检测内陷缺陷" << state;
+		ui->groupBox_invagination->setEnabled(state);
+	}
+}
+
+//开启检测切角缺陷
+void CMvChipDefect::slotGetCornerCutIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启检测切角缺陷" << state;
+		ui->groupBox_cornerCut->setEnabled(state);
+	}
+}
+
+//获取外凸最小长度
+void CMvChipDefect::slotGetMinimumLengthConvexValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取外凸最小长度" << ui->spinBox_minimumLengthConvex->value() << value;
+	}
+}
+
+//获取外凸边缘不平整度
+void CMvChipDefect::slotGetEdgeUnevenEvaginationValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取外凸边缘不平整度" << ui->spinBox_edgeUnevenEvagination->value() << value;
+	}
+}
+
+//获取内陷最小深度
+void CMvChipDefect::slotGetMinimumDepthSubsidenceValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取内陷最小深度" << ui->spinBox_minimumDepthSubsidence->value() << value;
+	}
+}
+
+//获取内陷边缘不平整度
+void CMvChipDefect::slotGetEdgeUnevenInvaginationValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取内陷边缘不平整度" << ui->spinBox_edgeUnevenInvagination->value() << value;
+	}
+}
+
+//获取与顶点最小距离
+void CMvChipDefect::slotGetMinimumRangeValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取与顶点最小距离" << ui->spinBox_minimumRange->value() << value;
+	}
+}
+
+//获取与顶点最大距离
+void CMvChipDefect::slotGetMaximumRangeValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取与顶点最大距离" << ui->spinBox_maximumRange->value() << value;
+	}
+}
+
+//开启检测空洞缺陷
+void CMvChipDefect::slotGetCavityIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启检测空洞缺陷" << state;
 	}
 }
 
 
-//获取面积下限
-void CMvDenoiseBinarization::slotGetAreaMinValue(int value)
-{
-	if (m_signalEnable) {
-		qDebug() << "获取面积下限" << ui->spinBox_areaMin->value() << value;
-	}
-}
 
-//开启面积筛选
-void CMvDenoiseBinarization::slotGetAreaIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启面积筛选" << state;
-		ui->groupBox_area->setEnabled(state);
-	}
-}
-
-void CMvDenoiseBinarization::initMenuByTest()
+void CMvChipDefect::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pColorImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pColorImageMenuData);
 }
 
-void CMvDenoiseBinarization::slotClickPushButton(int row, int col)
+void CMvChipDefect::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -275,7 +444,7 @@ void CMvDenoiseBinarization::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvDenoiseBinarization::soltMenuTriggered(QAction* action)
+void CMvChipDefect::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -313,7 +482,7 @@ void CMvDenoiseBinarization::soltMenuTriggered(QAction* action)
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvDenoiseBinarization::slotGetDetectorNameValue()
+void CMvChipDefect::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -332,7 +501,7 @@ void CMvDenoiseBinarization::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvDenoiseBinarization::slotGetEnableDetectorValue(bool state)
+void CMvChipDefect::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -343,7 +512,7 @@ void CMvDenoiseBinarization::slotGetEnableDetectorValue(bool state)
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取启动绘制选中信息
-void CMvDenoiseBinarization::slotGetStartUpDrawingValue(bool State)
+void CMvChipDefect::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
@@ -354,43 +523,43 @@ void CMvDenoiseBinarization::slotGetStartUpDrawingValue(bool State)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvDenoiseBinarization::slotAmplifyThePictureIsClick()
+void CMvChipDefect::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvDenoiseBinarization::slotShrinkThePictureIsClick()
+void CMvChipDefect::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvDenoiseBinarization::slotBestSizeOfPictureIsClick()
+void CMvChipDefect::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvDenoiseBinarization::slotLockROIIsClick()
+void CMvChipDefect::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvDenoiseBinarization::slotOnceIsClick()
+void CMvChipDefect::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvDenoiseBinarization::slotMakeSureIsClick()
+void CMvChipDefect::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvDenoiseBinarization::slotCancelIsClick()
+void CMvChipDefect::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

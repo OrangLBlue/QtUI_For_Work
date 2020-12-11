@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CMvColorSelection</class>
- <widget class="QWidget" name="CMvColorSelection">
+ <class>CMvRectangleGlueDefect</class>
+ <widget class="QWidget" name="CMvRectangleGlueDefect">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>颜色选定</string>
+   <string>矩形胶缺陷</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="leftMargin">
@@ -272,7 +272,7 @@
          </column>
          <item row="0" column="0">
           <property name="text">
-           <string>黑白图像</string>
+           <string>彩色图像</string>
           </property>
          </item>
          <item row="0" column="1">
@@ -346,109 +346,11 @@
         <attribute name="title">
          <string>参数设置</string>
         </attribute>
-        <widget class="QLabel" name="label_tcolorHistogram">
-         <property name="geometry">
-          <rect>
-           <x>130</x>
-           <y>20</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>颜色直方图：</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_colorSpace">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>颜色空间：</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_colorSpace">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>101</width>
-           <height>31</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>RBG</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>HSV</string>
-          </property>
-         </item>
-        </widget>
-        <widget class="QComboBox" name="comboBox_backgroundType">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>300</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>101</width>
-           <height>31</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>黑色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>白色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>灰色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>红色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>绿色背景</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>蓝色背景</string>
-          </property>
-         </item>
-        </widget>
         <widget class="QLabel" name="label_titleJudged">
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>120</y>
+           <y>190</y>
            <width>381</width>
            <height>31</height>
           </rect>
@@ -464,119 +366,485 @@ color: rgb(255, 255, 255);</string>
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
         </widget>
-        <widget class="QCheckBox" name="checkBox_miscellaneousElimination">
+        <widget class="QGroupBox" name="groupBox">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>180</y>
-           <width>111</width>
-           <height>31</height>
+           <x>0</x>
+           <y>20</y>
+           <width>361</width>
+           <height>151</height>
           </rect>
          </property>
-         <property name="text">
-          <string>启用杂点剔除</string>
+         <property name="title">
+          <string>色彩选定</string>
          </property>
-        </widget>
-        <widget class="QWidget" name="widget_miscellaneousElimination" native="true">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>190</y>
-           <width>231</width>
-           <height>81</height>
-          </rect>
-         </property>
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_maxArea">
+         <widget class="QSpinBox" name="spinBox_maxArea">
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>40</y>
+            <x>10</x>
+            <y>110</y>
             <width>101</width>
             <height>31</height>
            </rect>
           </property>
-          <property name="maximum">
-           <double>50000000.000000000000000</double>
-          </property>
          </widget>
-         <widget class="QLabel" name="label_maxArea">
+         <widget class="QSpinBox" name="spinBox_minArea">
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>10</y>
-            <width>111</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>面积上限：</string>
-          </property>
-         </widget>
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_minArea">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>40</y>
+            <x>130</x>
+            <y>110</y>
             <width>101</width>
             <height>31</height>
            </rect>
-          </property>
-          <property name="maximum">
-           <double>50000000.000000000000000</double>
           </property>
          </widget>
          <widget class="QLabel" name="label_minArea">
           <property name="geometry">
            <rect>
-            <x>120</x>
+            <x>130</x>
+            <y>80</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>杂点剔除面积下限：</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_maxArea">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>80</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>杂点剔除面积上限：</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_corrosiveCore">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
             <y>10</y>
             <width>111</width>
             <height>31</height>
            </rect>
           </property>
           <property name="text">
-           <string>面积下限：</string>
+           <string>滤波尺寸：</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_corrosiveCore">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>3x3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5x5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>7x7</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>9x9</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>11x11</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>13x13</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>15x15</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>17x17</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>19x19</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>21x21</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>23x23</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>25x25</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>27x27</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>29x29</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>31x31</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_colorSpace">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>颜色空间：</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_colorHistogram">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>显示颜色直方图</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_colorSpace">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>101</width>
+            <height>31</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>RBG</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>HSV</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_tcolorHistogram">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>颜色直方图：</string>
           </property>
          </widget>
         </widget>
-        <widget class="QPushButton" name="pushButton_colorHistogram">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>250</y>
+           <width>361</width>
+           <height>81</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>异胶设置</string>
+         </property>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_minimumLength">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>1000000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_widthMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>涂胶宽度上限：</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_widthMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>1000000</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_lengthMin">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>异胶最小长度：</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_widthMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>1000000</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_widthMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>涂胶宽度下限：</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>340</y>
+           <width>361</width>
+           <height>81</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>开槽设置</string>
+         </property>
+         <widget class="QSpinBox" name="spinBox_minLength">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_slotsNumber">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>开槽数量：</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_slotsNumber">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_lowerLimit">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>开槽长度下限：</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_maxLength">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>1000000</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_lengthlimit">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>开槽长度上限：</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_hole">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>460</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <double>1000000.000000000000000</double>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_hole">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>430</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>孔洞最小面积：</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_glueing">
          <property name="geometry">
           <rect>
            <x>130</x>
-           <y>50</y>
+           <y>460</y>
            <width>101</width>
            <height>31</height>
           </rect>
          </property>
-         <property name="text">
-          <string>显示颜色直方图</string>
+         <property name="maximum">
+          <double>1000000.000000000000000</double>
          </property>
         </widget>
-        <widget class="QLabel" name="label_backgroundType">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_breakdown">
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>270</y>
+           <y>460</y>
            <width>101</width>
            <height>31</height>
           </rect>
          </property>
-         <property name="text">
-          <string>背景图像类型：</string>
+         <property name="maximum">
+          <double>1000000.000000000000000</double>
          </property>
         </widget>
-        <zorder>widget_miscellaneousElimination</zorder>
-        <zorder>label_tcolorHistogram</zorder>
-        <zorder>label_colorSpace</zorder>
-        <zorder>comboBox_colorSpace</zorder>
-        <zorder>comboBox_backgroundType</zorder>
-        <zorder>label_titleJudged</zorder>
-        <zorder>checkBox_miscellaneousElimination</zorder>
-        <zorder>pushButton_colorHistogram</zorder>
-        <zorder>label_backgroundType</zorder>
+        <widget class="QLabel" name="label_glueing">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>430</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>涂胶圆角半径：</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_breakdown">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>430</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>断胶最小长度：</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_4">
         <attribute name="title">
@@ -585,7 +853,7 @@ color: rgb(255, 255, 255);</string>
         <widget class="QCheckBox" name="checkBox_valuTrig">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>260</x>
            <y>20</y>
            <width>101</width>
            <height>31</height>
@@ -596,6 +864,58 @@ color: rgb(255, 255, 255);</string>
          </property>
          <property name="checked">
           <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_imageDisplay">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>显示预处理图像</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_glueDisplay">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>涂胶显示：</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_glueDisplay">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>50</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>显示涂胶位置信息</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_imageDisplay">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>图像显示：</string>
          </property>
         </widget>
        </widget>

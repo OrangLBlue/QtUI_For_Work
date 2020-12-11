@@ -22,6 +22,20 @@
 #include "CMvDenoiseBinarization.h"
 #include "CMvCannyEdgeExtracting.h"
 #include "CMvImageDefect.h"
+#include "CMvBarCodeDefect.h"
+#include "CMvGraphicDefects.h"
+#include "CMvChipDefect.h"
+#include "CMvChipMainGrid.h"
+#include "CMvContactAttitudeDefect.h"
+#include "CMvEdgeDefect.h"
+#include "CMvRingGlueDefect.h"
+#include "CMvRectangleGlueDefect.h"
+#include "CMvPositiveNegativeContacts.h"
+#include "CMvRingDefect.h"
+#include "CMvTemplateMatching.h"
+#include "CMvContourMatching.h"
+#include "CMvFeatureMatching.h"
+
 
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
@@ -116,6 +130,45 @@ CMvTestWidget::~CMvTestWidget()
 
 	//图像缺陷
 	CMvImageDefect::destroy();
+
+	//条码缺陷
+	CMvBarCodeDefect::destroy();
+	
+	//图形缺陷
+	CMvGraphicDefects::destroy();
+
+	//晶片缺陷
+	CMvChipDefect::destroy();
+	
+	//晶片主栅线
+	CMvChipMainGrid::destroy();
+
+	//触点姿态缺陷
+	CMvContactAttitudeDefect::destroy();
+
+	//边缘缺陷
+	CMvEdgeDefect::destroy();
+
+	//环胶缺陷
+	CMvRingGlueDefect::destroy();
+
+	//矩形胶缺陷
+	CMvRectangleGlueDefect::destroy();
+
+	//触点正反
+	CMvPositiveNegativeContacts::destroy();
+	
+	//圆环缺口
+	CMvRingDefect::destroy();
+
+	//模板匹配
+	CMvTemplateMatching::destroy();
+
+	//轮廓匹配
+	CMvContourMatching::destroy();
+	
+	//特征匹配
+	CMvFeatureMatching::destroy();
 	
 	m_pTestWidget = nullptr;
 	delete ui;
@@ -265,6 +318,73 @@ void CMvTestWidget::slotOpenWindow()
 			//图像缺陷
 			CMvImageDefect::destroy();
 		}break;
+		case 21:
+		{
+			//条码缺陷
+			CMvBarCodeDefect::destroy();
+		}break;
+		case 22:
+		{
+			//图形缺陷
+			CMvGraphicDefects::destroy();
+		}break;
+		case 23:
+		{
+			//晶片缺陷
+			CMvChipDefect::destroy();
+		}break;
+		case 24:
+		{
+			//晶片主栅线
+			CMvChipMainGrid::destroy();
+		}break;
+		case 25:
+		{
+			//触点姿态缺陷
+			CMvContactAttitudeDefect::destroy();
+		}break;
+		case 26:
+		{
+			//边缘缺陷
+			 CMvEdgeDefect::destroy();
+		}break;
+		case 27:
+		{
+			//环胶缺陷
+			CMvRingGlueDefect::destroy();
+		}break;
+		case 28:
+		{
+			//矩形胶缺陷
+			CMvRectangleGlueDefect::destroy();
+		}break;
+		case 29:
+		{
+			//触点正反
+			CMvPositiveNegativeContacts::destroy();
+		}break;
+		case 30:
+		{
+			//圆环缺口
+			CMvRingDefect::destroy();
+		}break;
+		case 31:
+		{
+			//模板匹配
+			CMvTemplateMatching::destroy();
+		}break;
+		case 32:
+		{
+			//轮廓匹配
+			CMvContourMatching::destroy();
+		}break;
+		case 33:
+		{
+			//特征匹配
+			CMvFeatureMatching::destroy();
+		}break;
+	
+
 		default:
 			break;
 		}//switch (widgetType)
@@ -383,8 +503,72 @@ void CMvTestWidget::slotOpenWindow()
 		//图像缺陷
 		m_pTestWidget = CMvImageDefect::Instance();
 	}break;
+	case 21:
+	{
+		//条码缺陷
+		m_pTestWidget = CMvBarCodeDefect::Instance();
+	}break;
+	case 22:
+	{
+		//图形缺陷
+		m_pTestWidget = CMvGraphicDefects::Instance();
+	}break;
+	case 23:
+	{
+		//晶片缺陷
+		m_pTestWidget = CMvChipDefect::Instance();
+	}break;
+	case 24:
+	{
+		//晶片主栅线
+		m_pTestWidget = CMvChipMainGrid::Instance();
+	}break;
+	case 25:
+	{
+		//触点姿态缺陷
+		m_pTestWidget = CMvContactAttitudeDefect::Instance();
+	}break;
 
-
+	case 26:
+	{
+		//边缘缺陷
+		m_pTestWidget = CMvEdgeDefect::Instance();
+	}break;
+	case 27:
+	{
+		//环胶缺陷
+		m_pTestWidget = CMvRingGlueDefect::Instance();
+	}break;
+	case 28:
+	{
+		//矩形胶缺陷
+		m_pTestWidget = CMvRectangleGlueDefect::Instance();
+	}break;
+	case 29:
+	{
+		//触点正反
+		m_pTestWidget = CMvPositiveNegativeContacts::Instance();
+	}break;
+	case 30:
+	{
+		//圆环缺口
+		m_pTestWidget = CMvRingDefect::Instance();
+	}break;
+	case 31:
+	{
+		//模板匹配
+		m_pTestWidget = CMvTemplateMatching::Instance();
+	}break;
+	case 32:
+	{
+		//轮廓匹配
+		m_pTestWidget = CMvContourMatching::Instance();
+	}break;
+	case 33:
+	{
+		//特征匹配
+		m_pTestWidget = CMvFeatureMatching::Instance(); 
+	}break;
 	default:
 		break;
 	}//switch (widgetType)

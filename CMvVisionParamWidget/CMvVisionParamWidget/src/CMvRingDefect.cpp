@@ -1,5 +1,5 @@
-﻿#include "CMvAdaptiveBinarization.h"
-#include "ui_CMvAdaptiveBinarization.h"
+﻿#include "CMvRingDefect.h"
+#include "ui_CMvRingDefect.h"
 #include <QStringList>
 #include <QTableWidgetItem>
 #include <QDebug>
@@ -20,11 +20,11 @@
 //
 //}
 
-CMvAdaptiveBinarization * CMvAdaptiveBinarization::s_pCMvAdaptiveBinarization = nullptr;
+CMvRingDefect * CMvRingDefect::s_pCMvRingDefect = nullptr;
 
-CMvAdaptiveBinarization::CMvAdaptiveBinarization(QWidget *parent)
+CMvRingDefect::CMvRingDefect(QWidget *parent)
 	: QWidget(parent),
-	ui(new Ui::CMvAdaptiveBinarization)
+	ui(new Ui::CMvRingDefect)
 { 
 	ui->setupUi(this);
 	setWindowFlags(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -41,7 +41,7 @@ CMvAdaptiveBinarization::CMvAdaptiveBinarization(QWidget *parent)
 	m_signalEnable = true;
 
 	//初始化数据
-	initCMvAdaptiveBinarization();
+	initCMvRingDefect();
 
 	//算法选择触发
 	connect(ui->tableWidget_input, SIGNAL(cellClicked(int, int)), this, SLOT(slotClickPushButton(int, int)));
@@ -49,20 +49,40 @@ CMvAdaptiveBinarization::CMvAdaptiveBinarization(QWidget *parent)
 	//根据彩色图像菜单动作选择，设置单元格显示内容
 	connect(m_pColorImageMenu, SIGNAL(triggered(QAction*)), this, SLOT(soltMenuTriggered(QAction*)));
 
-	//选择自适应类型
-	connect(ui->comboBox_adaptiveType, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeAdaptiveType(int)));
-
-	//选择自适应尺寸
-	connect(ui->comboBox_adaptiveDimensions, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeAdaptiveDimensions(int)));
-
-	//选择结果图像处理
-	connect(ui->comboBox_resultLmageProcessing, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeResultLmageProcessing(int)));
-
 	//获取检测器名称
 	connect(ui->plainTextEdit_funcName, SIGNAL(textChanged()), this, SLOT(slotGetDetectorNameValue()));
 
 	//获取启用检测器选中信息
 	connect(ui->checkBox_enableFunc, SIGNAL(clicked(bool)), this, SLOT(slotGetEnableDetectorValue(bool)));
+
+
+	//选择二值化类型
+	connect(ui->comboBox_binaryDetection, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChangeBinaryDetection(int)));
+
+	//灰度阈值
+	connect(ui->spinBox_grayLevel, SIGNAL(valueChanged(int)), this, SLOT(slotGetGrayLevelValue(int)));
+
+	//获取面积上限
+	connect(ui->spinBox_areaMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetAreaMaxValue(int)));
+
+	//获取面积下限
+	connect(ui->spinBox_areaMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetAreaMinValue(int)));
+
+	//点击显示面积信息
+	connect(ui->pushButton_areaInformation, SIGNAL(clicked()), this, SLOT(slotGetAreaInformationIsClicked()));
+
+	//获取曲率上限
+	connect(ui->spinBox_curvatureMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetCurvatureMaxValue(int)));
+
+	//获取曲率下限
+	connect(ui->spinBox_curvatureMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetCurvatureMinValue(int)));
+
+	//获取尺度上限
+	connect(ui->spinBox_dimensionMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetDimensionMaxValue(int)));
+
+
+	//获取尺度下限
+	connect(ui->spinBox_dimensionMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetDimensionMinValue(int)));
 
 	/*===============================================================================================*\
 	**====================================功能栏信号与槽的链接=======================================**
@@ -96,7 +116,7 @@ CMvAdaptiveBinarization::CMvAdaptiveBinarization(QWidget *parent)
 	//setAttribute(Qt::WA_DeleteOnClose);
 }
 
-CMvAdaptiveBinarization::~CMvAdaptiveBinarization()
+CMvRingDefect::~CMvRingDefect()
 {
 	qDebug() << "析构函数";
 
@@ -129,30 +149,29 @@ CMvAdaptiveBinarization::~CMvAdaptiveBinarization()
 	delete ui;
 }
 
-
 //单例
-CMvAdaptiveBinarization * CMvAdaptiveBinarization::Instance()
+CMvRingDefect * CMvRingDefect::Instance()
 {
-	if (s_pCMvAdaptiveBinarization == nullptr)
+	if (s_pCMvRingDefect == nullptr)
 	{
-		s_pCMvAdaptiveBinarization = new CMvAdaptiveBinarization;
+		s_pCMvRingDefect = new CMvRingDefect;
 	}
-	return s_pCMvAdaptiveBinarization;
+	return s_pCMvRingDefect;
 
 }
 
 //释放内存
-void CMvAdaptiveBinarization::destroy()
+void CMvRingDefect::destroy()
 {
-	if (s_pCMvAdaptiveBinarization)
+	if (s_pCMvRingDefect)
 	{
-		delete s_pCMvAdaptiveBinarization;
-		s_pCMvAdaptiveBinarization = nullptr;
+		delete s_pCMvRingDefect;
+		s_pCMvRingDefect = nullptr;
 	}
 }
 
 //初始化数据
-void CMvAdaptiveBinarization::initCMvAdaptiveBinarization()
+void CMvRingDefect::initCMvRingDefect()
 {
 	m_signalEnable = false;
 
@@ -163,15 +182,39 @@ void CMvAdaptiveBinarization::initCMvAdaptiveBinarization()
 	ui->plainTextEdit_funcName->setPlainText("");
 	ui->checkBox_enableFunc->setChecked(true);
 
-	//选择自适应类型
-	ui->comboBox_adaptiveType->setCurrentIndex(0);
+	//选择二值化类型
+	ui->comboBox_binaryDetection->setCurrentIndex(2);
 
-	//设置自适应尺寸
-	ui->comboBox_adaptiveDimensions->setCurrentIndex(0);
+	if (ui->comboBox_binaryDetection->currentIndex() < 2) {
+		ui->label_grayLevel->setEnabled(true);
+		ui->spinBox_grayLevel->setEnabled(true);
+	}
+	else {
+		ui->label_grayLevel->setEnabled(false);
+		ui->spinBox_grayLevel->setEnabled(false);
+	}
 
-	//设置结果图像处理
-	ui->comboBox_resultLmageProcessing->setCurrentIndex(0);
+	//灰度阈值
+	ui->spinBox_grayLevel->setValue(5);
 
+	//获取面积上限
+	ui->spinBox_areaMax->setValue(5);
+
+	//获取面积下限
+	ui->spinBox_areaMin->setValue(5);
+
+	//获取曲率上限
+	ui->spinBox_curvatureMax->setValue(5);
+	
+	//获取曲率下限
+	ui->spinBox_curvatureMin->setValue(5);
+	
+	//获取尺度上限
+	ui->spinBox_dimensionMax->setValue(5);
+
+	//获取尺度下限
+	ui->spinBox_dimensionMin->setValue(5);
+	
 	//设置绘图
 	ui->checkBox_valuTrig->setChecked(false);
 
@@ -179,39 +222,95 @@ void CMvAdaptiveBinarization::initCMvAdaptiveBinarization()
 
 }
 
-//选择自适应类型
-void CMvAdaptiveBinarization::slotChangeAdaptiveType(int index)
+//选择二值化类型
+void CMvRingDefect::slotChangeBinaryDetection(int index)
 {
 	if (m_signalEnable) {
-		qDebug() << "选择自适应类型" << ui->comboBox_adaptiveType->itemText(index) << " " << index;
-	}
-
-}
-
-//选择自适应尺寸
-void CMvAdaptiveBinarization::slotChangeAdaptiveDimensions(int index)
-{
-	if (m_signalEnable) {
-		qDebug() << "选择自适应尺寸" << ui->comboBox_adaptiveDimensions->itemText(index) << " " << index;
-	}
-}
-
-//选择结果图像处理
-void CMvAdaptiveBinarization::slotChangeResultLmageProcessing(int index)
-{
-	if (m_signalEnable) {
-		qDebug() << "选择结果图像处理" << ui->comboBox_resultLmageProcessing->itemText(index) << " " << index;
+		qDebug() << "选择二值化类型" << ui->comboBox_binaryDetection->itemText(index) << " " << index;
+		if (index < 2) {
+			ui->label_grayLevel->setEnabled(true);
+			ui->spinBox_grayLevel->setEnabled(true);
+		}
+		else{
+			ui->label_grayLevel->setEnabled(false);
+			ui->spinBox_grayLevel->setEnabled(false);
+		}
 	}
 }
 
+//获取灰度阈值
+void CMvRingDefect::slotGetGrayLevelValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取灰度阈值" << value;
+	}
+}
 
-void CMvAdaptiveBinarization::initMenuByTest()
+//获取面积上限
+void CMvRingDefect::slotGetAreaMaxValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取面积上限" << ui->spinBox_areaMax->value() << value;
+	}
+}
+
+//获取面积下限
+void CMvRingDefect::slotGetAreaMinValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取面积下限" << ui->spinBox_areaMin->value() << value;
+	}
+}
+
+//点击显示面积信息
+void CMvRingDefect::slotGetAreaInformationIsClicked()
+{
+	if (m_signalEnable) {
+		qDebug() << "点击显示面积信息";
+	}
+}
+
+//获取曲率上限
+void CMvRingDefect::slotGetCurvatureMaxValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取曲率上限" << ui->spinBox_curvatureMax->value() << value;
+	}
+}
+
+//获取曲率下限
+void CMvRingDefect::slotGetCurvatureMinValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取曲率下限" << ui->spinBox_curvatureMin->value() << value;
+	}
+}
+
+//获取尺度上限
+void CMvRingDefect::slotGetDimensionMaxValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取尺度上限" << ui->spinBox_dimensionMax->value() << value;
+	}
+}
+
+//获取尺度下限
+void CMvRingDefect::slotGetDimensionMinValue(int value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取尺度下限" << ui->spinBox_dimensionMin->value() << value;
+	}
+}
+
+
+
+void CMvRingDefect::initMenuByTest()
 {
 	//初始化图片来源菜单
 	m_pColorImageMenu = m_pSecondLevelMenu->initMenuByTest(ui->tableWidget_input, m_pColorImageMenuData);
 }
 
-void CMvAdaptiveBinarization::slotClickPushButton(int row, int col)
+void CMvRingDefect::slotClickPushButton(int row, int col)
 {
 	qDebug() << "位置确定";
 	//根据在tabelWidget点击的位置判断该弹出的菜单
@@ -227,7 +326,7 @@ void CMvAdaptiveBinarization::slotClickPushButton(int row, int col)
 }
 
 //菜单动作点击
-void CMvAdaptiveBinarization::soltMenuTriggered(QAction* action)
+void CMvRingDefect::soltMenuTriggered(QAction* action)
 {
 	//设置点击栏的显示内容
 	QString showInfoText;
@@ -265,7 +364,7 @@ void CMvAdaptiveBinarization::soltMenuTriggered(QAction* action)
 **====================================输入设置页面槽函数=========================================**
 \*===============================================================================================*/
 //获取检测器名称
-void CMvAdaptiveBinarization::slotGetDetectorNameValue()
+void CMvRingDefect::slotGetDetectorNameValue()
 {
 	if (m_signalEnable) {
 		QString strText = ui->plainTextEdit_funcName->toPlainText();
@@ -284,7 +383,7 @@ void CMvAdaptiveBinarization::slotGetDetectorNameValue()
 }
 
 //获取启用检测器选中信息
-void CMvAdaptiveBinarization::slotGetEnableDetectorValue(bool state)
+void CMvRingDefect::slotGetEnableDetectorValue(bool state)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启用检测器选中信息" << ui->checkBox_enableFunc->isChecked();
@@ -295,7 +394,7 @@ void CMvAdaptiveBinarization::slotGetEnableDetectorValue(bool state)
 **=======================================结果绘制页面槽函数======================================**
 \*===============================================================================================*/
 //获取启动绘制选中信息
-void CMvAdaptiveBinarization::slotGetStartUpDrawingValue(bool State)
+void CMvRingDefect::slotGetStartUpDrawingValue(bool State)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取启动绘制选中信息" << ui->checkBox_valuTrig->isChecked();
@@ -306,43 +405,43 @@ void CMvAdaptiveBinarization::slotGetStartUpDrawingValue(bool State)
 **======================================功能栏槽函数=============================================**
 \*===============================================================================================*/
 //点击 放大
-void CMvAdaptiveBinarization::slotAmplifyThePictureIsClick()
+void CMvRingDefect::slotAmplifyThePictureIsClick()
 {
 	qDebug() << "放大被点了";
 }
 
 //点击 缩小
-void CMvAdaptiveBinarization::slotShrinkThePictureIsClick()
+void CMvRingDefect::slotShrinkThePictureIsClick()
 {
 	qDebug() << "缩小被点了";
 }
 
 //点击 最好尺寸
-void CMvAdaptiveBinarization::slotBestSizeOfPictureIsClick()
+void CMvRingDefect::slotBestSizeOfPictureIsClick()
 {
 	qDebug() << "最好尺寸被点了";
 }
 
 //点击 锁定ROI
-void CMvAdaptiveBinarization::slotLockROIIsClick()
+void CMvRingDefect::slotLockROIIsClick()
 {
 	qDebug() << "锁定ROI被点了";
 }
 
 //点击 单次
-void CMvAdaptiveBinarization::slotOnceIsClick()
+void CMvRingDefect::slotOnceIsClick()
 {
 	qDebug() << "单次被点了";
 }
 
 //点击 确定
-void CMvAdaptiveBinarization::slotMakeSureIsClick()
+void CMvRingDefect::slotMakeSureIsClick()
 {
 	qDebug() << "确定被点了";
 }
 
 //点击 取消
-void CMvAdaptiveBinarization::slotCancelIsClick()
+void CMvRingDefect::slotCancelIsClick()
 {
 	qDebug() << "取消被点了";
 }

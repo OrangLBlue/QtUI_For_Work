@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CMvImagesCut</class>
- <widget class="QWidget" name="CMvImagesCut">
+ <class>CMvGraphicDefects</class>
+ <widget class="QWidget" name="CMvGraphicDefects">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>图片裁剪</string>
+   <string>图形缺陷</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="leftMargin">
@@ -205,7 +205,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>380</width>
          <height>16777215</height>
         </size>
        </property>
@@ -216,6 +216,116 @@
         <attribute name="title">
          <string>输入设置</string>
         </attribute>
+        <widget class="QTableWidget" name="tableWidget_input">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>361</width>
+           <height>382</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>361</width>
+           <height>382</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>361</width>
+           <height>382</height>
+          </size>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="showGrid">
+          <bool>false</bool>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <row>
+          <property name="text">
+           <string>1</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>2</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>3</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>4</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>输入名称</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>数据来源</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>图像来源</string>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>ROI来源</string>
+          </property>
+         </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
+         <item row="2" column="0">
+          <property name="text">
+           <string>ROI位置修正</string>
+          </property>
+         </item>
+         <item row="2" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
+         <item row="3" column="0">
+          <property name="text">
+           <string>掩膜来源</string>
+          </property>
+         </item>
+         <item row="3" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
+        </widget>
         <widget class="QLabel" name="label_funcName">
          <property name="geometry">
           <rect>
@@ -337,143 +447,434 @@
          </property>
          <item>
           <property name="text">
-           <string>正方形</string>
+           <string>矩形</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>圆形</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>多边形</string>
+           <string>自定义形状</string>
           </property>
          </item>
         </widget>
-        <widget class="QTableWidget" name="tableWidget_input">
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>参数设置</string>
+        </attribute>
+        <widget class="QLabel" name="label_titleJudged">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>120</y>
-           <width>341</width>
-           <height>361</height>
+           <x>0</x>
+           <y>260</y>
+           <width>381</width>
+           <height>31</height>
           </rect>
          </property>
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
+         <property name="styleSheet">
+          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 120));
+color: rgb(255, 255, 255);</string>
          </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
+         <property name="text">
+          <string>  筛选</string>
          </property>
-         <property name="horizontalScrollMode">
-          <enum>QAbstractItemView::ScrollPerItem</enum>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
-         <property name="showGrid">
-          <bool>false</bool>
-         </property>
-         <property name="sortingEnabled">
-          <bool>false</bool>
-         </property>
-         <attribute name="horizontalHeaderCascadingSectionResizes">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
+        </widget>
+        <widget class="QGroupBox" name="groupBox_area">
+         <property name="enabled">
           <bool>true</bool>
-         </attribute>
-         <attribute name="verticalHeaderVisible">
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>320</y>
+           <width>361</width>
+           <height>79</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>图形面积筛选</string>
+         </property>
+         <property name="checkable">
           <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderCascadingSectionResizes">
+         </property>
+         <widget class="QSpinBox" name="spinBox_areaMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>50000000</number>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_areaMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>50000000</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_areaMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>单个图形面积上限：</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_areaMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>单个图形面积下限：</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_figureArea">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>显示图形面积</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_figureArea">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>显示图形面积信息：</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_number">
+         <property name="enabled">
           <bool>false</bool>
-         </attribute>
-         <row>
-          <property name="text">
-           <string>1</string>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>480</y>
+           <width>241</width>
+           <height>79</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>图形个数限定：</string>
+         </property>
+         <widget class="QSpinBox" name="spinBox_numberMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
           </property>
-         </row>
-         <row>
-          <property name="text">
-           <string>2</string>
+          <property name="maximum">
+           <number>5000</number>
           </property>
-         </row>
-         <column>
-          <property name="text">
-           <string>输入名称</string>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_numberMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
           </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>数据来源</string>
+          <property name="maximum">
+           <number>5000</number>
           </property>
-         </column>
-         <item row="0" column="0">
-          <property name="text">
-           <string>黑白图像</string>
+         </widget>
+         <widget class="QLabel" name="label_numberMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
           </property>
-         </item>
-         <item row="0" column="1">
           <property name="text">
-           <string>某个检测器的输出</string>
+           <string>图形个数上限：</string>
           </property>
-         </item>
-         <item row="1" column="0">
+         </widget>
+         <widget class="QLabel" name="label_numberMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
           <property name="text">
-           <string>坐标系输入 </string>
+           <string>图形个数下限：</string>
           </property>
-         </item>
-         <item row="1" column="1">
+         </widget>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_number">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>490</y>
+           <width>49</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>49</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>开启</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_editImageTemplate">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>编辑图像模板</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_editImageTemplate">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>编辑图像模板：</string>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_binaryThreshold">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>90</y>
+           <width>241</width>
+           <height>79</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>二值化阈值</string>
+         </property>
+         <widget class="QSpinBox" name="spinBox_binaryThresholdMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_binaryThresholdMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_binaryThresholdMax">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
           <property name="text">
-           <string>某个检测器的输出</string>
+           <string>二值化高阈值：</string>
           </property>
-         </item>
+         </widget>
+         <widget class="QLabel" name="label_binaryThresholdMin">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>二值化低阈值：</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QLabel" name="label_titleJudged_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>420</y>
+           <width>381</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 120));
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>  结果判定</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="spinBox_minimumGrayscale">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>210</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_minimumGrayscale">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>180</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>缺陷最小灰度差：</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_minimumArea">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>180</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>缺陷最小面积：</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="spinBox_minimumArea">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>210</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>50000000</number>
+         </property>
         </widget>
        </widget>
        <widget class="QWidget" name="tab_3">
         <attribute name="title">
          <string>掩膜设置</string>
         </attribute>
-        <widget class="QComboBox" name="comboBox_dEtectionMask">
-         <property name="geometry">
-          <rect>
-           <x>130</x>
-           <y>20</y>
-           <width>131</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <item>
-          <property name="text">
-           <string>不使用掩膜</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>本检测器ROI内掩膜</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>其他算法的掩膜</string>
-          </property>
-         </item>
-        </widget>
-        <widget class="QLabel" name="label_dEtectionMask">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>111</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>检测区域的掩膜：</string>
-         </property>
-        </widget>
         <widget class="QWidget" name="widget_Mask" native="true">
          <property name="enabled">
           <bool>false</bool>
@@ -630,6 +1031,44 @@
           </item>
          </widget>
         </widget>
+        <widget class="QLabel" name="label_dEtectionMask">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>检测区域的掩膜：</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_dEtectionMask">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>不使用掩膜</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>本检测器ROI内掩膜</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>其他算法的掩膜</string>
+          </property>
+         </item>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_4">
         <attribute name="title">
@@ -638,9 +1077,9 @@
         <widget class="QCheckBox" name="checkBox_valuTrig">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>270</x>
            <y>20</y>
-           <width>80</width>
+           <width>101</width>
            <height>31</height>
           </rect>
          </property>
@@ -649,6 +1088,66 @@
          </property>
          <property name="checked">
           <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_lineColour">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>线条颜色：</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="spinBox_lineWidth">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="suffix">
+          <string>磅</string>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>5</number>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_lineColour">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>60</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>颜色</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="label_lineWidth">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>线条宽度：</string>
          </property>
         </widget>
        </widget>
