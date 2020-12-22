@@ -28,7 +28,7 @@ public:
 	void initMenuByTest();
 
 	//初始化界面
-	void initBlobRapidDetection();
+	void initCMvBlobRapidDetection();
 
 	//void testInit();
 	
@@ -73,16 +73,16 @@ private slots:
 	void slotGetAreaMinValue(double value);
 
 	//获取中心x上限
-	void slotGetCenterXMaxValue(int value);
+	void slotGetCenterXMaxValue(double value);
 
 	//获取中心x下限
-	void slotGetCenterXMinValue(int value);
+	void slotGetCenterXMinValue(double value);
 
 	//获取中心y上限
-	void slotGetCenterYMaxValue(int value);
+	void slotGetCenterYMaxValue(double value);
 
 	//获取中心y下限
-	void slotGetCenterYMinValue(int value);
+	void slotGetCenterYMinValue(double value);
 
 	//获取最小矩形宽度上限
 	void slotGetRectangleMaxWidthValue(double value);
@@ -95,6 +95,15 @@ private slots:
 
 	//获取最小矩形高度下限
 	void slotGetRectangleMinHightValue(double value);
+
+	//开启斜矩形长宽比筛选
+	void slotGetLengthWidthRatioIsChecked(bool state);
+
+	//获取最小矩形长宽比上限
+	void slotGetMaxLengthWidthRatioValue(double value);
+
+	//获取最小矩形长宽比下限
+	void slotGetMinLengthWidthRatioValue(double value);
 
 	//获取个数上限
 	void slotGetNumberMaxValue(int value);
@@ -185,7 +194,7 @@ private slots:
 private:
 	Ui::CMvBlobRapidDetection *ui;
 
-	static CMvBlobRapidDetection* s_pBlobRapidDetection;
+	static CMvBlobRapidDetection* s_pCMvBlobRapidDetection;
 
 	CMvBlobRapidDetection(QWidget *parent = Q_NULLPTR);
 	~CMvBlobRapidDetection();

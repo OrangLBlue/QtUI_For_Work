@@ -342,6 +342,11 @@
          </item>
          <item>
           <property name="text">
+           <string>斜矩形</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>圆形</string>
           </property>
          </item>
@@ -1419,8 +1424,6 @@ color: rgb(255, 255, 255);</string>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="CMvContourMatching.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

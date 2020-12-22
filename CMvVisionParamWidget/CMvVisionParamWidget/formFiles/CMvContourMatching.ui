@@ -452,6 +452,11 @@
          </item>
          <item>
           <property name="text">
+           <string>斜矩形</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>圆形</string>
           </property>
          </item>
@@ -539,7 +544,7 @@
         <widget class="QLabel" name="label_matchingSpeed">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>250</x>
            <y>20</y>
            <width>111</width>
            <height>31</height>
@@ -568,7 +573,7 @@
         <widget class="QComboBox" name="comboBox_matchingSpeed">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>250</x>
            <y>50</y>
            <width>101</width>
            <height>31</height>
@@ -1097,6 +1102,19 @@ color: rgb(255, 255, 255);</string>
           </item>
          </widget>
         </widget>
+        <widget class="QPushButton" name="pushButton_lock">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>50</y>
+           <width>40</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>🔒</string>
+         </property>
+        </widget>
         <zorder>groupBox_angle</zorder>
         <zorder>spinBox_threshold</zorder>
         <zorder>comboBox_thresholdType</zorder>
@@ -1111,6 +1129,7 @@ color: rgb(255, 255, 255);</string>
         <zorder>label_minimumMatching</zorder>
         <zorder>groupBox_scale</zorder>
         <zorder>groupBox_regulating</zorder>
+        <zorder>pushButton_lock</zorder>
        </widget>
        <widget class="QWidget" name="tab_3">
         <attribute name="title">

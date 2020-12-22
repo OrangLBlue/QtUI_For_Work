@@ -120,6 +120,12 @@ CMvColorSelection::~CMvColorSelection()
 {
 	qDebug() << "析构函数";
 
+	if (m_pSecondLevelMenu)
+	{
+		delete m_pSecondLevelMenu;
+		m_pSecondLevelMenu = nullptr;
+	}
+
 	if (m_pImageSourceMenu)
 	{
 		for (int index = 0; index < m_pImageSourceMenu->actions().size(); index++)

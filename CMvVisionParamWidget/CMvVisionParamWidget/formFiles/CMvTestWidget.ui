@@ -16,9 +16,9 @@
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>80</x>
      <y>70</y>
-     <width>251</width>
+     <width>281</width>
      <height>91</height>
     </rect>
    </property>
@@ -42,7 +42,7 @@
        <widget class="QComboBox" name="comboBox_selectionFunction">
         <property name="minimumSize">
          <size>
-          <width>131</width>
+          <width>161</width>
           <height>31</height>
          </size>
         </property>
@@ -220,6 +220,111 @@
         <item>
          <property name="text">
           <string>特征匹配</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>多目标轮廓匹配</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>多模板特征匹配</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>点、线简单关系测量</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>点线偏移</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>角度偏移</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>边缘距离</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>引脚间距</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>最远点提取</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>边缘卡尺</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Blob提取</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Blob筛选</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Blob排序输出</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Blob相关获取</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Blob面积累计</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Blob内接斜矩形</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>字符识别</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>一维码识别</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>二维码识别</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>匹配法字符识别</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>自定义坐标系</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>点随坐标系偏移</string>
          </property>
         </item>
        </widget>

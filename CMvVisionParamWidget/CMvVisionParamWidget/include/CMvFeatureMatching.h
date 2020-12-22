@@ -56,6 +56,9 @@ private slots:
 	//点击编辑轮廓
 	void slotGetEditingContoursIsClick();
 
+	//点击锁
+	void slotGetLockIsClick();
+
 	//获取检测模式 数值
 	void slotGetDetectionModeValue(int index);
 

@@ -53,7 +53,8 @@ private slots:
 	//根据点击位置选择弹框
 	void slotClickPushButton(int, int);
 
-
+	//点击锁
+	void slotGetLockIsClick();
 
 	//点击编辑轮廓
 	void slotGetEditingContoursIsClick();

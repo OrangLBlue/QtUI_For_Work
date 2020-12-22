@@ -35,7 +35,27 @@
 #include "CMvTemplateMatching.h"
 #include "CMvContourMatching.h"
 #include "CMvFeatureMatching.h"
-
+#include "CMvMultiObjectiveContourMatching.h"
+#include "CMvMultiTemplateFeatureMatching.h"
+#include "CMvSimpleRelationPointLines.h"
+#include "CMvPointLineOffset.h"
+#include "CMvAngleOffset.h"
+#include "CMvEdgeDistance.h"
+#include "CMvPinSpacing.h"
+#include "CMvExtractFarthestPoints.h"
+#include "CMvEdgeCaliper.h"
+#include "CMvBlobExtract.h"
+#include "CMvBlobScreen.h"
+#include "CMvBlobSortOutput.h"
+#include "CMvBlobRelevantGetting.h"
+#include "CMvBlobCumulativeArea.h"
+#include "CMvBlobInnerObliqueRectangle.h"
+#include "CMvCharacterRecognition.h"
+#include "CMv1DCodeRecognition.h"
+#include "CMv2DCodeRecognition.h"
+#include "CMvMatchingCharacterRecognition.h"
+#include "CMvCustomCoordinates.h"
+#include "CMvPointOffsetWithCoordinates.h"
 
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8") //set encoding character
@@ -169,7 +189,69 @@ CMvTestWidget::~CMvTestWidget()
 	
 	//特征匹配
 	CMvFeatureMatching::destroy();
+
+	//多目标轮廓匹配
+	CMvMultiObjectiveContourMatching::destroy();
+
+	//多模板特征匹配
+	CMvMultiTemplateFeatureMatching::destroy();
 	
+	//点、线简单关系测量
+	CMvSimpleRelationPointLines::destroy();
+	
+	//点线偏移
+	CMvPointLineOffset::destroy();
+
+	//角度偏移
+	CMvAngleOffset::destroy();
+
+	//边缘距离
+	CMvEdgeDistance::destroy();
+	
+	//引脚间距
+	CMvPinSpacing::destroy();
+
+	//最远点提取
+	CMvExtractFarthestPoints::destroy();
+
+	//边缘卡尺
+	CMvEdgeCaliper::destroy();
+	
+	//Blob提取
+	CMvBlobExtract::destroy();
+
+	//Blob筛选
+	CMvBlobScreen::destroy();
+
+	//Blob排序输出
+	CMvBlobSortOutput::destroy();
+
+	//Blob相关获取
+	CMvBlobRelevantGetting::destroy();
+
+	//Blob面积累计
+	CMvBlobCumulativeArea::destroy();
+
+	//Blob内接斜矩形
+	CMvBlobInnerObliqueRectangle::destroy();
+
+	//字符识别
+	CMvCharacterRecognition::destroy();
+
+	//一维码识别
+	CMv1DCodeRecognition::destroy();
+
+	//二维码识别
+	CMv2DCodeRecognition::destroy();
+
+	//匹配法字符识别
+	CMvMatchingCharacterRecognition::destroy();
+
+	//自定义坐标系
+	CMvCustomCoordinates::destroy();
+	
+	//点随坐标系偏移
+	CMvPointOffsetWithCoordinates::destroy();
 	m_pTestWidget = nullptr;
 	delete ui;
 }
@@ -383,8 +465,128 @@ void CMvTestWidget::slotOpenWindow()
 			//特征匹配
 			CMvFeatureMatching::destroy();
 		}break;
-	
+		case 34:
+		{
+			//多目标轮廓匹配
+			CMvMultiObjectiveContourMatching::destroy();
+		}break;
+		case 35:
+		{
+			//多模板特征匹配
+			CMvMultiTemplateFeatureMatching::destroy();
+		}break;
+		case 36:
+		{
+			//点、线简单关系测量
+			CMvSimpleRelationPointLines::destroy();
+		}break;
+		case 37:
+		{
+			//点线偏移
+			CMvPointLineOffset::destroy();
+		}break;
+		case 38:
+		{
+			//角度偏移
+			CMvAngleOffset::destroy();
+		}break;
+		case 39:
+		{
+			//边缘距离
+			CMvEdgeDistance::destroy();
+		}break;
+		case 40:
+		{
+			//引脚间距
+			CMvPinSpacing::destroy();
+		}break;
 
+
+		case 41:
+		{
+			//最远点提取
+			CMvExtractFarthestPoints::destroy();
+
+		}break;
+
+
+		case 42:
+		{
+			//边缘卡尺
+			CMvEdgeCaliper::destroy();
+
+		}break;
+		case 43:
+		{
+			//Blob提取
+			CMvBlobExtract::destroy();
+
+		}break;
+		case 44:
+		{
+			//Blob筛选
+			CMvBlobScreen::destroy();
+
+		}break;
+		case 45:
+		{
+			//Blob排序输出
+			CMvBlobSortOutput::destroy();
+
+		}break;
+		case 46:
+		{
+			//Blob相关获取
+			CMvBlobRelevantGetting::destroy();
+		}break;
+
+		case 47:
+		{
+			//Blob面积累计
+			CMvBlobCumulativeArea::destroy();
+		}break;
+
+		case 48:
+		{
+			//Blob内接斜矩形
+			CMvBlobInnerObliqueRectangle::destroy();
+		}break;
+
+		case 49:
+		{
+			//字符识别
+			CMvCharacterRecognition::destroy();
+		}break;
+
+		case 50:
+		{
+			//一维码识别
+			CMv1DCodeRecognition::destroy();
+		}break;
+
+		case 51:
+		{
+			//二维码识别
+			CMv2DCodeRecognition::destroy();
+		}break;
+		case 52:
+		{
+			//匹配法字符识别
+			CMvMatchingCharacterRecognition::destroy();
+		}break;
+		case 53:
+		{
+			//自定义坐标系
+			CMvCustomCoordinates::destroy();
+
+		}break;
+		case 54:
+		{
+			//点随坐标系偏移
+			CMvPointOffsetWithCoordinates::destroy();
+		}break;
+	
+	
 		default:
 			break;
 		}//switch (widgetType)
@@ -569,9 +771,121 @@ void CMvTestWidget::slotOpenWindow()
 		//特征匹配
 		m_pTestWidget = CMvFeatureMatching::Instance(); 
 	}break;
+	case 34:
+	{
+		//多目标轮廓匹配
+		m_pTestWidget = CMvMultiObjectiveContourMatching::Instance();
+	}break;
+	case 35:
+	{
+		//多模板特征匹配
+		m_pTestWidget = CMvMultiTemplateFeatureMatching::Instance();
+	}break;
+	case 36:
+	{
+		//点、线简单关系测量
+		m_pTestWidget = CMvSimpleRelationPointLines::Instance();
+	}break;
+	case 37:
+	{
+		//点线偏移
+		m_pTestWidget = CMvPointLineOffset::Instance();
+	}break;
+	case 38:
+	{
+		//角度偏移
+		m_pTestWidget = CMvAngleOffset::Instance();
+	}break;
+	case 39:
+	{
+		//边缘距离
+		m_pTestWidget = CMvEdgeDistance::Instance();
+	}break;
+	case 40:
+	{
+		//引脚间距
+		m_pTestWidget = CMvPinSpacing::Instance();
+	}break;
+	case 41:
+	{
+		//最远点提取
+		m_pTestWidget = CMvExtractFarthestPoints::Instance();
+	}break;
+	case 42:
+	{
+		//边缘卡尺
+		m_pTestWidget = CMvEdgeCaliper::Instance();
+
+	}break;
+	case 43:
+	{
+		//Blob提取
+		m_pTestWidget = CMvBlobExtract::Instance();
+
+	}break;
+	case 44:
+	{
+		//Blob筛选
+		m_pTestWidget =	CMvBlobScreen::Instance();
+
+	}break;
+	case 45:
+	{
+		//Blob排序输出
+		m_pTestWidget = CMvBlobSortOutput::Instance();
+
+	}break;
+	case 46:
+	{
+		//Blob相关获取
+		m_pTestWidget = CMvBlobRelevantGetting::Instance();
+	}break;
+	case 47:
+	{
+		//Blob面积累计
+		m_pTestWidget = CMvBlobCumulativeArea::Instance();
+	}break;
+	case 48:
+	{
+		//Blob内接斜矩形
+		m_pTestWidget = CMvBlobInnerObliqueRectangle::Instance();
+	}break;
+	case 49:
+	{
+		//字符识别
+		m_pTestWidget = CMvCharacterRecognition::Instance();
+	}break;
+	case 50:
+	{
+		//一维码识别
+		m_pTestWidget = CMv1DCodeRecognition::Instance();
+	}break;
+	case 51:
+	{
+		//二维码识别
+		m_pTestWidget = CMv2DCodeRecognition::Instance();
+	}break;
+	case 52:
+	{
+		//匹配法字符识别
+		m_pTestWidget = CMvMatchingCharacterRecognition::Instance();
+	}break;
+	case 53:
+	{
+		//自定义坐标系
+		m_pTestWidget = CMvCustomCoordinates::Instance();
+		
+	}break;
+	case 54:
+	{
+		//点随坐标系偏移
+		m_pTestWidget = CMvPointOffsetWithCoordinates::Instance();
+	}break;
+
 	default:
 		break;
 	}//switch (widgetType)
+
 
 	if (m_pTestWidget)
 	{

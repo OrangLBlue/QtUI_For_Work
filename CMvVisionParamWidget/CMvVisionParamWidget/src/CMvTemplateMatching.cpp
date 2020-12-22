@@ -77,7 +77,9 @@ CMvTemplateMatching::CMvTemplateMatching(QWidget *parent)
 	/*===============================================================================================*\
 	**====================================参数设置信号与槽的链接=====================================**
 	\*===============================================================================================*/
-	
+	//点击锁
+	connect(ui->pushButton_lock, SIGNAL(clicked()), this, SLOT(slotGetLockIsClick()));
+
 	//获取边缘梯度阈值 数值
 	connect(ui->doubleSpinBox_minimumMatching, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinimumMatchingValue(double)));
 
@@ -478,6 +480,13 @@ void CMvTemplateMatching::soltMenuTriggered(QAction* action)
 /*===============================================================================================*\
 **======================================参数设置页面槽函数=======================================**
 \*===============================================================================================*/
+//点击锁
+void CMvTemplateMatching::slotGetLockIsClick()
+{
+	qDebug() << "点击锁";
+}
+
+
 //获取最小匹配度 数值
 void CMvTemplateMatching::slotGetMinimumMatchingValue(double Value)
 {

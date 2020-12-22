@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CMvPointLineOffset</class>
+ <widget class="QWidget" name="CMvPointLineOffset">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>892</width>
+    <height>646</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>点线偏移</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QGraphicsView" name="graphicsView_mainImage">
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>600</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="frame">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>42</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>42</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="pushButton_zoomIn">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>放大</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_zoomOut">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>缩小</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_zoomBest">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>最好尺寸</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_lockRoiMove">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>锁定ROI</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>63</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_mousePos">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="minimumSize">
+        <size>
+         <width>382</width>
+         <height>602</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>380</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>输入设置</string>
+        </attribute>
+        <widget class="QTableWidget" name="tableWidget_input">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>361</width>
+           <height>382</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>361</width>
+           <height>382</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>361</width>
+           <height>382</height>
+          </size>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="showGrid">
+          <bool>false</bool>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <row>
+          <property name="text">
+           <string>1</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>2</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>输入名称</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>数据来源</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>点输入</string>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>线输入</string>
+          </property>
+         </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>某个检测器的输出</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="label_funcName">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>检测器名称：</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_enableFunc">
+         <property name="geometry">
+          <rect>
+           <x>270</x>
+           <y>20</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>101</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>启用检测器</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QPlainTextEdit" name="plainTextEdit_funcName">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>131</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>131</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="overwriteMode">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>参数设置</string>
+        </attribute>
+        <widget class="QLabel" name="label_study">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>直线初始位置：</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_study">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>学习当前值</string>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_initialStraightLine">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>340</y>
+           <width>241</width>
+           <height>221</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>直线初始位置</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <widget class="QLabel" name="label_initialStraightLineY">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>直线起点Y：</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_initialStraightLineY">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>5000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_initialStraightLineX">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>直线起点X：</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_initialStraightLineX">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>5000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_initialStraightLine">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>150</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>直线初始位置：</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_initialStraightLine">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>180</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>应用手动设置</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_straightLineEndPointY">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>80</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>直线终点Y：</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_straightLineEndPointX">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>80</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>直线终点X：</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_straightLineEndPointY">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>110</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>5000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_straightLineEndPointX">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>110</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>5000.000000000000000</double>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_initialStraightLine">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>350</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>手动设置</string>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_initialPoint">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>170</y>
+           <width>241</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>初始点位置</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <widget class="QLabel" name="label_initialStraightLineY_2">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>初始点Y：</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_initialPointY">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>5000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_initialStraightLineX_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>初始点X：</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_initialPointX">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <double>5000.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_initialStraightLine_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>80</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>点初始位置</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_initialPoint">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>110</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>应用手动设置</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_initialPoint">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>180</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>手动设置</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_initialStraightLineY_3">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>90</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>初始点Y偏移：</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_initialOffsetX">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>120</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <double>99999999.000000000000000</double>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_initialOffsetY">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>120</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <double>99999999.000000000000000</double>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_initialStraightLineX_3">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>初始点X偏移：</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_4">
+        <attribute name="title">
+         <string>结果绘制</string>
+        </attribute>
+        <widget class="QCheckBox" name="checkBox_valuTrig">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>启用绘制</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pushButton_ones">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>单次</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_affirm">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>确定</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbPrev_cancel">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>取消</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="CMvContourMatching.qrc"/>
+ </resources>
+ <connections/>
+</ui>

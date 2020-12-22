@@ -23,7 +23,7 @@ void QAbstractSpinBox::wheelEvent(QWheelEvent *e)
 }
 
 
-CMvBlobRapidDetection* CMvBlobRapidDetection::s_pBlobRapidDetection = nullptr;
+CMvBlobRapidDetection* CMvBlobRapidDetection::s_pCMvBlobRapidDetection = nullptr;
 
 CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 	: QWidget(parent),
@@ -46,7 +46,7 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 	\*===============================================================================================*/
 	
 	//初始化参数
-	initBlobRapidDetection();
+	initCMvBlobRapidDetection();
 
 	//初始化所有二级菜单
 	initMenuByTest();
@@ -95,16 +95,16 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 	connect(ui->doubleSpinBox_areaMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetAreaMinValue(double)));
 
 	//获取中心x上限
-	connect(ui->spinBox_centerXMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterXMaxValue(int)));
+	connect(ui->doubleSpinBox_centerXMax, SIGNAL(valueChanged(double)), this, SLOT(slotGetCenterXMaxValue(double)));
 
 	//获取中心x下限
-	connect(ui->spinBox_centerXMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterXMinValue(int)));
+	connect(ui->doubleSpinBox_centerXMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetCenterXMinValue(double)));
 
 	//获取中心y上限
-	connect(ui->spinBox_centerYMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterYMaxValue(int)));
+	connect(ui->doubleSpinBox_centerYMax, SIGNAL(valueChanged(double)), this, SLOT(slotGetCenterYMaxValue(double)));
 
 	//获取中心y下限
-	connect(ui->spinBox_centerYMin, SIGNAL(valueChanged(int)), this, SLOT(slotGetCenterYMinValue(int)));
+	connect(ui->doubleSpinBox_centerYMin, SIGNAL(valueChanged(double)), this, SLOT(slotGetCenterYMinValue(double)));
 
 	//获取最小矩形宽度上限
 	connect(ui->doubleSpinBox_rectangleMaxWidth, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMaxWidthValue(double)));
@@ -117,6 +117,16 @@ CMvBlobRapidDetection::CMvBlobRapidDetection(QWidget *parent)
 
 	//获取最小矩形高度下限
 	connect(ui->doubleSpinBox_rectangleMinHight, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMinHightValue(double)));
+
+
+	//开启斜矩形长宽比筛选
+	connect(ui->checkBox_lengthWidthRatio, SIGNAL(clicked(bool)), this, SLOT(slotGetLengthWidthRatioIsChecked(bool)));
+
+	//获取最小矩形长宽比上限
+	connect(ui->doubleSpinBox_maxLengthWidthRatio, SIGNAL(valueChanged(double)), this, SLOT(slotGetRectangleMinHightValue(double)));
+
+	//获取最小矩形长宽比下限
+	connect(ui->doubleSpinBox_minLengthWidthRatio, SIGNAL(valueChanged(double)), this, SLOT(slotGetMinLengthWidthRatioValue(double)));
 
 	//获取个数上限
 	connect(ui->spinBox_numberMax, SIGNAL(valueChanged(int)), this, SLOT(slotGetNumberMaxValue(int)));
@@ -273,25 +283,25 @@ CMvBlobRapidDetection::~CMvBlobRapidDetection()
 //单例化
 CMvBlobRapidDetection* CMvBlobRapidDetection::Instance()
 {
-	if (s_pBlobRapidDetection == nullptr) {
-		s_pBlobRapidDetection = new CMvBlobRapidDetection;
+	if (s_pCMvBlobRapidDetection == nullptr) {
+		s_pCMvBlobRapidDetection = new CMvBlobRapidDetection;
 	}
-	return s_pBlobRapidDetection;
+	return s_pCMvBlobRapidDetection;
 }
 
 
 //释放内存
 void CMvBlobRapidDetection::destroy()
 {
-	if (s_pBlobRapidDetection)
+	if (s_pCMvBlobRapidDetection)
 	{
-		delete s_pBlobRapidDetection;
-		s_pBlobRapidDetection = nullptr;
+		delete s_pCMvBlobRapidDetection;
+		s_pCMvBlobRapidDetection = nullptr;
 	}//if (c_pUniqueShowMessage)
 }
 
 //初始化界面
-void CMvBlobRapidDetection::initBlobRapidDetection()
+void CMvBlobRapidDetection::initCMvBlobRapidDetection()
 {
 	m_signalEnable = false;
 	//设置检测器名称
@@ -313,16 +323,16 @@ void CMvBlobRapidDetection::initBlobRapidDetection()
 	ui->doubleSpinBox_areaMin->setValue(0);
 
 	//设置中心x上限
-	ui->spinBox_centerXMax->setValue(0);
+	ui->doubleSpinBox_centerXMax->setValue(0);
 
 	//设置中心x下限
-	ui->spinBox_centerXMin->setValue(0);
+	ui->doubleSpinBox_centerXMin->setValue(0);
 
 	//设置中心y上限
-	ui->spinBox_centerYMax->setValue(0);
+	ui->doubleSpinBox_centerYMax->setValue(0);
 
 	//设置中心y下限
-	ui->spinBox_centerYMin->setValue(0);
+	ui->doubleSpinBox_centerYMin->setValue(0);
 
 	//设置最小矩形宽度上限
 	ui->doubleSpinBox_rectangleMaxWidth->setValue(0);
@@ -350,24 +360,34 @@ void CMvBlobRapidDetection::initBlobRapidDetection()
 
 	//设置面积筛选中
 	ui->checkBox_area->setChecked(false);
-	ui->groupBox_area->setEnabled(false);
+	ui->groupBox_area->setEnabled(ui->checkBox_area->isChecked());
 
 	//设置中心x选中
 	ui->checkBox_centerX->setChecked(false);
-	ui->groupBox_centerX->setEnabled(false);
+	ui->groupBox_centerX->setEnabled(ui->checkBox_centerX->isChecked());
 
 	//设置中心y选中
 	ui->checkBox_centerY->setChecked(false);
-	ui->groupBox_centerY->setEnabled(false);
+	ui->groupBox_centerY->setEnabled(ui->checkBox_centerY->isChecked());
 
 	//设置斜矩形宽度筛选选中
 	ui->checkBox_rectangleWidth->setChecked(false);
-	ui->groupBox_rectangleWidth->setEnabled(false);
+	ui->groupBox_rectangleWidth->setEnabled(ui->checkBox_rectangleWidth->isChecked());
 
 	//设置斜矩形高度筛选选中
 	ui->checkBox_rectangleHight->setChecked(false);
-	ui->groupBox_rectangleHight->setEnabled(false);
+	ui->groupBox_rectangleHight->setEnabled(ui->checkBox_rectangleHight->isChecked());
 
+	//开启斜矩形长宽比筛选
+	ui->checkBox_lengthWidthRatio->setChecked(false);
+	ui->groupBox_lengthWidthRatio->setEnabled(ui->checkBox_lengthWidthRatio->isChecked());
+
+	//获取最小矩形长宽比上限
+	ui->doubleSpinBox_maxLengthWidthRatio->setValue(0);
+
+	//获取最小矩形长宽比下限
+	ui->doubleSpinBox_minLengthWidthRatio->setValue(0);
+	
 
 	//设置掩膜
 	ui->comboBox_dEtectionMask->setCurrentIndex(0);
@@ -577,6 +597,15 @@ void CMvBlobRapidDetection::slotGetGrayLevelMinValue(int value)
 	}
 }
 
+//开启面积筛选
+void CMvBlobRapidDetection::slotGetAreaMinIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启面积筛选" << state;
+		ui->groupBox_area->setEnabled(state);
+	}
+}
+
 //获取面积上限
 void CMvBlobRapidDetection::slotGetAreaMaxValue(double value)
 {
@@ -593,24 +622,45 @@ void CMvBlobRapidDetection::slotGetAreaMinValue(double value)
 	}
 }
 
+//开启中心x筛选
+void CMvBlobRapidDetection::slotGetCenterXMaxIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启中心x筛选" << state;
+		ui->groupBox_centerX->setEnabled(state);
+	}
+}
+
 //获取中心x上限
-void CMvBlobRapidDetection::slotGetCenterXMaxValue(int value)
+void CMvBlobRapidDetection::slotGetCenterXMaxValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取中心x上限" << value;
 	}
 }
 
+
 //获取中心x下限
-void CMvBlobRapidDetection::slotGetCenterXMinValue(int value)
+void CMvBlobRapidDetection::slotGetCenterXMinValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取中心x下限" << value;
 	}
 }
 
+//开启中心y筛选
+void CMvBlobRapidDetection::slotGetCenterYMaxIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启中心y筛选" << state;
+		ui->groupBox_centerY->setEnabled(state);
+	}
+}
+
+
+
 //获取中心y上限
-void CMvBlobRapidDetection::slotGetCenterYMaxValue(int value)
+void CMvBlobRapidDetection::slotGetCenterYMaxValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取中心y上限" << value;
@@ -618,10 +668,19 @@ void CMvBlobRapidDetection::slotGetCenterYMaxValue(int value)
 }
 
 //获取中心y下限
-void CMvBlobRapidDetection::slotGetCenterYMinValue(int value)
+void CMvBlobRapidDetection::slotGetCenterYMinValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取中心y下限" << value;
+	}
+}
+
+//开启矩形宽度筛选
+void CMvBlobRapidDetection::slotGetRectangleMaxWidthIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启矩形宽度筛选" << state;
+		ui->groupBox_rectangleWidth->setEnabled(state);
 	}
 }
 
@@ -641,6 +700,15 @@ void CMvBlobRapidDetection::slotGetRectangleMinWidthValue(double value)
 	}
 }
 
+//开启矩形高度筛选
+void CMvBlobRapidDetection::slotGetRectangleMaxHightIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启矩形高度筛选" << state;
+		ui->groupBox_rectangleHight->setEnabled(state);
+	}
+}
+
 //获取最小矩形高度上限
 void CMvBlobRapidDetection::slotGetRectangleMaxHightValue(double value)
 {
@@ -654,6 +722,31 @@ void CMvBlobRapidDetection::slotGetRectangleMinHightValue(double value)
 {
 	if (m_signalEnable) {
 		qDebug() << "获取最小矩形高度下限" << value;
+	}
+}
+
+//开启斜矩形长宽比筛选
+void CMvBlobRapidDetection::slotGetLengthWidthRatioIsChecked(bool state)
+{
+	if (m_signalEnable) {
+		qDebug() << "开启矩形高度筛选" << state;
+		ui->groupBox_lengthWidthRatio->setEnabled(state);
+	}
+}
+
+//获取最小矩形长宽比上限
+void CMvBlobRapidDetection::slotGetMaxLengthWidthRatioValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取最小矩形长宽比上限" << value;
+	}
+}
+
+//获取最小矩形长宽比下限
+void CMvBlobRapidDetection::slotGetMinLengthWidthRatioValue(double value)
+{
+	if (m_signalEnable) {
+		qDebug() << "获取最小矩形长宽比下限" << value;
 	}
 }
 
@@ -689,49 +782,7 @@ void CMvBlobRapidDetection::slotGetGrossAreaMinValue(int value)
 	}
 }
 
-//开启面积筛选
-void CMvBlobRapidDetection::slotGetAreaMinIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启面积筛选" << state;
-		ui->groupBox_area->setEnabled(state);
-	}
-}
 
-//开启中心x筛选
-void CMvBlobRapidDetection::slotGetCenterXMaxIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启中心x筛选" << state;
-		ui->groupBox_centerX->setEnabled(state);
-	}
-}
-//开启中心y筛选
-void CMvBlobRapidDetection::slotGetCenterYMaxIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启中心y筛选" << state;
-		ui->groupBox_centerY->setEnabled(state);
-	}
-}
-
-//开启矩形宽度筛选
-void CMvBlobRapidDetection::slotGetRectangleMaxWidthIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启矩形宽度筛选" << state;
-		ui->groupBox_rectangleWidth->setEnabled(state);
-	}
-}
-
-//开启矩形高度筛选
-void CMvBlobRapidDetection::slotGetRectangleMaxHightIsChecked(bool state)
-{
-	if (m_signalEnable) {
-		qDebug() << "开启矩形高度筛选" << state;
-		ui->groupBox_rectangleHight->setEnabled(state);
-	}
-}
 
 /*===============================================================================================*\
 **=======================================掩膜设置槽函数==========================================**

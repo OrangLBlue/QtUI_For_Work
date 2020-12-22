@@ -161,7 +161,7 @@ void CMvImageRotation::initCMvImageRotation()
 	ui->checkBox_enableFunc->setChecked(true);
 
 	//设置旋转角度
-	//ui->doubleSpinBox_rsotationAngle->set
+	ui->doubleSpinBox_rsotationAngle->setValue(0);
 
 	//设置背景类型
 	ui->comboBox_backgroundType->setCurrentIndex(0);

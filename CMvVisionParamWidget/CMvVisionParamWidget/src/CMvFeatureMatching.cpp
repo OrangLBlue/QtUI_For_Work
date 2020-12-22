@@ -81,6 +81,9 @@ CMvFeatureMatching::CMvFeatureMatching(QWidget *parent)
 	//点击编辑轮廓
 	connect(ui->pushButton_editingContours, SIGNAL(clicked()), this, SLOT(slotGetEditingContoursIsClick()));
 
+	//点击锁
+	connect(ui->pushButton_lock, SIGNAL(clicked()), this, SLOT(slotGetLockIsClick()));
+
 	//获取检测模式 数值
 	connect(ui->comboBox_detectionMode, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetDetectionModeValue(int)));
 
@@ -579,6 +582,13 @@ void CMvFeatureMatching::slotGetEditingContoursIsClick()
 {
 	qDebug() << "点击编辑轮廓";
 }
+
+//点击锁
+void CMvFeatureMatching::slotGetLockIsClick()
+{
+	qDebug() << "点击锁";
+}
+
 
 //获取检测模式数值
 void CMvFeatureMatching::slotGetDetectionModeValue(int index)

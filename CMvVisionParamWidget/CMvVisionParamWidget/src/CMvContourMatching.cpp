@@ -81,6 +81,9 @@ CMvContourMatching::CMvContourMatching(QWidget *parent)
 	//点击编辑轮廓
 	connect(ui->pushButton_editingContours, SIGNAL(clicked()), this, SLOT(slotGetEditingContoursIsClick()));
 
+	//点击锁
+	connect(ui->pushButton_lock, SIGNAL(clicked()), this, SLOT(slotGetLockIsClick()));
+
 	//获取匹配速度 数值
 	connect(ui->comboBox_matchingSpeed, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGetMatchingSpeedValue(int)));
 
@@ -553,6 +556,13 @@ void CMvContourMatching::slotGetEditingContoursIsClick()
 {
 	qDebug() << "点击编辑轮廓";
 }
+
+//点击锁
+void CMvContourMatching::slotGetLockIsClick()
+{
+	qDebug() << "点击锁";
+}
+
 
 //获取匹配速度 数值
 void CMvContourMatching::slotGetMatchingSpeedValue(int index)
